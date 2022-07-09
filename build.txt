@@ -1,0 +1,4 @@
+displayName = Ferustria Suprence
+author = SibFox
+version = 0.0.1
+setLanguageVersion = 7
