@@ -15,7 +15,7 @@ namespace Ferustria.Items.Tools
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Scavenger");
-			DisplayName.AddTranslation(FSHelper.RuTrans(), "Мусорщик");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Мусорщик");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -26,8 +26,8 @@ namespace Ferustria.Items.Tools
 			Item.crit = 0;
 			Item.width = 34;
 			Item.height = 32;
-			Item.useTime = 12;
-			Item.useAnimation = 21;
+			Item.useTime = 8;
+			Item.useAnimation = 22;
 			Item.pick = 85;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3.2f;

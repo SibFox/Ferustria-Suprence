@@ -12,8 +12,8 @@ namespace Ferustria.Items.Materials
 		{
 			DisplayName.SetDefault("Rotten Skin");
 			Tooltip.SetDefault("Disgusting thing");
-			DisplayName.AddTranslation("Russian", "Гнилая кожа");
-			Tooltip.AddTranslation("Russian", "Мерзкая штука");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Гнилая кожа");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Мерзкая штука");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 
@@ -22,7 +22,7 @@ namespace Ferustria.Items.Materials
 			Item.width = 24;
 			Item.height = 26;
 			Item.maxStack = 999;
-			Item.value = Item.buyPrice(0, 0, 0, 40);
+			Item.value = Item.sellPrice(0, 0, 0, 40);
 			Item.rare = ItemRarityID.White;
 		}
 

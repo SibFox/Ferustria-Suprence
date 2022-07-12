@@ -12,9 +12,9 @@ namespace Ferustria.Buffs.Negatives
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Weak Void Leach");
-			DisplayName.AddTranslation(FSHelper.RuTrans(), "Слабое пустотное истощение");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Слабое пустотное истощение");
 			Description.SetDefault("Your body slowly exhausting");
-			Description.AddTranslation(FSHelper.RuTrans(), "Ваше тело медленно истощается");
+			Description.AddTranslation(FSHelper.RuTrans, "Ваше тело медленно истощается");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

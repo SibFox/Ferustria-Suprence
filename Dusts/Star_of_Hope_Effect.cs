@@ -19,7 +19,7 @@ namespace Ferustria.Dusts
 			dust.position += dust.velocity * .5f;
 			//dust.velocity *= .98f;
 			//dust.rotation += dust.velocity.X * .18f;
-			dust.scale *= .96f;
+			dust.scale *= .975f;
 			float light = 0.83f * dust.scale;
 			Lighting.AddLight(dust.position, light * 0.85f, light * 0.8f, 0);
 			if (dust.scale < .3f)

@@ -19,14 +19,13 @@ namespace Ferustria.NPCs.Enemies.PreHM
 	public class Voidless_Fly : ModNPC
 	{
 		private float scale;
-		IEntitySource source;
 
 		public override string Texture => !Main.hardMode ? "Ferustria/NPCs/Enemies/PreHM/Voidless_Fly_1" : "Ferustria/NPCs/Enemies/PreHM/Voidless_Fly_2";
 
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Voidless Fly");
-			DisplayName.AddTranslation("Russian", "Безпустотная мушка");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Безпустотная мушка");
 			Main.npcFrameCount[NPC.type] = 4;
 		}
 
@@ -36,8 +35,8 @@ namespace Ferustria.NPCs.Enemies.PreHM
 			else scale = Main.rand.NextFloat(0.75f, 1.24f);
 			int life = (int)(FSHelper.Scale(80, 110, 145) * scale);
 			NPC.lifeMax = life;
-			NPC.damage = 25;
-			NPC.defense = 7;
+			NPC.damage = FSHelper.Scale(25, 45, 50);
+			NPC.defense = FSHelper.WOScale(5, 7, 9);
 			NPC.knockBackResist = 0.3f;
 			NPC.width = 26;
 			NPC.height = 152/4;
@@ -46,7 +45,7 @@ namespace Ferustria.NPCs.Enemies.PreHM
 			NPC.noGravity = true;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath4;
-			NPC.value = Item.buyPrice(0, 0, 4, 0);
+			NPC.value = Item.sellPrice(0, 0, 4, 0);
 			NPC.buffImmune[ModContent.BuffType<Weak_Void_Leach>()] = true;
 			AIType = NPCID.CaveBat;
 			AnimationType = NPCID.GiantBat;
@@ -62,7 +61,7 @@ namespace Ferustria.NPCs.Enemies.PreHM
 					{
 						return SpawnCondition.Underworld.Chance * 0.08f;
 					}
-					else return SpawnCondition.OverworldNightMonster.Chance * 0.0255f;
+					else return SpawnCondition.OverworldNightMonster.Chance * 0.0355f;
 				}
 				else if (spawnInfo.Player.ZoneUnderworldHeight)
 				{
@@ -93,8 +92,11 @@ namespace Ferustria.NPCs.Enemies.PreHM
 			}
 		}
 
+        bool setTimer = false;
+        float req = 1000f;
 		public override void AI()
 		{
+            NPC.netUpdate = true;
 			NPC.TargetClosest(true);
 			Player player = Main.player[NPC.target];
 			bool triple;
@@ -103,45 +105,44 @@ namespace Ferustria.NPCs.Enemies.PreHM
 			if (scale > 1.05f && !Main.hardMode) triple = true;
 			else if (scale > 1.12f && Main.hardMode) triple = true;
 			else triple = false;
-			if (Math.Abs(NPC.Center.X - player.Center.X) < 150f * 6f && Math.Abs(NPC.Center.Y - player.Center.Y) < 140f * 6f)
-			{
-				NPC.localAI[1] += 1f;
-				float req = Main.rand.NextFloat(240f, 360f);
-				if (NPC.localAI[1] >= req)
-				{
-					NPC.localAI[1] = 0f;
-					if (Main.netMode != NetmodeID.MultiplayerClient)
-					{
+            if (Math.Abs(NPC.Center.X - player.Center.X) < 150f * 6f && Math.Abs(NPC.Center.Y - player.Center.Y) < 140f * 6f)
+            {
+                NPC.localAI[1] += 1f;
+                if (!setTimer)
+                {
+                    req = Main.rand.NextFloat(240f, 360f);
+                    setTimer = true;
+                }
+                if (NPC.localAI[1] >= req)
+                {
+                    NPC.localAI[1] = 0f;
+                    setTimer = false;
 
-						if (Math.Abs(NPC.Center.Y - player.Center.Y) < NPC.Center.Y && Math.Abs(NPC.Center.X - player.Center.X) < 6f * 16f)
-						{
-							float velY = NPC.velocity.Y * 1.5f;
-							if (NPC.velocity.Y <= 0) velY = NPC.velocity.Y * -1.5f;
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * -0.4f + playerXvel, velY + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 4, 3f, Main.myPlayer, 0f, 0f);
+                    if (Math.Abs(NPC.Center.Y - player.Center.Y) < NPC.Center.Y && Math.Abs(NPC.Center.X - player.Center.X) < 6f * 16f)
+                    {
+                        float velY = NPC.velocity.Y * 1.5f;
+                        if (NPC.velocity.Y <= 0) velY *= -1;
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * -0.4f + playerXvel, velY + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
 
-						}
-						else if (!triple) Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.4f + playerXvel, NPC.velocity.Y * 2.4f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 4, 3f, Main.myPlayer, 0f, 0f);
-						else if (triple)
-						{
-							Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * 2.2f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 4, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.8f + playerXvel, NPC.velocity.Y + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 4, 3f, Main.myPlayer, 0f, 0f);
-							Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * -2.2f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 4, 3f, Main.myPlayer, 0f, 0f);
+                    }
+                    else if (!triple) Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.4f + playerXvel, NPC.velocity.Y * 2.4f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                    else if (triple)
+                    {
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * 2.2f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.8f + playerXvel, NPC.velocity.Y + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * -2.2f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
 
-						}
-						NPC.velocity.X = -NPC.velocity.X * 4.5f;
-						NPC.velocity.Y = -NPC.velocity.Y * 4.5f;
-						NPC.velocity *= .4f;
+                    }
+                    NPC.velocity.X = -NPC.velocity.X * 4.5f;
+                    NPC.velocity.Y = -NPC.velocity.Y * 4.5f;
+                    NPC.velocity *= .4f;
+                }
 
-					}
-					NPC.netUpdate = true;
-				}
-
-			}
-			else NPC.localAI[1] = 0f;
+            }
+            else { NPC.localAI[1] = 0f; setTimer = false; }
 			
 			base.AI();
 		}
-
 
 		public override void OnHitPlayer(Player target, int damage, bool crit)
         {
@@ -150,8 +151,8 @@ namespace Ferustria.NPCs.Enemies.PreHM
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Impure_Dust>(), 1, 2, 5));
-			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Void_Sample>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Impure_Dust>(), 1, 1, 6));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Void_Sample>(), 6));
 		}
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -165,7 +166,5 @@ namespace Ferustria.NPCs.Enemies.PreHM
 				new FlavorTextBestiaryInfoElement("This fly is looking for anything to fill itself.")
 			});
 		}
-			
 	}
-
 }

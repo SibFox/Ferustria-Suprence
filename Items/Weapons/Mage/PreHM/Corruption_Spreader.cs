@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Mage
+namespace Ferustria.Items.Weapons.Mage.PreHM
 {
 	public class Corruption_Spreader : ModItem
 	{
@@ -16,8 +16,8 @@ namespace Ferustria.Items.Weapons.Mage
 		{
 			DisplayName.SetDefault("Corruption Spreader");
 			Tooltip.SetDefault("Sends rot sacks, that sticks to enemies and explodes into small corrupted petals.");
-			DisplayName.AddTranslation("Russian", "Распространитель Искажения");
-			Tooltip.AddTranslation("Russian", "Выплёвывает гнилые мешочки, которые прилипают к врагам и разрываются распростроняя маленькие заражённые лепестки.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Распространитель Искажения");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Выплёвывает гнилые мешочки, которые прилипают к врагам и разрываются распростроняя маленькие заражённые лепестки.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			Item.staff[Item.type] = true;
 		}

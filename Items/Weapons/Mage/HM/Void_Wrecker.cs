@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Mage
+namespace Ferustria.Items.Weapons.Mage.HM
 {
 	public class Void_Wrecker : ModItem
 	{
@@ -16,8 +16,8 @@ namespace Ferustria.Items.Weapons.Mage
 		{
 			DisplayName.SetDefault("Void Wrecker");
 			Tooltip.SetDefault("Shoots a heavy neon blast that explodes upon contact.\nExplosion stays for a time and heals you if hits enemies.");
-			DisplayName.AddTranslation("Russian", "Пустотный Разрушитель");
-			Tooltip.AddTranslation("Russian", "Выстреливает тяжёлый неоновый лазер, который взрывается при контакте.\nВзрыв на время остаётся и лечит вас при нанесении урона врагам.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Пустотный Разрушитель");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Выстреливает тяжёлый неоновый лазер, который взрывается при контакте.\nВзрыв на время остаётся и лечит вас при нанесении урона врагам.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

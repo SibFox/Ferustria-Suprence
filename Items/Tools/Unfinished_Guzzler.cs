@@ -18,8 +18,8 @@ namespace Ferustria.Items.Tools
 			DisplayName.SetDefault("Unfinished Guzzler");
 			Tooltip.SetDefault("'This thing weights over 50 killogramms'" +
 				"\nRight Click to shoot void projectile that splits into smaller projectiles.");
-			DisplayName.AddTranslation("Russian", "Незавершённый Пожиратель");
-			Tooltip.AddTranslation("Russian", "'Эта штука весит около 50 киллограмм'\nНажмите ПКМ, чтобы выстрелить пустотный снаряд, который разделяется на кучку маленьких.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Незавершённый Пожиратель");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "'Эта штука весит около 50 киллограмм'\nНажмите ПКМ, чтобы выстрелить пустотный снаряд, который разделяется на кучку маленьких.");
 			Item.staff[Item.type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -37,7 +37,7 @@ namespace Ferustria.Items.Tools
 			Item.hammer = 74;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 8.3f;
-			Item.value = Item.buyPrice(0, 0, 46, 0);
+			Item.value = Item.sellPrice(0, 0, 46, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.useTurn = false;
@@ -50,12 +50,12 @@ namespace Ferustria.Items.Tools
         {
 			if (player.altFunctionUse == 2)
             {
+				Item.useStyle = ItemUseStyleID.Shoot;
 				Item.damage = 24;
 				Item.noMelee = true;
 				Item.DamageType = DamageClass.Magic;
 				Item.useTime = 36;
 				Item.useAnimation = 36;
-				Item.useStyle = ItemUseStyleID.Shoot;
 				Item.knockBack = 3f;
 				Item.UseSound = SoundID.Item20;
 				Item.autoReuse = false;
@@ -65,12 +65,12 @@ namespace Ferustria.Items.Tools
 			}
             else
             {
+				Item.useStyle = ItemUseStyleID.Swing;
 				Item.damage = 42;
 				Item.DamageType = DamageClass.Melee;
 				Item.noMelee = false;
 				Item.useTime = 16;
 				Item.useAnimation = 58;
-				Item.useStyle = ItemUseStyleID.Swing;
 				Item.knockBack = 8.3f;
 				Item.UseSound = SoundID.Item1;
 				Item.autoReuse = true;

@@ -11,7 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Ranger
+namespace Ferustria.Items.Weapons.Ranger.HM
 {
 	public class Pyrite_Shotgun : ModItem
 	{
@@ -21,8 +21,8 @@ namespace Ferustria.Items.Weapons.Ranger
 		{
 			DisplayName.SetDefault("Pyrite Shotgun");
 			Tooltip.SetDefault("It's hard to control this beast.\nWarms up for more damage");
-			DisplayName.AddTranslation("Russian", "Пиритовый Дробовик");
-			Tooltip.AddTranslation("Russian", "Этого зверя сложно контрлировать.\nРазогревается для нанесения большего урона.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Пиритовый Дробовик");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Этого зверя сложно контрлировать.\nРазогревается для нанесения большего урона.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

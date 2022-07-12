@@ -11,9 +11,9 @@ namespace Ferustria.Items.Materials
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Impure Dust");
-			DisplayName.AddTranslation("Russian", "Нечистая пыль");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Нечистая пыль");
 			Tooltip.SetDefault("Little echo from afar");
-			Tooltip.AddTranslation("Russian", "Маленький отголосок из далека");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Маленький отголосок из далека");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 
@@ -22,7 +22,7 @@ namespace Ferustria.Items.Materials
 			Item.width = 24;
 			Item.height = 20;
 			Item.maxStack = 999;
-			Item.value = Item.buyPrice(0, 0, 0, 55);
+			Item.value = Item.sellPrice(0, 0, 0, 55);
 			Item.rare = ItemRarityID.White;
 		}
 

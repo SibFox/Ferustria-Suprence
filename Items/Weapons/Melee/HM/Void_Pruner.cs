@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Melee
+namespace Ferustria.Items.Weapons.Melee.HM
 {
 	public class Void_Pruner : ModItem
 	{
@@ -16,8 +16,8 @@ namespace Ferustria.Items.Weapons.Melee
 		{
 			DisplayName.SetDefault("Void Pruner");
 			Tooltip.SetDefault("Giant sword that cuts enemies defence with its neon blade.\nDeals more damage to unhurt enemies.");
-			DisplayName.AddTranslation("Russian", "Секатор Пустоты");
-			Tooltip.AddTranslation("Russian", "Гигантсикй меч, который разрезает броню врагу своим неоновым клинком.\nНаносит больше урона неповреждённым врагам");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Секатор Пустоты");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Гигантсикй меч, который разрезает броню врагу своим неоновым клинком.\nНаносит больше урона неповреждённым врагам");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

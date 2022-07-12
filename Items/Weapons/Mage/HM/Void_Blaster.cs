@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Mage
+namespace Ferustria.Items.Weapons.Mage.HM
 {
 	public class Void_Blaster : ModItem
 	{
@@ -16,8 +16,8 @@ namespace Ferustria.Items.Weapons.Mage
 		{
 			DisplayName.SetDefault("Void Blaster");
 			Tooltip.SetDefault("Shoots 4 neon lasers in a row, that pierce through enemies.");
-			DisplayName.AddTranslation("Russian", "Бластер Пустоты");
-			Tooltip.AddTranslation("Russian", "Выстреливает 4 неоновых лазера очередью, пробивающих врагов насквозь.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Бластер Пустоты");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Выстреливает 4 неоновых лазера очередью, пробивающих врагов насквозь.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

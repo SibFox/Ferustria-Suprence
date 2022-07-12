@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
+using Ferustria.Buffs.Negatives;
 
 namespace Ferustria.NPCs.Enemies.PreHM
 {
@@ -20,14 +21,14 @@ namespace Ferustria.NPCs.Enemies.PreHM
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Mutilated zombie");
-            DisplayName.AddTranslation(FSHelper.RuTrans(), "Изуродованный зомби");
+            DisplayName.AddTranslation(FSHelper.RuTrans, "Изуродованный зомби");
             Main.npcFrameCount[NPC.type] = 9;
         }
 
         public override void SetDefaults()
         {
-            NPC.lifeMax = FSHelper.Scale(80, 115, 150);
-            NPC.damage = FSHelper.Scale(25, 45, 60);
+            NPC.lifeMax = FSHelper.Scale(90, 135, 180);
+            NPC.damage = FSHelper.Scale(30, 50, 75);
             NPC.defense = FSHelper.WOScale(9, 12, 14);
             NPC.knockBackResist = 0.2f;
             NPC.width = 40;
@@ -38,7 +39,7 @@ namespace Ferustria.NPCs.Enemies.PreHM
             NPC.npcSlots = 0.4f;
             NPC.HitSound = SoundID.NPCHit41;
             NPC.DeathSound = SoundID.NPCDeath43;
-            NPC.value = Item.buyPrice(0, 0, 6, 0);
+            NPC.value = Item.sellPrice(0, 0, 6, 0);
             NPC.rarity = 1;
             NPC.noGravity = false;
             jumpCD = jumpCD = roarCD = 0;
@@ -55,35 +56,32 @@ namespace Ferustria.NPCs.Enemies.PreHM
 
         public override void AI()
         {
+            NPC.netUpdate = true;
             jumpCD--;
             roarCD--;
             if (!leap) leapCD--; 
-             NPC.TargetClosest(true);
+            NPC.TargetClosest(true);
             Player target = Main.player[NPC.target];
             if (!leap)
             {
                 leaped = false;
                 if (NPC.collideY || climb)
                 {
-                    if (target.position.X <= NPC.position.X) NPC.velocity.X -= 3.5f / 60;
-                    if (target.position.X >= NPC.position.X) NPC.velocity.X += 3.5f / 60;
-                    if (target.position.X <= NPC.position.X && NPC.velocity.X > 0) NPC.velocity.X -= 6.5f / 60;
-                    if (target.position.X >= NPC.position.X && NPC.velocity.X < 0) NPC.velocity.X += 6.5f / 60;
+                    if (target.position.X <= NPC.position.X) NPC.velocity.X -= 3.5f / 60; //Игрок слева
+                    else if (target.position.X >= NPC.position.X) NPC.velocity.X += 3.5f / 60; //Игрок справа
+                    if (target.position.X <= NPC.position.X && NPC.velocity.X > 0) NPC.velocity.X -= 6.5f / 60; //Игрок слева, резкий разворот справа
+                    else if (target.position.X >= NPC.position.X && NPC.velocity.X < 0) NPC.velocity.X += 6.5f / 60; //Игрок справа, резикий разворот слева
                 }
                 if (NPC.collideY) climb = false;
 
                 if (NPC.collideX && jumpCD <= 0) { NPC.velocity.Y = -8f; jumpCD = 60; climb = true; }
 
-                //bool[] ig = new bool[TileID.AccentSlab];
                 if (NPC.position.Y < target.position.Y - 20 && !Collision.SolidTiles(NPC.position, NPC.width, NPC.height)) NPC.noTileCollide = true;
                 else NPC.noTileCollide = false;
-                    //Collision.AdvancedTileCollision(ig, NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
-                    //else NPC.stairFall = false;
                 if (Math.Abs(target.position.X - NPC.position.X) < 100f && target.position.Y + 40 < NPC.position.Y && NPC.collideY && jumpCD <= 0) { NPC.velocity.Y = -9f; jumpCD = 80; }
                 
-                
-                if (NPC.velocity.X >= 4.5f && !leap) NPC.velocity.X = 4.5f;
-                if (NPC.velocity.X <= -4.5f && !leap) NPC.velocity.X = -4.5f;
+                if (NPC.velocity.X >= 4.7f && !leap) NPC.velocity.X = 4.7f;
+                if (NPC.velocity.X <= -4.7f && !leap) NPC.velocity.X = -4.7f;
             }
 
             if (NPC.life <= NPC.lifeMax * 0.45) enraged = true;
@@ -116,7 +114,7 @@ namespace Ferustria.NPCs.Enemies.PreHM
 
             if (Main.rand.NextFloat() < .8f && roarCD <= 0)
             {
-                roarCD = Main.rand.Next(360, 600);
+                roarCD = Main.rand.Next(360, 550);
                 SoundStyle sound;
                 switch (Main.rand.NextBool())
                 {
@@ -125,7 +123,7 @@ namespace Ferustria.NPCs.Enemies.PreHM
                 }
                 sound.Volume = 0.5f;
                 sound.Type = SoundType.Sound;
-                sound.PitchRange = enraged ? (-0.5f, -0.18f) : (-0.4f, -0.08f);
+                sound.PitchRange = enraged ? (-0.68f, -0.25f) : (-0.5f, -0.18f);
                 SoundEngine.PlaySound(sound, NPC.position);
             }
             
@@ -133,8 +131,10 @@ namespace Ferustria.NPCs.Enemies.PreHM
 
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
+            if (Main.rand.NextFloat() < .35f) target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(4, 8) * 60);
             if (enraged)
             {
+                target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(5, 10) * 60);
                 int heal = (int)(damage / 1.5);
                 if (heal > 0)
                 {
@@ -146,15 +146,13 @@ namespace Ferustria.NPCs.Enemies.PreHM
         }
 
 
-        
-
         public override void HitEffect(int hitDirection, double damage)
         {
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 80; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * (float)hitDirection, -2.5f, 0, default(Color), 1.3f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 1.3f);
                 }
                 /*Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore1"), 1f);
                 Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore2"), 1f);
@@ -166,7 +164,7 @@ namespace Ferustria.NPCs.Enemies.PreHM
             {
                 for (int k = 0; k < Main.rand.Next(10, 20); k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * (float)hitDirection, -2.5f, 0, default, 1.3f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 1.3f);
                 }
             }
         }
@@ -175,33 +173,16 @@ namespace Ferustria.NPCs.Enemies.PreHM
         {
             if (NPC.downedBoss1 == true)
             {
-                if (NPC.CountNPCS(ModContent.NPCType<Mutilated_Zombie>()) < 3) return SpawnCondition.OverworldNightMonster.Chance * 0.029f;
+                if (NPC.CountNPCS(ModContent.NPCType<Mutilated_Zombie>()) < 3) return SpawnCondition.OverworldNightMonster.Chance * 0.0335f;
                 else return 0f;
             }
             else return 0f;
-            /*if (NPC.CountNPCS(ModContent.NPCType<Mutilated_Zombie>()) < 3)
-            {
-                if (NPC.downedBoss2 == true)
-                {
-                    if (spawnInfo.player.ZoneUnderworldHeight)
-                    {
-                        return SpawnCondition.Underworld.Chance * 0.1f;
-                    }
-                    else return SpawnCondition.OverworldNightMonster.Chance * 0.0195f;
-                }
-                else if (spawnInfo.player.ZoneUnderworldHeight)
-                {
-                    return SpawnCondition.Underworld.Chance * 0.03f;
-                }
-                else return 0f;
-            }
-            else return 0f;*/
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Wire, 100 / 11, 1, 1));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Materials.Rotten_Skin>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Items.Materials.Rotten_Skin>(), 1, 0, 2));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -213,6 +194,5 @@ namespace Ferustria.NPCs.Enemies.PreHM
 				new FlavorTextBestiaryInfoElement("The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.")
             });
         }
-
     }
 }

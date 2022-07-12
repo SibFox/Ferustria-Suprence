@@ -11,7 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Ranger
+namespace Ferustria.Items.Weapons.Ranger.HM
 {
 	public class Pyrite_Machinegun : ModItem
 	{
@@ -21,8 +21,8 @@ namespace Ferustria.Items.Weapons.Ranger
 		{
 			DisplayName.SetDefault("Pyrite Machinegun");
 			Tooltip.SetDefault("Accuracy improves over time.\nWarms up for more damage. Beware of overheat!\n67% chance not to consume ammo");
-			DisplayName.AddTranslation("Russian", "Пиритовый Пулемёт");
-			Tooltip.AddTranslation("Russian", "Точность повышается со временем\nРазогревается для нанесения большего урона. Остерегайтесь перегрева!\n67% шанс не потратить боеприпас");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Пиритовый Пулемёт");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Точность повышается со временем\nРазогревается для нанесения большего урона. Остерегайтесь перегрева!\n67% шанс не потратить боеприпас");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

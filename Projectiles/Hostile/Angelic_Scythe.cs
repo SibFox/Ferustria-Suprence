@@ -17,7 +17,7 @@ namespace Ferustria.Projectiles.Hostile
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Burning Light Ball");
+			DisplayName.SetDefault("Angelic Scythe");
 		}
 
 		public override void SetDefaults()
@@ -27,7 +27,7 @@ namespace Ferustria.Projectiles.Hostile
 			Projectile.aiStyle = -1;
 			Projectile.friendly = false;
 			Projectile.hostile = true;
-			Projectile.timeLeft = 650;
+			Projectile.timeLeft = 600;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = -1;
@@ -54,13 +54,13 @@ namespace Ferustria.Projectiles.Hostile
             {
 				if (Projectile.ai[0]++ >= 25)
                 {
-					acc += 0.007f;
-					Projectile.velocity = acc * heldVel * 3;
+					acc += 0.0085f;
+					Projectile.velocity = acc * heldVel * 2.5f;
 				}
 				
             }
-			float rotSpd = (((Projectile.velocity.X + Projectile.velocity.Y) / 15) + (0.1f * Projectile.direction)) * Projectile.direction;
-			if (Math.Abs(rotSpd) >= 1f) rotSpd = 1f * Projectile.direction;
+			float rotSpd = (((Projectile.velocity.X + Projectile.velocity.Y) / 8) + (0.1f * Projectile.direction));
+			if (Math.Abs(rotSpd) >= 0.65f) rotSpd = 0.65f * Projectile.direction;
 			Projectile.rotation += rotSpd;
 
 			if (Main.rand.NextFloat() < .4f)
@@ -69,11 +69,11 @@ namespace Ferustria.Projectiles.Hostile
 			}
 			if (Math.Abs(Projectile.velocity.X) >= Math.Abs(heldVel.X)) Projectile.velocity.X = heldVel.X;
 			if (Math.Abs(Projectile.velocity.Y) >= Math.Abs(heldVel.Y)) Projectile.velocity.Y = heldVel.Y;
-			//Projectile.rotation += 0.15f * Projectile.direction;
 		}
 
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
+            target.AddBuff(ModContent.BuffType<Sliced_Defense>(), Main.rand.Next(8, 15) * 60);
 			//target.AddBuff(ModContent.BuffType<Under_Crucifixion_Tier2>(), Main.rand.Next(4, 10) * 60);
 		}
 	}

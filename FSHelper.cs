@@ -14,7 +14,7 @@ namespace Ferustria
 {
     internal static class FSHelper
     {
-        public static GameCulture RuTrans() => GameCulture.FromCultureName(GameCulture.CultureName.Russian);
+        public static GameCulture RuTrans => GameCulture.FromCultureName(GameCulture.CultureName.Russian);
 
         /// <summary>
         /// Высчитывает нужный скейл для сложностей. n - Нормальная; e - Эксперт; m - Мастер

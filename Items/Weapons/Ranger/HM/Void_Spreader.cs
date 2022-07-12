@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Ranger
+namespace Ferustria.Items.Weapons.Ranger.HM
 {
 	public class Void_Spreader : ModItem
 	{
@@ -16,8 +16,8 @@ namespace Ferustria.Items.Weapons.Ranger
 		{
 			DisplayName.SetDefault("Void Spreader");
 			Tooltip.SetDefault("Flames of Neon. Sets enemies onto neon fire.\n[c/FA0000:WIP]");
-			DisplayName.AddTranslation("Russian", "Распростронитель Пустоты");
-			Tooltip.AddTranslation("Russian", "Пламя Неона. Поджигает врагов неоновым пламенем.\n[c/FA0000:WIP]");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Распростронитель Пустоты");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Пламя Неона. Поджигает врагов неоновым пламенем.\n[c/FA0000:WIP]");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 

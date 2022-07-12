@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Mage
+namespace Ferustria.Items.Weapons.Mage.PreHM
 {
 	public class Crimtane_Needler : ModItem
 	{
@@ -16,8 +16,8 @@ namespace Ferustria.Items.Weapons.Mage
 		{
 			DisplayName.SetDefault("Crimtane Needler");
 			Tooltip.SetDefault("Sends thin needles that attaches to enemies and sucks their life.");
-			DisplayName.AddTranslation("Russian", "Кримтановый Игольщик");
-			Tooltip.AddTranslation("Russian", "Выплёвывает тонкие иглы, которые прикрепляются к врагам и высасывают их жизнь.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Кримтановый Игольщик");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Выплёвывает тонкие иглы, которые проникают во врагов и высасывают их жизнь.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			Item.staff[Item.type] = true;
 		}

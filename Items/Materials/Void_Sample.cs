@@ -12,8 +12,8 @@ namespace Ferustria.Items.Materials
 		{
 			DisplayName.SetDefault("Void Sample");
 			Tooltip.SetDefault("");
-			DisplayName.AddTranslation("Russian", "Образец Пустоты");
-			Tooltip.AddTranslation("Russian", "");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Образец Пустоты");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
 		}
 
@@ -22,7 +22,7 @@ namespace Ferustria.Items.Materials
 			Item.width = 20;
 			Item.height = 24;
 			Item.maxStack = 99;
-			Item.value = Item.buyPrice(0, 0, 1, 40);
+			Item.value = Item.sellPrice(0, 0, 1, 40);
 			Item.rare = ItemRarityID.LightPurple;
 		}
 

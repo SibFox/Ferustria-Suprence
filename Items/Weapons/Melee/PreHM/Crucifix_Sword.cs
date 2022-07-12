@@ -10,7 +10,7 @@ using Terraria.Localization;
 using System.Collections.Generic;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Melee
+namespace Ferustria.Items.Weapons.Melee.PreHM
 {
 	public class Crucifix_Sword : ModItem
 	{
@@ -19,10 +19,11 @@ namespace Ferustria.Items.Weapons.Melee
 		{
 			DisplayName.SetDefault("Crucifix Sword");
 			Tooltip.SetDefault("Absolution to your enemies");
-			DisplayName.AddTranslation("Russian", "Меч Распятия");
-			Tooltip.AddTranslation("Russian", "Отпущение вашим врагам");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
+
+		//DisplayName.AddTranslation(FSHelper.RuTrans, "Меч Распятия");
+		//Tooltip.AddTranslation(FSHelper.RuTrans, "Отпущение вашим врагам");
 
 		public override void SetDefaults() 
 		{

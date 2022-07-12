@@ -7,8 +7,9 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
+using Ferustria.Buffs.Negatives;
 
-namespace Ferustria.Items.Weapons.Melee
+namespace Ferustria.Items.Weapons.Melee.PreHM
 {
 	public class Kanabo : ModItem
 	{
@@ -16,8 +17,8 @@ namespace Ferustria.Items.Weapons.Melee
 		{
 			DisplayName.SetDefault("Kanabo");
 			Tooltip.SetDefault("Crushes foes defense.");
-			DisplayName.AddTranslation("Russian", "Канабо");
-			Tooltip.AddTranslation("Russian", "Рушит броню врагов.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Канабо");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Рушит броню врагов.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -28,11 +29,11 @@ namespace Ferustria.Items.Weapons.Melee
 			Item.crit = 0;
 			Item.width = 62;
 			Item.height = 62;
-			Item.useTime = 37;
-			Item.useAnimation = 37;
+			Item.useTime = 35;
+			Item.useAnimation = 35;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 6.2f;
-			Item.value = Item.buyPrice(0, 0, 36, 0);
+			Item.value = Item.sellPrice(0, 0, 33, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.useTurn = false;
@@ -41,33 +42,26 @@ namespace Ferustria.Items.Weapons.Melee
 
 		public override void AddRecipes()
 		{
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.DemoniteBar, 8);
-			recipe.AddIngredient(ItemID.Ebonwood , 25);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-			recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.CrimtaneBar, 8);
-			recipe.AddIngredient(ItemID.Shadewood, 25);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
+			CreateRecipe()
+				.AddIngredient(ItemID.DemoniteBar, 8)
+				.AddIngredient(ItemID.Ebonwood , 25)
+				.AddTile(TileID.DemonAltar)
+				.Register();
+			CreateRecipe()
+				.AddIngredient(ItemID.CrimtaneBar, 8)
+				.AddIngredient(ItemID.Shadewood, 25)
+				.AddTile(TileID.DemonAltar)
+				.Register();
 		}
-
-		List<NPC> npcs = new List<NPC>() { new NPC() };
-
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
 		{
-            double double1 = target.defDefense;
-            int getMinuser = Convert.ToInt32(Math.Round(double1 / 2.0));
-            if (getMinuser > 30) getMinuser = Convert.ToInt32(double1 - 20.0);
-            target.defense = getMinuser;
-
+			target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(12, 16) * 60);
         }
 
         public override void OnHitPvp(Player player, Player target, int damage, bool crit)
         {
-			target.AddBuff(BuffID.BrokenArmor, 20 * 60);
-        }
+			target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(12, 16) * 60);
+		}
     }
 
 }

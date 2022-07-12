@@ -10,22 +10,22 @@ using Terraria.Localization;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Ranger
+namespace Ferustria.Items.Weapons.Ranger.PreHM
 {
-	public class Boomflake : ModItem
+	public class Cross_Bow : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Boomflake");
-			Tooltip.SetDefault("Shoots a barrage of snowballs.");
-			DisplayName.AddTranslation("Russian", "Снего-шот");
-			Tooltip.AddTranslation("Russian", "Стреляет шквалом снежков.");
+			DisplayName.SetDefault("Cross-Bow");
+			Tooltip.SetDefault("Shoots angelic bolts.\nOn hit they spawn additional bolts around the target.");
+			DisplayName.AddTranslation(FSHelper.RuTrans, "Кресто-Лук");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Стреляет англельскими болтами.\nПри попадании, они вызывают дополнительные болты вокруг цели.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
 		{
-			Item.damage = 15;
+			Item.damage = 22;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;
 			Item.crit = 0;
@@ -33,14 +33,14 @@ namespace Ferustria.Items.Weapons.Ranger
 			Item.height = 20;
 			Item.useTime = 38;
 			Item.useAnimation = 38;
-			Item.shootSpeed = 8f;
+			Item.shootSpeed = 10.2f;
 			Item.shoot = 10;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.knockBack = 2.5f;
-			Item.value = Item.sellPrice(0, 2, 20, 0);
+			Item.knockBack = 2.6f;
+			Item.value = Item.sellPrice(0, 0, 40, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item5;
-			Item.useAmmo = AmmoID.Snowball;
+			Item.useAmmo = AmmoID.Arrow;
 			Item.autoReuse = false;
 		}
 
@@ -51,30 +51,10 @@ namespace Ferustria.Items.Weapons.Ranger
 			{
 				position += muzzleOffset;
 			}
-			type = ProjectileID.SnowBallFriendly;
-			for (int i = 0; i < Main.rand.Next(1) + 3; i++)
-			{
-				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(6));
-				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, player.whoAmI);
-			}
+			type = ModContent.ProjectileType<Angelic_Bolt_Friendly>();
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI, 1f);
 			return false;
         }
-
-        public override void AddRecipes()
-        {
-			CreateRecipe()
-				.AddIngredient(ItemID.Boomstick)
-				.AddIngredient(ItemID.SnowballCannon)
-				.AddIngredient(ItemID.GoldBar, 6)
-				.AddTile(TileID.Anvils)
-				.Register();
-			CreateRecipe()
-				.AddIngredient(ItemID.Boomstick)
-				.AddIngredient(ItemID.SnowballCannon)
-				.AddIngredient(ItemID.PlatinumBar, 6)
-				.AddTile(TileID.Anvils)
-				.Register();
-		}
 
         public override Vector2? HoldoutOffset() => new Vector2(-8f, 0);
 

@@ -14,7 +14,7 @@ namespace Ferustria.Projectiles.Friendly
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Opposite Echo");
+			DisplayName.SetDefault("Jumpy Void Echo");
 		}
 
 		public override void SetDefaults()
@@ -45,14 +45,14 @@ namespace Ferustria.Projectiles.Friendly
 				for (int i = 0; i < 4; i++)
 				{
 					float kos = Main.rand.NextFloat(0.6f, 1.025f);
-					float speedX = -Projectile.velocity.X * Main.rand.NextFloat(.7f, 0.9f) + Main.rand.NextFloat(-4f, 4f);
-					float speedY = -Projectile.velocity.Y * Main.rand.NextFloat(.7f, 0.9f) + Main.rand.NextFloat(-4f, 4f);
+					float speedX = -Projectile.velocity.X * Main.rand.NextFloat(.7f, 0.9f) + Main.rand.NextFloat(-2f, 2f);
+					float speedY = -Projectile.velocity.Y * Main.rand.NextFloat(.7f, 0.9f) + Main.rand.NextFloat(-2f, 2f);
 					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position.X + speedX, Projectile.position.Y + speedY, speedX, speedY, ModContent.ProjectileType<Void_Opposite_Bounce>(), (int)(Projectile.damage * kos), 1.2f, Projectile.owner, 1f, kos);
 					Main.projectile[proj].timeLeft = 70;
 				}
 				float koso = Main.rand.NextFloat(0.6f, 1.025f);
 				float speedXo = Projectile.velocity.X;
-				float speedYo = Projectile.velocity.Y ;
+				float speedYo = Projectile.velocity.Y;
 				if (Projectile.velocity.X != Projectile.oldVelocity.X)
 				{
 					speedXo = -Projectile.oldVelocity.X * Main.rand.NextFloat(.5f, 0.75f) + Main.rand.NextFloat(-3.5f, 3.5f);
@@ -69,6 +69,7 @@ namespace Ferustria.Projectiles.Friendly
 
         public override void AI()
 		{
+			Projectile.netUpdate = true;
 			if (Projectile.ai[0] == 1f)
 			{
 				Projectile.alpha = 50;

@@ -17,4 +17,11 @@
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\Weapons\Mage\PostML\" />
+    <Folder Include="Items\Weapons\Melee\PostML\" />
+    <Folder Include="Items\Weapons\Ranger\PostML\" />
+    <Folder Include="NPCs\Bosses\PreHM\" />
+    <Folder Include="NPCs\Bosses\PostML\" />
+  </ItemGroup>
 </Project>

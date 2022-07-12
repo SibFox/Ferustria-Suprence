@@ -21,9 +21,9 @@ namespace Ferustria.Projectiles.BGs
 		public override void SetDefaults()
 		{
 			Projectile.width = 60;
-			Projectile.height = 55;
+			Projectile.height = 56;
 			Projectile.aiStyle = -1;
-			Projectile.scale = 1.3f;
+			//Projectile.scale = 1.3f;
 			Projectile.timeLeft = 10000;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
@@ -33,14 +33,13 @@ namespace Ferustria.Projectiles.BGs
 
 		public override void Kill(int timeLeft)
 		{
-			/*FerustriaPlayer refer = owner.GetModPlayer<FerustriaPlayer>();
+			/*FSPlayer refer = owner.GetModPlayer<FSPlayer>();
 			refer.Crucifixion_Tier2 = false;
 			refer.Crucifixion_Halo_Existance = -1;*/
 		}
 
 		public override void AI()
 		{
-
 			if (Projectile.owner != -1)
 			{
 				owner = Main.player[Projectile.owner];
@@ -71,7 +70,7 @@ namespace Ferustria.Projectiles.BGs
             {
 				Projectile.localAI[1] = 0;
             }
-			owner.GetModPlayer<FerustriaPlayer>().Crucifixion_Halo_Existance++;
+			owner.GetModPlayer<FSPlayer>().Crucifixion_Halo_Existance++;
 			
 
 			/*if (Main.rand.NextFloat() < .25f)

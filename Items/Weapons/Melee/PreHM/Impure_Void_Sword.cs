@@ -9,32 +9,33 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Creative;
 
-namespace Ferustria.Items.Weapons.Melee
+namespace Ferustria.Items.Weapons.Melee.PreHM
 {
 	public class Impure_Void_Sword : ModItem
 	{
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Impure Void Sword");
-			Tooltip.SetDefault("Exhausting your enemies");
-			DisplayName.AddTranslation("Russian", "Неочищенный Меч Пустоты");
-			Tooltip.AddTranslation("Russian", "Истощает ваших врагов");
+			Tooltip.SetDefault("Exhausts your enemies");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
-		
+
+		//DisplayName.AddTranslation(FSHelper.RuTrans, "Неочищенный Меч Пустоты");
+		//Tooltip.AddTranslation(FSHelper.RuTrans, "Истощает ваших врагов");
+
 		public override void SetDefaults() 
 		{
 			Item.damage = 25;
 			Item.DamageType = DamageClass.Melee;
 			Item.crit = 3;
-			Item.width = 40;
-			Item.height = 40;
+			Item.width = 42;
+			Item.height = 42;
 			Item.scale *= 1.2f;
 			Item.useTime = 26;
 			Item.useAnimation = 26;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 4.5f;
-			Item.value = Item.buyPrice(0, 0, 36, 0);
+			Item.value = Item.sellPrice(0, 0, 42, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
