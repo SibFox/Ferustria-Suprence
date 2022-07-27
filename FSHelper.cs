@@ -14,12 +14,12 @@ namespace Ferustria
 {
     internal static class FSHelper
     {
-        public static GameCulture RuTrans => GameCulture.FromCultureName(GameCulture.CultureName.Russian);
+        public static GameCulture RuTrans = GameCulture.FromCultureName(GameCulture.CultureName.Russian);
 
         /// <summary>
-        /// Высчитывает нужный скейл для сложностей. n - Нормальная; e - Эксперт; m - Мастер
+        /// Высчитывает нужный скейл для сложностей.
         /// </summary>
-        /// <param name="n">Нормальная</param>
+        /// <param name="n">Нормальный</param>
         /// <param name="e">Эксперт</param>
         /// <param name="m">Мастер</param>
         public static int Scale(int n, int e, int m)
@@ -36,6 +36,50 @@ namespace Ferustria
             else if (Main.expertMode && !Main.masterMode) return e;
             else if (Main.masterMode) return m;
             else return 1;
+        }
+
+        public static float GetStraightRotation(this Projectile projectile) => projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
+        public static void SetStraightRotation(this Projectile projectile) => projectile.rotation = projectile.GetStraightRotation();
+
+        public static Item GetItem<T>() where T : ModItem => ModContent.GetModItem(ModContent.ItemType<T>()).Item;
+
+        public static void CreateRecipe(CraftMaterial[] items, int result, int resultCount = 1, int tile = -1)
+        {
+            Recipe recipe = Recipe.Create(result, resultCount);
+            foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
+            if (tile > -1) recipe.AddTile(tile);
+            recipe.Register();
+        }
+    }
+
+    internal struct CraftMaterial
+    {
+        public int itemID;
+        public int count;
+
+        public CraftMaterial(int id, int c = 1)
+        {
+            itemID = id;
+            count = c;
+        }
+    }
+
+    internal class RegisterRecipe
+    {
+        public RegisterRecipe(CraftMaterial[] items, int result, int resultCount = 1, int tile = -1)
+        {
+            Recipe recipe = Recipe.Create(result, resultCount);
+            foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
+            if (tile > -1) recipe.AddTile(tile);
+            recipe.Register();
+        }
+
+        public RegisterRecipe(CraftMaterial item, int result, int resultCount = 1, int tile = -1)
+        {
+            Recipe recipe = Recipe.Create(result, resultCount);
+            recipe.AddIngredient(item.itemID, item.count);
+            if (tile > -1) recipe.AddTile(tile);
+            recipe.Register();
         }
     }
 }
