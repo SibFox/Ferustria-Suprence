@@ -116,11 +116,13 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
         public override void AddRecipes()
         {
-            FSHelper.CreateRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.TitaniumBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16)
+            _ = new RegisterRecipe(new CraftMaterial[]
+            { new CraftMaterial(ItemID.TitaniumBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16),
+            new CraftMaterial(ItemID.IllegalGunParts)
             }, Type, tile: TileID.MythrilAnvil);
-            FSHelper.CreateRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.AdamantiteBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16)
+            _ = new RegisterRecipe(new CraftMaterial[]
+            { new CraftMaterial(ItemID.AdamantiteBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16),
+            new CraftMaterial(ItemID.IllegalGunParts)
             }, Type, tile: TileID.MythrilAnvil);
         }
 

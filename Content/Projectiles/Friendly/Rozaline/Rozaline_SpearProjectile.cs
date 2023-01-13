@@ -76,8 +76,8 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                             proj.timeLeft = duration;
                         }
                         break;
-                    case 3: Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(15f)); break;
-                    case 5: Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(-15f)); break;
+                    case 3: Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(12f)); break;
+                    case 5: Projectile.velocity = Projectile.velocity.RotatedBy(MathHelper.ToRadians(-12f)); break;
                 }
                 SoundEngine.PlaySound(SoundID.Item71.WithPitchOffset(Sequence != 6 ? -0.07f : -0.45f), player.Center);
                 set = true;
@@ -138,7 +138,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                 }
             }
 
-            if (Projectile.spriteDirection == -1)
+            if (Main.player[Projectile.owner].direction == -1)
             {
                 // If sprite is facing left, rotate 45 degrees
                 Projectile.rotation += MathHelper.ToRadians(45f);
@@ -170,9 +170,9 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
         {
             Players.FSSpesialWeaponsPlayer chargeManager = player.GetModPlayer<Players.FSSpesialWeaponsPlayer>();
             //if (Main.rand.NextFloat() < .35f) { chargeManager.Rozaline_Spikes_ChargeMeter += 0.06f; chargeManager.Rozaline_Spikes_UnchargeCooldown = 600; }
-            if (target.realLife - damage <= 0)
+            if (target.life <= 0 && target.lifeMax > 10)
             {
-                chargeManager.Rozaline_Spikes_ChargeMeter += 1.85f;
+                chargeManager.Rozaline_Spikes_ChargeMeter += 2.5f;
                 chargeManager.Rozaline_Spikes_UnchargeCooldown = 600;
             }
         }

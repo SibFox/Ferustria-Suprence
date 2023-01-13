@@ -40,7 +40,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 		{
 			Projectile.velocity.X *= 0.992f;
 			Projectile.velocity.Y += 0.14f;
-			//else Projectile.velocity.Y *= 1.04f;
 			if (Projectile.velocity.Y > 20f) Projectile.velocity.Y = 20f;
 			Projectile.rotation += 0.15f;
 			if (Main.rand.NextBool())

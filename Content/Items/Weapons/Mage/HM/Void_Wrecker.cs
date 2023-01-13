@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Ferustria.Content.Items.Materials.Drop;
 using static Terraria.ModLoader.ModContent;
+using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Mage.HM
 {
@@ -48,7 +49,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 		public override void AddRecipes()
 		{
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.LaserRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofMight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Sample>(), 3)
+            { new(ItemID.LaserRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofMight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Extract>(), 3)
             }, Type, tile: TileID.MythrilAnvil);
 		}
 

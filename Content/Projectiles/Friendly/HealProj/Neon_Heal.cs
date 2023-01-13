@@ -16,7 +16,7 @@ namespace Ferustria.Content.Projectiles.Friendly.HealProj
             timeLeft = 240;
             speed = 22f;
             Light = (0, 0.4f, 0.4f);
-            SetTexture = "Assets/Textures/Neon_Heal";
+            SetTexture = "Assets/Textures/Projectiles/Neon_Heal";
         }
 
         public override void CreateTrail()

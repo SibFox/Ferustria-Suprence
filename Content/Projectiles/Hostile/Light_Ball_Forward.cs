@@ -9,7 +9,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 	public class Light_Ball_Forward : ModProjectile
 	{
 		private int upwards;
-		public override string Texture => "Ferustria/Assets/Textures/Burning_Light_Ball";
+		public override string Texture => "Ferustria/Assets/Textures/Projectiles/Burning_Light_Ball";
 
 		public override void SetStaticDefaults()
 		{

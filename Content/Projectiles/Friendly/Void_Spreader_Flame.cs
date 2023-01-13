@@ -38,7 +38,8 @@ namespace Ferustria.Content.Projectiles.Friendly
 		{
             for (int i = 0; i < Main.rand.Next(1, 3); i++)
             {
-                Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Void_Particles>(), Projectile.velocity.X / 2, Projectile.velocity.Y / 2, Alpha: 100, Scale: Main.rand.NextFloat(1.8f, 2.35f));
+                Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Void_Particles>(), Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 
+                    Alpha: 70, Scale: Main.rand.NextFloat(1.8f, 2.35f));
             }
 		}
 

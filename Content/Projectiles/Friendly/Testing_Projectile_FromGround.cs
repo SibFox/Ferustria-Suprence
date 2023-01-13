@@ -7,7 +7,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Testing_Projectile_FromGround : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/A_poop_QM";
+		public override string Texture => "Ferustria/Assets/Textures/Projectiles/A_poop_QM";
 
 		public override void SetStaticDefaults()
 		{
@@ -67,7 +67,6 @@ namespace Ferustria.Content.Projectiles.Friendly
             if (Projectile.ai[0] != 1f) Projectile.tileCollide = Projectile.timeLeft < 73; 
             Projectile.netUpdate = true;
             Projectile.SetStraightRotation();
-            //Projectile.rotation = Projectile.GetStraightRotation();
             Projectile.velocity *= 0.985f;
         }
 	}

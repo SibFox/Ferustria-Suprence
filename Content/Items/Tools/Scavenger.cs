@@ -42,10 +42,10 @@ namespace Ferustria.Content.Items.Tools
 		public override void AddRecipes()
 		{
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.DemoniteBar, 10), new CraftMaterial(ItemID.ShadowScale, 5), new CraftMaterial(ModContent.ItemType<Impure_Dust>(), 14)
+            { new(ItemID.NightmarePickaxe), new(ModContent.ItemType<Impure_Dust>(), 8)
             }, Type, tile: TileID.DemonAltar);
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.CrimtaneBar, 10), new CraftMaterial(ItemID.TissueSample, 5), new CraftMaterial(ModContent.ItemType<Impure_Dust>(), 14)
+            { new(ItemID.DeathbringerPickaxe), new(ModContent.ItemType<Impure_Dust>(), 8)
             }, Type, tile: TileID.DemonAltar);
 		}
 

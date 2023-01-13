@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Ferustria.Content.Items.Materials.Drop;
 using static Terraria.ModLoader.ModContent;
+using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Mage.HM
 {
@@ -35,7 +36,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 			Item.useTime = 3;
 			Item.reuseDelay = 14;
 			Item.shootSpeed = 11.5f;
-			Item.shoot = ModContent.ProjectileType<Neon_Laser>();
+			Item.shoot = ProjectileType<Neon_Laser>();
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.25f;
 			Item.UseSound = SoundID.Item33;
@@ -48,7 +49,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 		public override void AddRecipes()
 		{
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.ClockworkAssaultRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Sample>(), 3)
+            { new(ItemID.ClockworkAssaultRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Extract>(), 3)
             }, Type, tile: TileID.MythrilAnvil);
 		}
 

@@ -9,19 +9,6 @@ namespace Ferustria
 {
     public static class FerustriaFunctions
     {
-
-        //Градусы > Радианы
-        public static float GradtoRad(float Grad)
-        {
-            return Grad * (float)Math.PI / 180.0f;
-        }
-
-        //Радианы > Градусы
-        public static float RadtoGrad(float Rad)
-        {
-            return Rad * 180.0f / (float)Math.PI;
-        }
-
         public static Vector2 VelocityToPoint(Vector2 A, Vector2 B, float Speed)
         {
             var Move = (B - A);
@@ -29,9 +16,9 @@ namespace Ferustria
         }
 
         //Какая-то точка в радиусе
-        public static Vector2 RandomPointInArea(Vector2 A, Vector2 B)
+        public static Vector2 RandomPointInArea(Vector2 v1, Vector2 v2)
         {
-            return new Vector2(Main.rand.Next((int)A.X, (int)B.X) + 1, Main.rand.Next((int)A.Y, (int)B.Y) + 1);
+            return new Vector2(Main.rand.Next((int)v1.X, (int)v2.X) + 1, Main.rand.Next((int)v1.Y, (int)v2.Y) + 1);
         }
 
         public static Vector2 RandomPointInArea(Rectangle Area)
@@ -59,13 +46,30 @@ namespace Ferustria
             {
                 Move *= speed / Length;
             }
-            Move = (npc.velocity * turnResistance + Move) / (turnResistance + 1f);
+            Move = (npc.velocity * (turnResistance - 1f) + Move) / (turnResistance + 1f);
             Length = Move.Length();
             if (Length > speed)
             {
                 Move *= speed / Length;
             }
             npc.velocity = Move;
+        }
+
+        public static void HomingTowards(this Projectile proj, Vector2 target, float speed, float turnResistance)
+        {
+            Vector2 Move = target - proj.Center;
+            float Length = Move.Length();
+            if (Length > speed)
+            {
+                Move *= speed / Length;
+            }
+            Move = (proj.velocity * (turnResistance - 1f) + Move) / (turnResistance + 1f);
+            Length = Move.Length();
+            if (Length > speed)
+            {
+                Move *= speed / Length;
+            }
+            proj.velocity = Move;
         }
 
     }

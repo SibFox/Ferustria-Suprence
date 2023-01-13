@@ -18,7 +18,9 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 		public override void SetStaticDefaults() 
 		{
 			DisplayName.SetDefault("Crucifix Sword");
-			Tooltip.SetDefault("Absolution to your enemies");
+			Tooltip.SetDefault("Absolution to your enemies.");
+            DisplayName.AddTranslation(FSHelper.RuTrans, "Меч-распятие");
+            Tooltip.AddTranslation(FSHelper.RuTrans, "Очищение вашим врагам.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -32,8 +34,8 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 			Item.crit = 0;
 			Item.width = 44;
 			Item.height = 44;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 4.2f;
 			Item.value = Item.sellPrice(0, 0, 17, 0);
@@ -67,6 +69,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 			{
 				CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y, 10, 10), Color.LawnGreen, 6, true);
 				target.DelBuff(target.FindBuffIndex(BuffID.OnFire));
+                target.AddBuff(BuffID.OnFire3, 320);
 			}
 			else if (time >= 6.5 * 65 && canSlot)
 			{

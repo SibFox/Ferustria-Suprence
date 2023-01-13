@@ -32,7 +32,7 @@ namespace Ferustria.Content.Items.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-			player.GetModPlayer<Players.FSPlayer>().Accessory_StarOfHope_Equiped = true;
+			player.GetModPlayer<Players.FSPlayer>().Acc_StarOfHope_Equiped = true;
         }
     }
 

@@ -13,31 +13,46 @@ using Ferustria.Content.Items.Materials.Drop;
 
 namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 {
+    [AutoloadBossHead]
     public class Six_Winged_Seraph_Boss : ModNPC
 	{
 		/// <summary>
 		/// Таймер атак
 		/// </summary>
-		private int attackTimer = 200;
-		private int moveTimer = 0;
-        private int attackDenominator, sequenceDenominator, movementDenominator;
-        private int choosenAttack, continueAttack, moveChoise, continueMove;
-        private int dashed, face, sequenceTimer, side;
-        private List<int> attackWeights = new() { 200, 800, 600 }; //Круговая атака, три шара в игрока, с косой по середине
-        private List<int> sequenceWeights = new() { 600, 325 }; //1 - Тройной дэш; 2 - Кружения с обстрелом
-        private List<int> movementWeights = new() { 80, 250, 135 }; //Продление, движение в стороне от игрока, дэш в игрока
-        private int allAttackWeights, allSequenceWeights, allMovementWeights;
-		private float accSpeedY, accSpeedX, rotate;
-		private string sequence;
-        private int projDamage_lightBall = (int)(FSHelper.Scale(130, 165, 250) / 2.5);
-        private int projDamage_lightBallCircle = (int)(FSHelper.Scale(100, 145, 200) / 2.5);
-        private int projDamage_angelicScythe = (int)(FSHelper.Scale(220, 280, 350) / 2.3);
-        private float maxDashSpeed = !Main.masterMode ? 16f : 20f;
+		public int attackTimer = 200;
+		public int moveTimer = 0;
+        public int attackDeterminator, sequenceDeterminator, movementDeterminator;
+        public int choosenAttack, continueAttack, moveChoise, continueMove;
+        public int dashed, face, sequenceTimer;
+        public float fromAngle, flyDistanceToPlayer;
+        public List<int> attackWeights = new() { 200, 800, 600, 240 };
+        public List<int> sequenceWeights = new() { 600, 325 }; //1 - Тройной дэш; 2 - Кружения с обстрелом
+        public List<int> movementWeights = new() { 80, 250, 135 }; //Продление, движение в стороне от игрока, дэш в игрока
+        public int allAttackWeights, allSequenceWeights, allMovementWeights;
+		public float accSpeedY, accSpeedX, rotate;
+		public string sequence;
+        public int projDamage_lightBall = (int)(FSHelper.Scale(130, 165, 250) / 2.5);
+        public int projDamage_lightBallCircle = (int)(FSHelper.Scale(100, 145, 200) / 2.5);
+        public int projDamage_angelicScythe = (int)(FSHelper.Scale(220, 280, 350) / 2.3);
+        public float maxDashSpeed = !Main.masterMode ? 16f : 20f;
         Vector2 center;
-		/// <summary>
-		/// Ограничитель в единицах перед началом сиквенции
+        /// <summary>
+		/// Ограничитель в единицах перед началом последовательности
 		/// </summary>
-		private int sequenceCounter;
+		public int sequenceCounter;
+
+        public int GetPhase
+        {
+            get
+            {
+                if ((NPC.life <= NPC.lifeMax * 0.35 && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.32 && Main.masterMode))
+                    return 3;
+                else if ((NPC.life <= NPC.lifeMax * 0.6 && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.55 && Main.masterMode))
+                    return 2;
+                return 1;
+            }
+        }
+		
 
 		public override void SetStaticDefaults()
 		{
@@ -45,13 +60,39 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 			DisplayName.AddTranslation(FSHelper.RuTrans, "Моргос, Шести-крылый Серафим");
 			Main.npcFrameCount[NPC.type] = 1;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
-		}
+
+            // Add this in for bosses that have a summon item, requires corresponding code in the item (See MinionBossSummonItem.cs)
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+            // Automatically group with other bosses
+            NPCID.Sets.BossBestiaryPriority.Add(Type);
+
+            // Specify the debuffs it is immune to
+            NPCDebuffImmunityData debuffData = new()
+            {
+                SpecificallyImmuneTo = new int[] {
+                    BuffID.Poisoned,
+                    BuffID.OnFire,
+                    ModContent.BuffType<Weak_Void_Leach>(),
+                    BuffID.Confused // Most NPCs have this
+				}
+            };
+            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+
+            // Influences how the NPC looks in the Bestiary
+            //NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            //{
+            //    CustomTexturePath = "ExampleMod/Assets/Textures/Bestiary/MinionBoss_Preview",
+            //    PortraitScale = 0.6f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+            //    PortraitPositionYOverride = 0f,
+            //};
+            //NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+        }
 
 		public override void SetDefaults()
 		{
-			NPC.lifeMax = FSHelper.Scale(70000, 85500, 115000);
+			NPC.lifeMax = FSHelper.Scale(70000, 90500, 115000);
 			NPC.damage = FSHelper.Scale(180, 230, 285);
-			NPC.defense = FSHelper.WOScale(30, 35, 40);
+			NPC.defense = 40;
 			NPC.knockBackResist = 0f;
 			NPC.width = 192 / 3;
 			NPC.height = 120 / 2;
@@ -59,7 +100,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
             NPC.noGravity = true;
 			NPC.aiStyle = -1;
 			NPC.boss = true;
-			NPC.npcSlots = 5f;
+			NPC.npcSlots = 15f;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath4;
 			NPC.value = Item.sellPrice(0, 0, 1, 0);
@@ -71,8 +112,8 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 			sequence = "None";
 			sequenceCounter = 0;
             CalculateWeights(true, true, true);
-            NPC.buffImmune[ModContent.BuffType<Weak_Void_Leach>()] = true;
-            NPC.buffImmune[BuffID.Confused] = true;
+            NPC.direction = 1;
+            NPC.netAlways = true;
         }
 
         bool summoned = false;
@@ -89,15 +130,6 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
             }
             else allowAi = true;
         }
-
-        int GetPhase()
-        {
-			if ((NPC.life <= NPC.lifeMax * 0.35 && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.32 && Main.masterMode))
-				return 3;
-			else if ((NPC.life <= NPC.lifeMax * 0.6 && Main.expertMode && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.55 && Main.masterMode))
-				return 2;
-			else return 1;
-		}
 
         void CalculateWeights(bool calcAttacks = false, bool calcSequence = false, bool calcMovement = false)
         {
@@ -185,9 +217,11 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     }
                     if (rageBuff > 80) rageBuff = 80;
                     float distance = Vector2.Distance(target, NPC.Center);
-                    if (GetPhase() == 2 && !setSecondPhaseWeights)
+
+                    //// ~~~~ Веса Второй фазы
+                    if (GetPhase == 2 && !setSecondPhaseWeights)
                     {
-                        attackWeights = new List<int> { 275, 750, 585, 350 };
+                        attackWeights = new List<int> { 275, 750, 585, 350, 325, 260 };
                         CalculateWeights(true);
                         setSecondPhaseWeights = true;
                     }
@@ -197,23 +231,26 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     int modifier = 1;
                     if (attackTimer <= 0)
                     {
-                        attackDenominator = Convert.ToInt32(Main.rand.NextFloat() * allAttackWeights);
+                        attackDeterminator = Convert.ToInt32(Main.rand.NextFloat() * allAttackWeights);
 
                         for (int i = 0; i < attackWeights.Count; i++)
                         {
-                            if (attackWeights[i] > attackDenominator) { choosenAttack = i; break; }
+                            if (attackWeights[i] > attackDeterminator) { choosenAttack = i; break; }
                         }
-
+                        //choosenAttack = Main.rand.NextBool() ? 3 : 4;
                         switch (choosenAttack)
                         {
                             case 0: RotationAttackToCenter(); attackTimer = Main.rand.Next(160 - rageBuff / 2, 280 - rageBuff); break;
                             case 1: InPlayerTripleAttack(player); attackTimer = Main.rand.Next(100 - rageBuff / 2, 195 - rageBuff); break;
                             case 2: WideScytheAttack(player); attackTimer = Main.rand.Next(140 - rageBuff / 2, 220 - rageBuff); break;
-                            case 3:
+                            case 3: OutOfScreenAttack(player); attackTimer = Main.rand.Next(165 - rageBuff / 2, 300 - rageBuff); break;
+                            case 4: GatheringAttack(player); attackTimer = Main.rand.Next(170 - rageBuff / 2, 250 - rageBuff); break;
+                            case 5:
                                 continueAttack = 1;
                                 attackTimer = 999; moveTimer = 999; moveChoise = 10;
                                 continueMove = 10; teleportTime = Main.rand.Next(80, 105);
                                 modifier = Main.rand.NextBool() ? 1 : -1; break;
+                            
                         }
                     }
 
@@ -234,25 +271,25 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                         {
                             if (dashed == 1)
                             {
-                                MoveToSideOfPlayer(player, distance > 400 ? 12f : 8.5f, 7);
+                                MoveToSideOfPlayer(player, distance > 400 ? 12f : 8.5f, fromAngle);
                                 NPC.damage = FSHelper.Scale(130, 150, 180);
                             }
 
                             while (moveTimer <= 0)
                             {
-                                movementDenominator = Convert.ToInt32(Main.rand.NextFloat() * allMovementWeights);
+                                movementDeterminator = Convert.ToInt32(Main.rand.NextFloat() * allMovementWeights);
 
                                 for (int i = 0; i < movementWeights.Count; i++)
                                 {
-                                    if (movementWeights[i] > movementDenominator) { moveChoise = i; break; }
+                                    if (movementWeights[i] > movementDeterminator) { moveChoise = i; break; }
                                 }
                                 if (moveChoise == 0 && dashed == 1) moveChoise = 1;
-                                if (GetPhase() == 3 && Main.rand.NextFloat() <= 0.28f)
+                                if (GetPhase == 3 && Main.rand.NextFloat() <= 0.28f)
                                 {
                                     if (++sequenceCounter >= 0)
                                     {
                                         sequence = "TrippleDash";
-                                        attackDenominator = 0;
+                                        attackDeterminator = 0;
                                         choosenAttack = 0;
                                         sequenceCounter = 0;
                                         moveTimer = !Main.masterMode ? 90 : 70;
@@ -261,11 +298,12 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                                 switch (moveChoise)
                                 {
                                     case 0: moveTimer = Main.rand.Next(90, 180); break;
-                                    case 1: continueMove = 1; moveTimer = Main.rand.Next(180, 260); dashed = 0; side = Main.rand.Next(8) + 1; break;
+                                    case 1: continueMove = 1; moveTimer = Main.rand.Next(180, 260); dashed = 0; 
+                                        fromAngle = MathHelper.ToRadians(Main.rand.NextFloat(360f)); flyDistanceToPlayer = Main.rand.NextFloat(120f, 280f) ; break;
                                     case 2:
                                         if (dashed == 0 && sequence == "None")
                                         {
-                                            if (GetPhase() == 2) StarAttack();
+                                            if (GetPhase == 2) StarAttack();
                                             center = targetCenter;
                                             face = NPC.direction;
                                             moveTimer = !Main.masterMode ? 50 : 35; dashed = 1; continueMove = 2; attackTimer = moveTimer + 20;
@@ -294,7 +332,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     switch (continueMove)
                     {
                         case 0: SlowDown(); dashed = 1; break;
-                        case 1: MoveToSideOfPlayer(player, distance > 400 ? 12f : 8.5f, side); dashed = 0; break;
+                        case 1: MoveToSideOfPlayer(player, distance > 400 ? 12f : 8.5f, fromAngle); dashed = 0; break;
                         case 2: DashIntoPlayer(center); dashed = 1; break;
                         case 10: CircleAroundThePlayer(player, modifier); dashed = 0; break;
                     }
@@ -314,50 +352,57 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
           ///////////////////////////////////////////////////////////////////////
 		 //// --------------------------- Атаки --------------------------- ////
         ///////////////////////////////////////////////////////////////////////
-		private void RotationAttackToCenter()
+		public void RotationAttackToCenter()
         {
 			float toPlayer = Main.rand.NextFloat(160f, 210f);
-			//float held = toPlayer;
-			for (int k = 1; k <= 6; k++)
-			{
-				//toPlayer = held;
-				//if (k % 2 == 0) toPlayer += held / 4;
-				int lightBall = Projectile.NewProjectile(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, 0f, 0f, ModContent.ProjectileType<Light_Ball_Circle_6>(), projDamage_lightBallCircle, 3f, Main.myPlayer, k, toPlayer);
-				Main.projectile[lightBall].netUpdate = true;
-
-				if (GetPhase() == 3)
+            //float held = toPlayer;
+            for (int k = 1; k <= 6; k++)
+            {
+                //toPlayer = held;
+                //if (k % 2 == 0) toPlayer += held / 4;
+                if (Main.netMode != 1)
                 {
-					int lightBallPhase = Projectile.NewProjectile(NPC.GetSource_FromThis(), (int)NPC.position.X, (int)NPC.position.Y, 0f, 0f, ModContent.ProjectileType<Light_Ball_Circle_6>(), projDamage_lightBallCircle, 3f, Main.myPlayer, k, toPlayer + 145f);
-					Main.projectile[lightBallPhase].localAI[0] = 1;
-					Main.projectile[lightBallPhase].netUpdate = true;
-				}
+                    Projectile lightBall = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.position, Vector2.Zero,
+                    ModContent.ProjectileType<Light_Ball_Circle_6>(), projDamage_lightBallCircle, 3f, Main.myPlayer, k, toPlayer);
+                    lightBall.netUpdate = true;
+
+                    if (GetPhase == 3)
+                    {
+                        Projectile lightBallPhase = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.position, Vector2.Zero,
+                            ModContent.ProjectileType<Light_Ball_Circle_6>(), projDamage_lightBallCircle, 3f, Main.myPlayer, k, toPlayer + 145f);
+                        lightBallPhase.localAI[0] = 1;
+                        lightBallPhase.netUpdate = true;
+                    }
+                }
 			}
 		}
 
 		 ////                           Выстрел тремя снарядами								////
 		//// При достижении определённого здоровья пускает две дополнительные косы побокам ////
-		private void InPlayerTripleAttack(Player player)
+		public void InPlayerTripleAttack(Player player)
         {
-			Vector2 target = player.Center - NPC.Center;
-			target.Normalize();
-			target *= 16f;
+			Vector2 target = (player.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 16f;
 			float rotation = MathHelper.ToRadians(17);
-			Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, target.X, target.Y, ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall + 12, 3f, Main.myPlayer);
-			for (int i = 0; i < 3; i++)
-			{
-				Vector2 perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / 2));
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Light_Ball_Forward>(),
-                    projDamage_lightBall, 3f, Main.myPlayer);
-				if ((NPC.life <= NPC.lifeMax * 0.38 && Main.expertMode && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.55 && Main.masterMode))
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, target.X, target.Y, ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall + 12, 3f, Main.myPlayer);
+                for (int i = 0; i < 3; i++)
                 {
-					perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation / 1.5f, rotation / 1.5f, i / 2));
-					Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X * 0.9f, perturbedSpeed.Y * 0.9f, 
-						ModContent.ProjectileType<Angelic_Scythe>(), projDamage_angelicScythe, 3f, Main.myPlayer);
-				}
-			}
+                    Vector2 perturbedSpeed = target.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / 2));
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y,
+                        ModContent.ProjectileType<Light_Ball_Forward>(),
+                        projDamage_lightBall, 3f, Main.myPlayer);
+                    if ((NPC.life <= NPC.lifeMax * 0.38 && Main.expertMode && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.55 && Main.masterMode))
+                    {
+                        perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation / 1.5f, rotation / 1.5f, i / 2));
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X * 0.9f, perturbedSpeed.Y * 0.9f,
+                            ModContent.ProjectileType<Angelic_Scythe>(), projDamage_angelicScythe, 4.5f, Main.myPlayer);
+                    }
+                }
+            }
 		}
 
-		private void StarAttack()
+		public void StarAttack()
         {
 			attackTimer = 80;
 			for (int k = 1; k <= 12; k++)
@@ -375,35 +420,53 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 				}
 				
 				double angle = Math.PI * 2.0 * k / 12.0;
-				Vector2 speed = new((float)Math.Cos(angle), (float)Math.Sin(angle));
-				speed.Normalize();
-				speed *= max;
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall - 8, 3f, Main.myPlayer, 1);
+				Vector2 speed = Vector2.One.GetVectorToAngleWithMult((float)angle, max);
+				//speed.Normalize();
+				//speed *= max;
+                if (Main.netMode != 1)
+				    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, 
+                        ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall - 8, 3f, Main.myPlayer, 1);
 			}
 		}
 
 
 
-		private void WideScytheAttack(Player player)
+		public void WideScytheAttack(Player player)
         {
 			Vector2 target = player.Center - NPC.Center;
 			target.Normalize();
 			target *= 14f;
 			float rotation = MathHelper.ToRadians(30);
-			Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, target.X, target.Y, ModContent.ProjectileType<Angelic_Scythe>(), projDamage_angelicScythe, 3f, Main.myPlayer);
-			for (int i = 0; i < 2; i++)
-			{
-				Vector2 perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / 1));
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer);
-				perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation /2, rotation / 2, i / 1));
-				Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer);
-			}
+            if (Main.netMode != 1)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, target.X, target.Y, ModContent.ProjectileType<Angelic_Scythe>(),
+                    projDamage_angelicScythe, 4.5f, Main.myPlayer);
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / 1));
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y,
+                        ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer);
+                    perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation / 2, rotation / 2, i / 1));
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y,
+                        ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer);
+                }
+                if (GetPhase == 3)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        Vector2 perturbedSpeed = new Vector2(target.X, target.Y).RotatedBy(MathHelper.Lerp(-rotation * 1.5f, rotation * 1.5f, i / 1));
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, perturbedSpeed.X, perturbedSpeed.Y,
+                            ModContent.ProjectileType<Angelic_Scythe>(), projDamage_angelicScythe, 4.5f, Main.myPlayer);
+                    }
+                    
+                }
+            }
 		}
 
         ////     Стрельба в цель, как из пулемёта      ////
         int await = 0;
         int rapidAttackLocalTimer = 0;
-        private void RapidInPlayerAttack(Player player, bool tping = false)
+        public void RapidInPlayerAttack(Player player, bool tping = false)
         {
             if ((tping && appeared))
             {
@@ -412,15 +475,92 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     Vector2 target = player.Center - NPC.Center;
                     target.Normalize();
                     Vector2 speed = target * 13.5f;
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, ModContent.ProjectileType<Light_Ball_Forward>(), (int)(projDamage_lightBall / 1.5), 3f, Main.myPlayer);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, 
+                            ModContent.ProjectileType<Light_Ball_Forward>(), (int)(projDamage_lightBall / 1.25), 3f, Main.myPlayer);
                     rapidAttackLocalTimer = 5;
                 }
             }
         }
 
+          ////    Из экрана вылетает несколько снарядов(5-7) летящие в одну точку    ////
+         ////    В этой точке они собираются в один большой шар, который потом стреляет в игрока     ////
+        ////    Отстреляв всё, шар потом самоноводкой летит в игрока     ////
+        public void GatheringAttack(Player player)
+        {
+            int projectiles = Main.rand.Next(7, 13);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Vector2 topLeftCorner = player.Center + new Vector2(-250f, -250f);
+                Vector2 bottomRightCorner = player.Center + new Vector2(250f, 250f);
+                Vector2 centerPosition = FerustriaFunctions.RandomPointInArea(topLeftCorner, bottomRightCorner);
+                //Mod.Logger.Debug($"TopLeft: {topLeftCorner}; BotmRight: {bottomRightCorner}; Center: {centerPosition}");
+                Projectile centerProj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("GatheringLight:Appear"), centerPosition, Vector2.Zero,
+                    ModContent.ProjectileType<Gathering_Light>(), (int)(projDamage_lightBall / 1.25), 3f, Main.myPlayer, ai0: projectiles);
+                //Mod.Logger.Debug($"Gatheting proj: {debug1}");
+                for (int i = 0; i < projectiles; i++)
+                {
+                    
+                    float angle = MathHelper.TwoPi + MathHelper.ToRadians(Main.rand.NextFloat(360f));
+                    int desSpeed = Main.rand.Next(23, 28);
+                    Vector2 speed = (Vector2.One * -desSpeed).GetVectorToAngle(angle);
+                    Vector2 fromPoint = Extensions.GetVectorWithAngle(angle) * Main.rand.NextFloat(1500f, 1800f) + centerPosition;
+                    Projectile outOS = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LightBall:OutOfScreenToGather"), fromPoint, speed,
+                        ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer, ai1: centerProj.whoAmI);
+                    float distanceToCenter = Vector2.Distance(outOS.Center, centerPosition);
+                    Projectile laserLine = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LaserLine:OutOfScreenToGather"), fromPoint, speed,
+                        ModContent.ProjectileType<Laser_Line>(), 0, 0, player.whoAmI, desSpeed, distanceToCenter);
+                    //Mod.Logger.Debug($"OutOfScreen proj: {debug2}\n" +
+                    //    $"Angle: {angle}; Speed: {speed}; From point: {fromPoint}");
+                }
+            }
+        }
+
+        ////     Шары света, летящие почти в игрока(в рандомную область в квадрате от игрока)     ////
+        public void OutOfScreenAttack(Player player)
+        {
+            if (Main.netMode != 1)
+            {
+                int projectiles = 8;
+                if (!Main.expertMode)
+                {
+                    if (GetPhase >= 2) projectiles += 2;
+                    else projectiles += 1;
+                }
+                else if (Main.expertMode && !Main.masterMode)
+                {
+                    if (GetPhase == 2) projectiles += 3;
+                    if (GetPhase == 3) projectiles += 4;
+                    else projectiles += 2;
+                }
+                else if (Main.masterMode)
+                {
+                    projectiles += 1;
+                    if (GetPhase == 2) projectiles += 4;
+                    else if (GetPhase == 3) projectiles += 6;
+                    else projectiles += 3;
+                }
+                for (int i = 0; i < Main.rand.Next(projectiles - 4, projectiles) + 1; i++)
+                {
+                    Vector2 topLeftCorner = player.Center + new Vector2(-300f, -300f);
+                    Vector2 bottomRightCorner = player.Center + new Vector2(300f, 300f);
+                    Vector2 centerPosition = FerustriaFunctions.RandomPointInArea(topLeftCorner, bottomRightCorner);
+                    float angle = MathHelper.TwoPi + MathHelper.ToRadians(Main.rand.NextFloat(360f));
+                    int desSpeed = Main.rand.Next(25, 30);
+                    Vector2 speed = (Vector2.One * -desSpeed).GetVectorToAngle(angle);
+                    Vector2 fromPoint = Extensions.GetVectorWithAngle(angle) * Main.rand.NextFloat(2100f, 2900f) + centerPosition;
+                    Projectile laserLine = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LaserLine:OutOfScreen"), fromPoint, speed,
+                        ModContent.ProjectileType<Laser_Line>(), 0, 0, player.whoAmI, desSpeed, 6000f);
+                    Projectile debug1 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LightBall:OutOfScreen"), fromPoint, speed,
+                        ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer);
+                    laserLine.netUpdate = true;
+                    debug1.netUpdate = true;
+                }
+            }
+        }
 		// --------------------------- Движение ---------------------------
 
-		private void SlowDown()
+		public void SlowDown()
         {
 			/*if (Math.Abs(NPC.velocity.Y) > 8f) NPC.velocity.Y *= 0.97f;
 			if (Math.Abs(NPC.velocity.X) > 8f) NPC.velocity.X *= 0.97f;*/
@@ -428,29 +568,18 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 			//NPC.velocity *= 0.986f;
         }
 
-        private float actualSpeed = 0f;
+        public float actualSpeed = 0f;
 
-		private void MoveToSideOfPlayer(Player player, float maxSpeed, int side)
+		public void MoveToSideOfPlayer(Player player, float maxSpeed, float angle)
 		{
             if (actualSpeed < maxSpeed) actualSpeed += 0.036f;
             if (actualSpeed > maxSpeed) actualSpeed -= 0.028f;
-			Vector2 toSide = new();
-			switch (side)
-            {
-				case 1: toSide = new(-160, 0); break;	    //Лево
-				case 2: toSide = new(-160, -160); break;	//Вниз-лево
-				case 3: toSide = new(0, -160); break;	    //Вниз
-				case 4: toSide = new(160, -160); break;	    //Вниз-право
-				case 5: toSide = new(160, 0); break;	    //Право
-				case 6: toSide = new(160, 160); break;	    //Верх-право
-				case 7: toSide = new(0, 160); break;	    //Верх
-				case 8: toSide = new(-160, 160); break;	    //Лево-верх
-			}	
-			NPC.MoveTowards(player.Center + (toSide * new Vector2(1, -1)), maxSpeed, 4f);
+			Vector2 toSide = Vector2.One.GetVectorToAngleWithMult(angle, flyDistanceToPlayer);
+			NPC.MoveTowards(player.Center + toSide, maxSpeed, 16f);
 			NPC.noTileCollide = true;
 		}
 
-		private void DashIntoPlayer(Vector2 targetCenter)
+		public void DashIntoPlayer(Vector2 targetCenter)
         {
 			NPC.TargetClosest(false);
 			targetCenter.Normalize();
@@ -459,34 +588,20 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 
         bool appeared = false;
         int maxTime;
-        private void CircleAroundThePlayer(Player player, int modifier)
+        public void CircleAroundThePlayer(Player player, int modifier)
         {
             Vector2 sideToStart = new();
-            float distance = 260f;
-            switch ((side + 5) % 8)
-            {
-                case 1: sideToStart = new(-160, 0); break;       //Лево
-                case 2: sideToStart = new(-160, -160); break;    //Вниз-лево
-                case 3: sideToStart = new(0, -160); break;       //Вниз
-                case 4: sideToStart = new(160, -160); break;     //Вниз-право
-                case 5: sideToStart = new(160, 0); break;        //Право
-                case 6: sideToStart = new(160, 160); break;      //Верх-право
-                case 7: sideToStart = new(0, 160); break;        //Верх
-                case 0: sideToStart = new(-160, 160); break;     //Лево-верх
-            }
+            float distance = 320f;
             if (maxTime < 1)
             {
                 maxTime = teleportTime;
             }
             if (teleportTime > 0 && !appeared)
             {
-                MoveToSideOfPlayer(player, 9f, side);
+                MoveToSideOfPlayer(player, 9f, fromAngle);
                 for (int i = 0; i < 4; i++)
                 {
-                    double angle = Math.Abs(sideToStart.ToRotation());
-                    Vector2 pos = new((float)Math.Cos(angle), (float)Math.Sin(angle));
-                    pos.SafeNormalize(Vector2.Zero);
-                    pos *= distance;
+                    Vector2 pos = Vector2.One.GetVectorToAngleWithMult(fromAngle, distance);
                     Dust.NewDust(pos + player.Center, 60 - (teleportTime / maxTime * 60), 60 - (teleportTime / maxTime * 60), ModContent.DustType<Angelic_Particles>(),
                         Main.rand.NextFloat(-1.5f, 1.5f), Main.rand.NextFloat(-1.5f, 1.5f), 0, default, Main.rand.NextFloat(.8f, 1.25f));
                     NPC.alpha = (int)((double)maxTime / (double)teleportTime * 60);
@@ -499,33 +614,24 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                 if (!appeared)
                 {
                     NPC.alpha = 0;
-                    double angleC = Math.Abs(sideToStart.ToRotation());
-                    Vector2 posC = new((float)Math.Cos(angleC), (float)Math.Sin(angleC));
-                    posC.SafeNormalize(Vector2.Zero);
-                    posC *= distance;
+                    Vector2 posC = Vector2.One.GetVectorToAngleWithMult(fromAngle, distance);
                     NPC.position = posC + player.position;
                     for (int i = 0; i < 250; i++)
                     {
                         double angle = 2.0 * Math.PI * i / 250;
-                        Vector2 speed = new((float)Math.Cos(angle), (float)Math.Sin(angle));
-                        speed.SafeNormalize(Vector2.Zero);
-                        speed *= 7f;
+                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 7f);
                         Dust.NewDustPerfect(NPC.position, ModContent.DustType<Star_of_Hope_Effect>(), new(speed.X, speed.Y), 20, default, 3f);
                     }
                     for (int i = 0; i < 200; i++)
                     {
                         double angle = 2.0 * Math.PI * i / 200;
-                        Vector2 speed = new((float)Math.Cos(angle), (float)Math.Sin(angle));
-                        speed.SafeNormalize(Vector2.Zero);
-                        speed *= 5.5f;
+                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 5.5f);
                         Dust.NewDustPerfect(NPC.position, ModContent.DustType<Star_of_Hope_Effect>(), new(speed.X, speed.Y), 20, default, 2.5f);
                     }
                     for (int i = 0; i < 150; i++)
                     {
                         double angle = 2.0 * Math.PI * i / 150;
-                        Vector2 speed = new((float)Math.Cos(angle), (float)Math.Sin(angle));
-                        speed.SafeNormalize(Vector2.Zero);
-                        speed *= 4f;
+                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 4f);
                         Dust.NewDustPerfect(NPC.position, ModContent.DustType<Star_of_Hope_Effect>(), new(speed.X, speed.Y), 20, default, 2f);
                     }
                     appeared = true;
@@ -536,9 +642,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                 if (++teleportTime <= 80 && appeared)
                 {
                     double angleC = ((2.0 * Math.PI * (double)teleportTime / 80.0 * 0.45) + Math.Abs(sideToStart.ToRotation())) * modifier;
-                    Vector2 posC = new((float)Math.Cos(angleC), (float)Math.Sin(angleC));
-                    posC.SafeNormalize(Vector2.Zero);
-                    posC *= distance;
+                    Vector2 posC = Vector2.One.GetVectorToAngleWithMult(angleC, distance);
                     NPC.position = posC + player.position;
                     NPC.rotation = 0;
                 }
@@ -600,7 +704,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                 });
                 text2.AddRange(new string[]
                 {
-                    "Ah, so that's it...",
+                    "Ah, so that's how it is...",
                     "Thy.. not from here...",
                     "May the Almighty.. forgive us..."
                 });

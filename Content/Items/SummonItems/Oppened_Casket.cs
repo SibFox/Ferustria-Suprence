@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
+using Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss;
+using Terraria.Audio;
 
 namespace Ferustria.Content.Items.Materials
 {
@@ -17,7 +19,8 @@ namespace Ferustria.Content.Items.Materials
 			//Tooltip.SetDefault("Little echo from afar");
 			//Tooltip.AddTranslation(FSHelper.RuTrans, "Маленький отголосок из далека");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
-		}
+            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+        }
 
 		public override void SetDefaults()
 		{
@@ -32,17 +35,40 @@ namespace Ferustria.Content.Items.Materials
 
         public override bool? UseItem(Player player)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (player.whoAmI == Main.myPlayer)
             {
-                NPC.NewNPC(Item.GetSource_ItemUse(Item, "Summoned"), (int)player.position.X + player.width / 2, (int)player.position.Y + player.height,
-                    ModContent.NPCType<Content.NPCs.Bosses.HM.SixWingedSeraphBoss.Six_Winged_Seraph_Boss>(), Target: player.whoAmI);
+                // If the player using the item is the client
+                // (explicitely excluded serverside here)
+                //SoundEngine.PlaySound(SoundID.Roar, player.position);
+
+                int type = ModContent.NPCType<Six_Winged_Seraph_Boss>();
+
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    // If the player is not in multiplayer, spawn directly
+                    NPC.SpawnOnPlayer(player.whoAmI, type);
+                }
+                else
+                {
+                    // If the player is in multiplayer, request a spawn
+                    // This will only work if NPCID.Sets.MPAllowedEnemies[type] is true, which we set in MinionBossBody
+                    NetMessage.SendData(MessageID.SpawnBoss, number: player.whoAmI, number2: type);
+                }
             }
+
             return true;
+            //if (Main.myPlayer == player.whoAmI)
+            //{
+            //    NPC.NewNPC(Item.GetSource_ItemUse(Item, "Summoned"), (int)player.position.X + player.width / 2, (int)player.position.Y + player.height,
+            //        ModContent.NPCType<Six_Winged_Seraph_Boss>(), Target: player.whoAmI);
+            //}
+            //return true;
         }
 
         public override bool CanUseItem(Player player)
         {
-            return NPC.CountNPCS(ModContent.NPCType<NPCs.Bosses.HM.SixWingedSeraphBoss.Six_Winged_Seraph_Boss>()) < 1;
+            return !NPC.AnyNPCs(ModContent.NPCType<Six_Winged_Seraph_Boss>());
+            //return NPC.CountNPCS(ModContent.NPCType<NPCs.Bosses.HM.SixWingedSeraphBoss.Six_Winged_Seraph_Boss>()) < 1;
         }
     }
 }

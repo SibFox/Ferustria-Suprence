@@ -10,7 +10,6 @@ namespace Ferustria.Assets.ClassTemplates
 {
     public abstract class HealProjectile : ModProjectile
     {
-        //public virtual void SetTexture(string path) { _texture = path; }
         string _texture = "Ferustria/emptyPixel";
         public string SetTexture { get => _texture; set => _texture = Mod.Name + "/" + value; }
 

@@ -10,9 +10,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 {
 	public class Void_Echo : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/Void_Echo";
-		/*private static float scale = 0.85f;
-		private int hitbox = (int)(14 * scale);*/
+        public override string Texture => "Ferustria/Assets/Textures/Projectiles/Void_Echo";
 
 		public override void SetStaticDefaults()
 		{
@@ -21,12 +19,10 @@ namespace Ferustria.Content.Projectiles.Hostile
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 14;
-			Projectile.height = 14;
-			Projectile.scale = 0.9f;
-			Projectile.aiStyle = ProjectileID.Bullet;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = 0;
 			Projectile.hostile = true;
-			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 600;
 			Projectile.penetrate = 3;
 			Projectile.ignoreWater = true;
@@ -40,23 +36,23 @@ namespace Ferustria.Content.Projectiles.Hostile
 			Projectile.scale *= 0.86f;
 			/*Projectile.width = (int)(14.5f * Projectile.scale);
 			Projectile.height = (int)(14.5f * Projectile.scale);*/
-			Projectile.damage = (int)(Projectile.damage * Projectile.scale * 1.5f);
+			Projectile.damage = (int)(Projectile.originalDamage * Projectile.scale);
 		}
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
 			Projectile.penetrate--;
-				Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-				SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-				if (Projectile.velocity.X != oldVelocity.X)
-				{
-					Projectile.velocity.X = -oldVelocity.X * 1.05f;
-				}
-				if (Projectile.velocity.Y != oldVelocity.Y)
-				{
-					Projectile.velocity.Y = -oldVelocity.Y * 1.015f;
-				}
-			Projectile.velocity *= .97f;
+            Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+            SoundEngine.PlaySound(SoundID.Item10.WithVolumeScale(0.5f), Projectile.position);
+            if (Projectile.velocity.X != oldVelocity.X)
+            {
+                Projectile.velocity.X = -oldVelocity.X * .35f;
+            }
+            if (Projectile.velocity.Y != oldVelocity.Y)
+            {
+                Projectile.velocity.Y = -oldVelocity.Y * .35f;
+            }
+            Projectile.velocity *= .97f;
 			Shrink();
 			return false;
 		}
@@ -71,14 +67,15 @@ namespace Ferustria.Content.Projectiles.Hostile
 		public override void AI()
 		{
 			if (Projectile.penetrate <= 0)
-			{
 				Projectile.Kill();
-			}
 			if (Main.rand.NextFloat() < .75f)
-			{
-				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Void_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
-			}
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Void_Particles>(), 
+                    Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
+
+            if (Projectile.velocity.Y < 16f && Projectile.penetrate < 3)
+                Projectile.velocity.Y += 0.17f;
+
+			Projectile.SetStraightRotation();
 		}
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

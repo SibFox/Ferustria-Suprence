@@ -25,13 +25,13 @@ namespace Ferustria.Content.Projectiles.Hostile
 			get => Projectile.localAI[0] == 1 ? true : false;
 		}
 
-		private bool set = false;
+		private bool set, set2;
 		private int toCenterCooldown = 135;
 		private bool appeared = false;
 		private float stopDistance;
         private Vector2 holdPlayerPos;
 
-        public override string Texture => "Ferustria/Assets/Textures/Burning_Light_Ball";
+        public override string Texture => Ferustria.TexturesPath + "Projectiles/Burning_Light_Ball";
 
         public override void SetStaticDefaults()
 		{
@@ -66,7 +66,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 			}
 			if (Main.rand.NextFloat() < .15f)
 			{
-				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Angelic_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Angelic_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.62f, .95f));
 			}
 
 			Vector2 playerCenter = target.Center;
@@ -75,8 +75,6 @@ namespace Ferustria.Content.Projectiles.Hostile
             {
 				stopDistance = distanceToPlayer;
 				distanceToPlayer = 0;
-				//rotSpd = Main.rand.NextFloat(0.03f, 0.042f);
-				//if (Main.rand.NextBool()) rotSpd *= -1;
 				set = true;
 			}
 			
@@ -87,9 +85,9 @@ namespace Ferustria.Content.Projectiles.Hostile
 				--toCenterCooldown;
                 
 				Projectile.alpha = 0;
-				if (Projectile.localAI[0] != 1f)
+				if (!set2)
 				{
-					Projectile.localAI[0] = 1f;
+                    set2 = true;
                     holdPlayerPos = playerCenter;
 				}
 				float rotSpd1, rotSpd2;
@@ -116,15 +114,15 @@ namespace Ferustria.Content.Projectiles.Hostile
             }
 			
 			Projectile.rotation += 0.15f;
-			if ((distanceToPlayer <= 0f && !Main.expertMode) || (distanceToPlayer <= -stopDistance / 1.7 && Main.expertMode && !Main.masterMode) || (distanceToPlayer <= -stopDistance && Main.masterMode)) Projectile.Kill();
+			if ((distanceToPlayer <= 0f && !Main.expertMode) || (distanceToPlayer <= -stopDistance / 1.6 && Main.expertMode && !Main.masterMode) || (distanceToPlayer <= -stopDistance && Main.masterMode)) Projectile.Kill();
 		}
 
 		public static void Rotate(Projectile Projectile, Vector2 targetCenter, float distance, float rotateSpeed)
         {
 			Projectile.localAI[1] += rotateSpeed;
 			Light_Ball_Circle_6 modProj = Projectile.ModProjectile as Light_Ball_Circle_6;
-			double angle = 2.0 * Math.PI * modProj.projectileNumber / 6.0 + Projectile.localAI[1];
-			Projectile.position = targetCenter + distance * new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) - Projectile.Size / 2f;
+			double angle = MathHelper.TwoPi * modProj.projectileNumber / 6 + Projectile.localAI[1];
+			Projectile.position = targetCenter + Vector2.One.GetVectorToAngleWithMult(angle, distance) - Projectile.Size / 2f;
 		}
 
 		public static void Appereance(Projectile Projectile, float stopDistance)

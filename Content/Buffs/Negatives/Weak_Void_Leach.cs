@@ -27,10 +27,10 @@ namespace Ferustria.Content.Buffs.Negatives
 			if (player.manaRegen > 0) { player.manaRegen = 0; player.manaRegenBonus = 0; }
 			player.manaRegen -= 8;
 			if (player.lifeRegen > 0) { player.lifeRegen = 0; player.lifeRegenTime = 0; }
-			player.lifeRegen -= 14;
-			player.maxRunSpeed *= 0.9f;
-			player.accRunSpeed *= 0f;
-			player.moveSpeed *= 0.45f;
+			player.lifeRegen -= 20;
+			//player.maxRunSpeed *= 0.9f;
+			//player.accRunSpeed *= 0f;
+			//player.moveSpeed *= 0.45f;
 			if (Main.rand.NextFloat() < .65f)
 				Dust.NewDustDirect(player.position, player.width, player.height, ModContent.DustType<Void_Particles>(), 0f, 0f, 0, default, Main.rand.NextFloat(0.6f, 1f));
 		}
@@ -39,7 +39,7 @@ namespace Ferustria.Content.Buffs.Negatives
 		{
 			npc.velocity.X *= 0.992f;
 			if (npc.lifeRegen > 0) npc.lifeRegen = 0;
-			npc.lifeRegen -= 14;
+			npc.lifeRegen -= 20;
 			if (Main.rand.NextFloat() < .65f)
 				Dust.NewDustDirect(npc.position, npc.width, npc.height, ModContent.DustType<Void_Particles>(), 0f, 0f, 0, default, Main.rand.NextFloat(0.6f, 1f));
 		}

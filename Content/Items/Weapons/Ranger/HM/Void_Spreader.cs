@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Ferustria.Content.Items.Materials.Drop;
 using static Terraria.ModLoader.ModContent;
+using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Ranger.HM
 {
@@ -17,9 +18,9 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Void Spreader");
-			Tooltip.SetDefault("Flames of the Void. Sets enemies onto void fire.\n20% chanse to not consume gel.");
+			Tooltip.SetDefault("Flames of the Void. Sets enemies onto void fire.\n25% chanse to not consume gel.");
 			DisplayName.AddTranslation(FSHelper.RuTrans, "Распростронитель Пустоты");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Пламя Пустоты. Поджигает врагов пустотным пламенем.\n20% шанс не потратить гель.");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Пламя Пустоты. Поджигает врагов пустотным пламенем.\n25% шанс не потратить гель.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -48,7 +49,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 		public override void AddRecipes()
 		{
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.HallowedBar, 15), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 15), new(ItemType<Void_Sample>(), 3)
+            { new CraftMaterial(ItemID.IllegalGunParts), new(ItemID.HallowedBar, 15), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 15), new(ItemType<Void_Extract>(), 3)
             }, Type, tile: TileID.MythrilAnvil);
         }
 
@@ -64,7 +65,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
-            return Main.rand.NextFloat() > .2f;
+            return Main.rand.NextFloat() > .25f;
         }
 
         public override Vector2? HoldoutOffset()

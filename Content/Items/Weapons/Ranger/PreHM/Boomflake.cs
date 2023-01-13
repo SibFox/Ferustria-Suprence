@@ -34,7 +34,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 			Item.shoot = 10;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.5f;
-			Item.value = Item.sellPrice(0, 2, 20, 0);
+			Item.value = Item.sellPrice(0, 5, 35, 0);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item5;
 			Item.useAmmo = AmmoID.Snowball;

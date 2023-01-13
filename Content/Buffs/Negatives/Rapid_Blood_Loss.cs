@@ -23,7 +23,7 @@ namespace Ferustria.Content.Buffs.Negatives
 		public override void Update(Player player, ref int buffIndex)
 		{
 			if (player.lifeRegen > 0) { player.lifeRegen = 0; player.lifeRegenTime = 0; }
-			player.lifeRegen -= 60;
+			player.lifeRegen -= 40;
 			if (Main.rand.NextFloat() < .65f)
 				Dust.NewDustDirect(player.position, player.width, player.height, DustID.Blood, 0f, 0f, 0, default, Main.rand.NextFloat(1f, 1.5f));
 		}
@@ -31,7 +31,7 @@ namespace Ferustria.Content.Buffs.Negatives
 		public override void Update(NPC npc, ref int buffIndex)
 		{
 			if (npc.lifeRegen > 0) npc.lifeRegen = 0;
-			npc.lifeRegen -= 80;
+			npc.lifeRegen -= 40;
 			if (Main.rand.NextFloat() < .65f)
 				Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Blood, 0f, 0f, 0, default, Main.rand.NextFloat(1f, 1.5f));
 		}

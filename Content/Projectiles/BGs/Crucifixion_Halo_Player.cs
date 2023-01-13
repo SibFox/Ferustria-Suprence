@@ -9,7 +9,7 @@ namespace Ferustria.Content.Projectiles.BGs
 	public class Crucifixion_Halo_Player : ModProjectile
 	{
 		Player owner = null;
-		public override string Texture => "Ferustria/Assets/Textures/Crucifixion_Halo";
+		public override string Texture => Ferustria.TexturesPath + "BGs/Crucifixion_Halo";
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("");

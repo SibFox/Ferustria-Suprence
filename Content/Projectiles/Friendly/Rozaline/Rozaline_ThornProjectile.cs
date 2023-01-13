@@ -15,6 +15,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
             set => Projectile.ai[0] = value ? 1f : 0f;
         }
         private Player player = null;
+        public float gravityStrength = 0.18f;
 
         public override void SetStaticDefaults()
         {
@@ -41,7 +42,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (ChargedAttack) chargeAmount = 0.045f;
+            if (ChargedAttack) { chargeAmount = 0.045f; gravityStrength = 0.13f; }
         }
 
         public override void Kill(int timeLeft)
@@ -54,7 +55,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
         {
             player = Main.player[Projectile.owner];
             Projectile.velocity.X *= 0.992f;
-            Projectile.velocity.Y += 0.18f;
+            Projectile.velocity.Y += gravityStrength;
             if (Projectile.velocity.Y > 20f) Projectile.velocity.Y = 30f;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             if (Main.rand.NextBool(5))

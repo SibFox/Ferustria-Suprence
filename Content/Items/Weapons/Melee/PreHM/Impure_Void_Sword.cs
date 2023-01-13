@@ -18,11 +18,11 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 		{
 			DisplayName.SetDefault("Impure Void Sword");
 			Tooltip.SetDefault("Exhausts your enemies");
+            DisplayName.AddTranslation(FSHelper.RuTrans, "Неочищенный Меч Пустоты");
+            Tooltip.AddTranslation(FSHelper.RuTrans, "Истощает ваших врагов.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
-		//DisplayName.AddTranslation(FSHelper.RuTrans, "Неочищенный Меч Пустоты");
-		//Tooltip.AddTranslation(FSHelper.RuTrans, "Истощает ваших врагов");
 
 		public override void SetDefaults() 
 		{
@@ -45,10 +45,10 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
         public override void AddRecipes()
         {
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.DemoniteBar, 10), new(ModContent.ItemType<Impure_Dust>(), 16)
+            { new(ItemID.DemoniteBar, 10), new(ModContent.ItemType<Impure_Dust>(), 8)
             }, Type, tile: TileID.DemonAltar);
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.CrimtaneBar, 10), new(ModContent.ItemType<Impure_Dust>(), 16)
+            { new(ItemID.CrimtaneBar, 10), new(ModContent.ItemType<Impure_Dust>(), 8)
             }, Type, tile: TileID.DemonAltar);
 		}
 
@@ -62,7 +62,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 8) * 60);
+			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 6) * 60);
         }
 
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)

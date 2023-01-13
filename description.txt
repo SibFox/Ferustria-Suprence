@@ -1,1 +1,12 @@
 If you see this mod in browser, than it shouldn't be here. It was a mistake, it's still under development and you won't see anything interesting here... yet.
+
+But if you want, you can freely explore it, to see what it have for now
+
+
+
+Code:
+- SibFox
+
+Sprites:
+- SibFox
+- sshinkseo

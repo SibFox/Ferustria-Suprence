@@ -21,8 +21,8 @@ namespace Ferustria.Content.Items.Materials.Drop
         {
             Item.width = 20;
             Item.height = 24;
-            Item.maxStack = 99;
-            Item.value = Item.sellPrice(0, 0, 1, 40);
+            Item.maxStack = 999;
+            Item.value = Item.sellPrice(0, 0, 2, 35);
             Item.rare = ItemRarityID.LightPurple;
         }
 

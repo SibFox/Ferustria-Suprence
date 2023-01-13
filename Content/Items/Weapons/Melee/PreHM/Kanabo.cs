@@ -12,7 +12,6 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 {
 	public class Kanabo : ModItem
 	{
-        int kills;
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Kanabo");
@@ -29,8 +28,8 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 			Item.crit = 0;
 			Item.width = 62;
 			Item.height = 62;
-			Item.useTime = 35;
-			Item.useAnimation = 35;
+			Item.useTime = 33;
+			Item.useAnimation = 33;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 6.2f;
 			Item.value = Item.sellPrice(0, 0, 33, 0);

@@ -10,17 +10,33 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Ferustria.Content.Items.Materials.Drop;
 using static Terraria.ModLoader.ModContent;
+using Ferustria.Content.Items.Materials.Craftable;
+using System.Threading;
 
 namespace Ferustria.Content.Items.Weapons.Melee.HM
 {
 	public class Void_Pruner : ModItem
 	{
+        bool canShoot = false;
+
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Void Pruner");
-			Tooltip.SetDefault("Giant sword that cuts enemies defence with its neon blade.\nDeals more damage to unhurt enemies.");
+			Tooltip.SetDefault("Giant sword that cuts enemies defence with its neon blade.\n" +
+                "Deals more damage to unhurt enemies.\n" +
+                "With each hit, it accumulates a charge of the kinetic coil.\n" +
+                "RMB to release [c/00f1f1:Neon Cleaver] that cuts through enemies.\n" +
+                "The strength of [c/00f1f1:Neon Cleaver] depends on the charge level.\n" +
+                "At level 3, unleash [c/00bbbb:Giant Cleaver] that inflicts Frostburn.\n" +
+                "[c/00f1f1:Neon Cleaver] also heals you when you hit an enemy. Regeneration depends on the level of charge.");
 			DisplayName.AddTranslation(FSHelper.RuTrans, "Секатор Пустоты");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Гигантсикй меч, который разрезает броню врагу своим неоновым клинком.\nНаносит больше урона неповреждённым врагам");
+			Tooltip.AddTranslation(FSHelper.RuTrans, "Гигантсикй меч, который разрезает броню врага своим неоновым клинком.\n" +
+                "Наносит больше урона неповреждённым врагам.\n" +
+                "При каждом ударе накапливает заряд кинетической катушки.\n" +
+                "При нажатии ПКМ выпускает [c/00f1f1:Неоновый Тесак] прорубающий врагов насквозь.\n" +
+                "Сила [c/00f1f1:Тесака] зависит от уровня заряда.\n" +
+                "На 3-ем уровне заряда выпускает [c/00bbbb:Гигантский Тесак], который при этом накладывает Ледяной Ожог.\n" +
+                "[c/00f1f1:Неоновый Тесак] также излечивает вас при попадании по врагу. Лечение зависит от уровня заряда.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -31,31 +47,73 @@ namespace Ferustria.Content.Items.Weapons.Melee.HM
 			Item.crit = 0;
 			Item.width = 74;
 			Item.height = 78;
-			Item.useAnimation = 28;
-			Item.useTime = 28;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 7.28f;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item15;
 			Item.value = Item.sellPrice(0, 4, 35, 0);
 			Item.rare = ItemRarityID.Purple;
-			Item.autoReuse = false;
+			Item.autoReuse = true;
+            Item.shoot = ProjectileType<Neon_Pruner_Slice>();
+            Item.shootSpeed = 22.5f;
 		}
 
-		public override void AddRecipes()
+        public override bool AltFunctionUse(Player player)
+        {
+            if (player.GetModPlayer<Players.FSSpesialWeaponsPlayer>().VoidPruner_Charge >= 40f)
+            {
+                canShoot = true;
+                return true;
+            }
+            return false;
+        }
+        
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2)
+            {
+                canShoot = true;
+            }
+
+            return true;
+        }
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            if (canShoot)
+            {
+                Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, type, (int)(damage * 1.5), knockback, Main.myPlayer, 
+                    player.GetModPlayer<Players.FSSpesialWeaponsPlayer>().VoidPruner_Charge);
+                canShoot = false;
+                player.GetModPlayer<Players.FSSpesialWeaponsPlayer>().VoidPruner_Charge = 0f;
+            }
+            return false;
+        }
+
+        public override void AddRecipes()
 		{
             _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.BreakerBlade), new(ItemID.HallowedBar, 10), new(ItemID.SoulofFright, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Sample>(), 3)
+            { new(ItemID.BreakerBlade), new(ItemID.HallowedBar, 10), new(ItemID.SoulofFright, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Extract>(), 3)
             }, Type, tile: TileID.MythrilAnvil);
         }
 
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
         {
-			if (target.life >= target.lifeMax) damage = (int)(damage * 2.5);
+			if (target.life >= target.lifeMax) damage = (int)(damage * 2.2);
 		}
 
         public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
         {
-            target.AddBuff(ModContent.BuffType<Sliced_Defense>(), 180);
+            target.AddBuff(BuffType<Sliced_Defense>(), 4 * 60);
+
+            Players.FSSpesialWeaponsPlayer weaponCharge = player.GetModPlayer<Players.FSSpesialWeaponsPlayer>();
+            if (target.boss)
+                weaponCharge.VoidPruner_Charge += 7.15f;
+            else
+                weaponCharge.VoidPruner_Charge += 3.85f;
+            weaponCharge.VoidPruner_Charge_DepleteTimer = 420;
         }
 
     }

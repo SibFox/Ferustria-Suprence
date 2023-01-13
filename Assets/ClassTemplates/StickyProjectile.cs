@@ -42,7 +42,6 @@ namespace Ferustria.Assets.ClassTemplates
 
         
         private string _texture = "Ferustria/emptyPixel";
-        //public void SetTexture(string path) { _texture = Mod.Name + "/" + path; }
         public string SetTexture { get => _texture; set => _texture = Mod.Name + "/" + value; }
         public override string Texture => SetTexture;
 

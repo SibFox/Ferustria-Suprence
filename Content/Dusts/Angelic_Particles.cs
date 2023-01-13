@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
 
 namespace Ferustria.Content.Dusts
 {
@@ -10,7 +11,8 @@ namespace Ferustria.Content.Dusts
 			dust.velocity *= 0.35f;
 			dust.noGravity = true;
 			dust.noLight = true;
-		}
+            dust.velocity = Vector2.Clamp(dust.velocity, new Vector2(-2f, -2f), new Vector2(2f, 2f));
+        }
 
 		public override bool Update(Dust dust)
 		{
@@ -20,7 +22,7 @@ namespace Ferustria.Content.Dusts
 			float light = 0.83f * dust.scale;
 			if (light > 1f) light = 1f;
 			Lighting.AddLight(dust.position, 0, light * 0.8f, light * 0.85f);
-			if (dust.scale < .3f)
+			if (dust.scale < .35f)
 			{
 				dust.active = false;
 			}

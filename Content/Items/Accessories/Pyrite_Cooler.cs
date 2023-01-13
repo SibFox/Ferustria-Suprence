@@ -16,9 +16,11 @@ namespace Ferustria.Content.Items.Accessories
 		{
 			DisplayName.SetDefault("Pyrite Cooler");
 			DisplayName.AddTranslation(FSHelper.RuTrans, "Пиритовый охладитель");
-			Tooltip.SetDefault("Enchanses Pyrite gear.");
+			Tooltip.SetDefault("Enchanses Pyrite gear.\n" +
+                "Increases amount of time until machinegun overheat, and overheat damage increased.\n" +
+                "Shotgun shoot speed increased, and shot spread decreased");
 			Tooltip.AddTranslation(FSHelper.RuTrans, "Усиливает Пиритовое вооружение.\n" +
-                "Колличество выстрелов перед перегревом пулемёта сильно увеличено.\n" +
+                "Колличество выстрелов перед перегревом пулемёта сильно увеличено и урон от перегрева увеличен.\n" +
                 "Скорость стрельбы дробовика увеличена, а разброс уменьшен.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
@@ -26,8 +28,8 @@ namespace Ferustria.Content.Items.Accessories
 		public override void SetDefaults()
 		{
 			Item.accessory = true;
-			Item.width = 30;
-			Item.height = 44;
+			Item.width = 12;
+			Item.height = 16;
 			Item.value = Item.sellPrice(0, 2, 25, 0);
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;

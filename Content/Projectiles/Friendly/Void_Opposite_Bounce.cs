@@ -10,7 +10,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Void_Opposite_Bounce : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/Void_Echo";
+		public override string Texture => "Ferustria/Assets/Textures/Projectiles/Void_Echo";
 
 		public override void SetStaticDefaults()
 		{
@@ -101,7 +101,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height , ModContent.DustType<Void_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
 			}
             Projectile.SetStraightRotation();
-			//Projectile.rotation = Projectile.GetStraightRotation();
 		}
 
         public override void OnHitPlayer(Player target, int damage, bool crit)

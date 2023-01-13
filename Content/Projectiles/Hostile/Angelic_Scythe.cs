@@ -10,7 +10,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 {
 	public class Angelic_Scythe : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/Angelic_Scythe";
+		public override string Texture => "Ferustria/Assets/Textures/Projectiles/Angelic_Scythe";
 		private bool set = false;
 		private Vector2 heldVel;
 		private float acc;

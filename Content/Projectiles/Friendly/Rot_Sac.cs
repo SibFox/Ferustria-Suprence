@@ -21,7 +21,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             stickyTimeLeft = 120;
             hitEffectTimer = 120;
             MAX_STICKY_PROJECTILE = 3;
-            SetTexture = "Assets/Textures/Rot_Sac";
+            SetTexture = "Assets/Textures/Projectiles/Rot_Sac";
         }
 
         public override void CreateTrail()
@@ -61,6 +61,13 @@ namespace Ferustria.Content.Projectiles.Friendly
                     new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-2f, -6f)),
                     ProjectileType<Rot_Petal>(), 20, 0.02f, Projectile.owner);
             }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.velocity = Vector2.Zero;
+            Projectile.tileCollide = false;
+            return false;
         }
     }
 }

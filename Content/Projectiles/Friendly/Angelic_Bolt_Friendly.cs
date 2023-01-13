@@ -10,7 +10,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Angelic_Bolt_Friendly : ModProjectile
 	{
-        public override string Texture => "Ferustria/Assets/Textures/Angelic_Bolt";
+        public override string Texture => "Ferustria/Assets/Textures/Projectiles/Angelic_Bolt";
         public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Angelic Bolt");

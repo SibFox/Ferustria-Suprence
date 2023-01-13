@@ -97,7 +97,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
                         case 3: putAi = 3f; break;
                         case 4: putAi = 6f; break;
                     }
-                    int id = Projectile.NewProjectile(Item.GetSource_FromThis(), position, velocity, type, damage, knockback, player.whoAmI, putAi, maxAngel);
+                    int id = Projectile.NewProjectile(Item.GetSource_FromThis(), position, velocity, type, (int)(damage * 1.5), knockback, player.whoAmI, putAi, maxAngel);
                     Projectile proj = Main.projectile[id];
                     proj.timeLeft = comboManager.Rozaline_SpearTime;
                 }
@@ -149,8 +149,6 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
             float charge = Main.LocalPlayer.GetModPlayer<Players.FSSpesialWeaponsPlayer>().Rozaline_Spikes_ChargeMeter;
             if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) theText = $"Шипы заряжены на {charge:N1}%";
             else theText = $"Thorns are charged for {charge:N1}%";
-            //    tooltip = new(Mod, "Tooltip#", $"Шипы заряжены на {charge:N1}%") { O };
-            //else tooltip = new(Mod, "Tooltip#", $"Spikes are charged for {charge:N1}%") { OverrideColor = charge >= 100f ? Color.GreenYellow : Color.DarkGreen };
             foreach (var line in tooltips)
             {
                 if (line.Mod == "Terraria" && line.Text == "<CHARGE>")

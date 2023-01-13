@@ -24,18 +24,18 @@ namespace Ferustria.Content.Items.Ammo
 			Item.width = 12;
 			Item.height = 16;
 			Item.maxStack = 9999;
-			Item.consumable = true;             //You need to set the item consumable so that the ammo would automatically consumed
-			Item.knockBack = 0.7f;
-			Item.value = Item.sellPrice(0, 0, 0, 9);
+			Item.consumable = true;
+			Item.knockBack = 0.5f;
+			Item.value = Item.sellPrice(0, 0, 0, 7);
 			Item.rare = ItemRarityID.White;
-			Item.shoot = ModContent.ProjectileType<Pyrite_Shot>();   //The projectile shoot when your weapon using this ammo
-			Item.shootSpeed = 12f;                  //The speed of the projectile
-			Item.ammo = Item.type;              //The ammo class this ammo belongs to.
+			Item.shoot = ModContent.ProjectileType<Pyrite_Shot>();
+			Item.shootSpeed = 12f;
+			Item.ammo = Item.type;
 		}
 
         public override void AddRecipes()
         {
-            _ = new RegisterRecipe(new CraftMaterial(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>()), Type, 175);
+            _ = new RegisterRecipe(new CraftMaterial(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>()), Type, 150);
         }
     }
 }
