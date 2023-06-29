@@ -118,6 +118,56 @@ namespace Ferustria
         internal static Vector2 GetVectorToAngleWithMult(this Vector2 vector, double angle, float speed) =>
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
 
+
+        // Tile
+        internal static bool IsTileSolid(this Tile tile) => Main.tileSolid[tile.TileType] && tile.HasTile && tile.TileType != TileID.Platforms;
+        internal static bool IsTileEmpty(this Tile tile) => !Main.tileSolid[tile.TileType] && !tile.HasTile && tile.TileType != TileID.Platforms;
+
+
+        // NPC
+        internal static int TargetClosestNPCid(this NPC npc, bool setToLocalAI3 = false)
+        {
+            float minDistance = 999999;
+            int closeNpcID = -1;
+            for (int i = 0; i < Main.npc.Length; i++)
+            {
+                NPC closeNpc = Main.npc[i];
+                if (closeNpc.active)
+                {
+                    float distance = npc.DistanceSQ(closeNpc.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closeNpcID = i;
+                        if (setToLocalAI3)
+                            npc.localAI[3] = i;
+                    }
+                }
+            }
+            return closeNpcID;
+        }
+
+        internal static NPC TargetClosestNPC(this NPC npc)
+        {
+            float minDistance = 999999;
+            NPC closeNpcReturn = new NPC();
+            for (int i = 0; i < Main.npc.Length; i++)
+            {
+                NPC closeNpc = Main.npc[i];
+                if (closeNpc.active)
+                {
+                    float distance = npc.DistanceSQ(closeNpc.position);
+                    if (distance < minDistance)
+                    {
+                        minDistance = distance;
+                        closeNpcReturn = closeNpc;
+                    }
+                }
+            }
+            return closeNpcReturn;
+        }
+
+
         // Projectile
         internal static float GetStraightRotation(this Projectile projectile) => projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
         internal static void SetStraightRotation(this Projectile projectile) => projectile.rotation = projectile.GetStraightRotation();
@@ -150,7 +200,7 @@ namespace Ferustria
                     !target.immortal &&
                     !target.friendly)
                 {
-                    if (idIgnore != null  && idIgnore.Length > 0 && !idIgnore.Contains(k))
+                    if (idIgnore != null && idIgnore.Length > 0 && !idIgnore.Contains(k))
                     {
                         // The DistanceSquared function returns a squared distance between 2 points, skipping relatively expensive square root calculations
                         float sqrDistanceToTarget = Vector2.DistanceSquared(target.Center, projectile.Center);
@@ -165,12 +215,6 @@ namespace Ferustria
                 }
             }
         }
-
-
-        // Tile
-        internal static bool IsTileSolid(this Tile tile) => Main.tileSolid[tile.TileType] && tile.HasTile && tile.TileType != TileID.Platforms;
-        internal static bool IsTileEmpty(this Tile tile) => !Main.tileSolid[tile.TileType] && !tile.HasTile && tile.TileType != TileID.Platforms;
-        
 
     }
 
@@ -194,8 +238,8 @@ namespace Ferustria
             foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
             if (tile > -1) recipe.AddTile(tile);
             recipe.Register();
+            
         }
-
         internal RegisterRecipe(CraftMaterial item, int result, int resultCount = 1, int tile = -1)
         {
             Recipe recipe = Recipe.Create(result, resultCount);
@@ -219,5 +263,7 @@ namespace Ferustria
             foreach (var tile in tiles) recipe.AddTile(tile);
             recipe.Register();
         }
+
+        
     }
 }

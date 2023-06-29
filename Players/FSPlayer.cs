@@ -147,7 +147,17 @@ namespace Ferustria.Players
 
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
         {
-            base.OnHitNPC(item, target, damage, knockback, crit);
+            if (Acc_MushroomsSpawner_Equiped)
+            {
+                Acc_MushroomsSpawner_DamageAccumulated += damage;
+                Acc_MushroomsSpawner_DeaccumulationTimer = Acc_MushroomsSpawner_DeaccumulationTimer_Max;
+
+                while (Acc_MushroomsSpawner_DamageAccumulated >= 100)
+                {
+                    Acc_MushroomsSpawner_DamageAccumulated -= 100;
+
+                }
+            }
         }
 
         public override void OnHitAnything(float x, float y, Entity victim)

@@ -12,7 +12,9 @@ namespace Ferustria.Content.Items.Accessories
 {
 	public class Mushrooms_Spawner : ModItem
 	{
-		public override void SetStaticDefaults()
+        public override string Texture => "Ferustria/Content/Items/Accessories/Pyrite_Cooler";
+
+        public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Mushrooms Spawner");
 			DisplayName.AddTranslation(FSHelper.RuTrans, "Грибной Рассадник");

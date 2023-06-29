@@ -11,7 +11,8 @@ namespace Ferustria.Content.Items.Armor
 	[AutoloadEquip(EquipType.Legs)]
 	public class Rotten_Leggings : ModItem
 	{
-		public override void SetStaticDefaults() {
+		public override void SetStaticDefaults()
+        {
             DisplayName.SetDefault("Condensed Rotten Leggings");
             Tooltip.SetDefault("7% increased movement speed");
             DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённые Гнилые Поножи");
@@ -20,7 +21,8 @@ namespace Ferustria.Content.Items.Armor
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
-		public override void SetDefaults() {
+		public override void SetDefaults()
+        {
 			Item.width = 26;
 			Item.height = 20;
             Item.value = Item.sellPrice(silver: 55);
@@ -28,7 +30,8 @@ namespace Ferustria.Content.Items.Armor
 			Item.defense = 7;
 		}
 
-		public override void UpdateEquip(Player player) {
+		public override void UpdateEquip(Player player)
+        {
 			player.moveSpeed += 0.07f; // Increase the movement speed of the player
 		}
 

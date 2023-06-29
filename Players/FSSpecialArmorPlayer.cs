@@ -58,8 +58,8 @@ namespace Ferustria.Players
                 if (RottenArmor_ArmorMult > 30) RottenArmor_ArmorMult = 30;
                 Player.statDefense += (int)(Player.statDefense * (RottenArmor_ArmorMult / 100));
             }
-            if (RottenArmor_Regeneration > 6)
-                RottenArmor_Regeneration = 6;
+            if (RottenArmor_Regeneration > 5)
+                RottenArmor_Regeneration = 5;
         }
 
         public override void PreUpdateBuffs()
@@ -74,7 +74,7 @@ namespace Ferustria.Players
 
         public override void UpdateLifeRegen()
         {
-            Player.lifeRegen += (int)RottenArmor_Regeneration;
+            Player.lifeRegen += (int)Math.Floor(RottenArmor_Regeneration);
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
