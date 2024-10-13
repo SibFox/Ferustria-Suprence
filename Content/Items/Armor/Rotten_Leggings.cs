@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Terraria.GameContent.Creative;
 using Ferustria.Content.Items.Materials.Drop;
+using Terraria.Localization;
 
 namespace Ferustria.Content.Items.Armor
 {
@@ -11,14 +12,17 @@ namespace Ferustria.Content.Items.Armor
 	[AutoloadEquip(EquipType.Legs)]
 	public class Rotten_Leggings : ModItem
 	{
-		public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Condensed Rotten Leggings");
-            Tooltip.SetDefault("7% increased movement speed");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённые Гнилые Поножи");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Повышает скорость передвижения на 7%");
+        public LocalizedText RottenLeggings => this.GetLocalization(nameof(RottenLeggings));
 
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        public override void SetStaticDefaults()
+        {
+            _ = RottenLeggings;
+            DisplayName.SetDefault("Condensed Rotten Leggings");
+            Tooltip.SetDefault("5% dencreased movement speed");
+            DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённые Гнилые Поножи");
+            Tooltip.AddTranslation(FSHelper.RuTrans, "Уменьшает скорость передвижения на 5%");
+            Item.ResearchUnlockCount = 1;
+			//CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults()
@@ -32,7 +36,7 @@ namespace Ferustria.Content.Items.Armor
 
 		public override void UpdateEquip(Player player)
         {
-			player.moveSpeed += 0.07f; // Increase the movement speed of the player
+			player.moveSpeed -= 0.05f; // Increase the movement speed of the player
 		}
 
         public override void AddRecipes()

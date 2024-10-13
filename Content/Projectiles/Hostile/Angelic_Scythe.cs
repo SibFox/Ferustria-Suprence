@@ -17,7 +17,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Angelic Scythe");
+            //DisplayName.SetDefault("Angelic Scythe");
 		}
 
 		public override void SetDefaults()
@@ -36,7 +36,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 		}
 
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			//Main.PlaySound(SoundID.Item10, Projectile.position);
 		}
@@ -71,11 +71,10 @@ namespace Ferustria.Content.Projectiles.Hostile
 			if (Math.Abs(Projectile.velocity.Y) >= Math.Abs(heldVel.Y)) Projectile.velocity.Y = heldVel.Y;
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
-		{
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
             target.AddBuff(ModContent.BuffType<Sliced_Defense>(), Main.rand.Next(8, 15) * 60);
-			//target.AddBuff(ModContent.BuffType<Under_Crucifixion_Tier2>(), Main.rand.Next(4, 10) * 60);
-		}
+        }
 	}
 
 }

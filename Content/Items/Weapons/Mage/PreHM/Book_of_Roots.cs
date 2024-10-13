@@ -15,7 +15,8 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Book of Roots");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
+			//CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 			Item.staff[Item.type] = true;
 		}
 

@@ -132,7 +132,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 			else modProj.appeared = true;
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
 			//target.AddBuff(ModContent.BuffType<Under_Crucifixion_Tier2>(), Main.rand.Next(4, 10) * 60);
 			Projectile.Kill();

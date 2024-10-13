@@ -86,9 +86,12 @@ namespace Ferustria.Content.Projectiles.Hostile
                 //((255 - Projectile.alpha) / 255f)
                 Color c = color;
                 var origin = start + i * unit.SafeNormalize(default);
-                Main.EntitySpriteDraw(texture, origin - Main.screenPosition,
+                Main.spriteBatch.Draw(texture, origin - Main.screenPosition,
                     new Rectangle(0, 0, 4, 4), i < transDist ? Color.Transparent : c, r,
                     new Vector2(0, 0), scale, 0, 0);
+                //Main.EntitySpriteDraw(texture, origin - Main.screenPosition,
+                //    new Rectangle(0, 0, 4, 4), i < transDist ? Color.Transparent : c, r,
+                //    new Vector2(0, 0), scale, 0, 0);
             }
             // Draws the laser 'tail'
             //Main.EntitySpriteDraw(texture, start + unit * (transDist - step) - Main.screenPosition,

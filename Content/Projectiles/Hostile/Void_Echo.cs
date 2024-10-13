@@ -58,7 +58,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 		}
 
 		
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
@@ -78,21 +78,21 @@ namespace Ferustria.Content.Projectiles.Hostile
 			Projectile.SetStraightRotation();
 		}
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-			Projectile.penetrate--;
-			Projectile.velocity *= 0.9f;
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 10) * 60);
-			Shrink();
-		}
+            Projectile.penetrate--;
+            Projectile.velocity *= 0.9f;
+            target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 10) * 60);
+            Shrink();
+        }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			Projectile.penetrate--;
-			Projectile.velocity *= 0.9f;
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 10) * 60);
-			Shrink();
-		}
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.penetrate--;
+            Projectile.velocity *= 0.9f;
+            target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 10) * 60);
+            Shrink();
+        }
 
 	}
 	

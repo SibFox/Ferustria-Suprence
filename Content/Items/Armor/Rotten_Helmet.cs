@@ -14,16 +14,23 @@ namespace Ferustria.Content.Items.Armor
 	[AutoloadEquip(EquipType.Head)]
 	public class Rotten_Helmet : ModItem
 	{
-		public override void SetStaticDefaults() {
+        public LocalizedText RottenHelmet => this.GetLocalization(nameof(RottenHelmet));
+
+        public static LocalizedText RottenArmorSetBonus { get; private set; }
+
+        public override void SetStaticDefaults()
+        {
+            _ = RottenHelmet;
+            RottenArmorSetBonus = this.GetLocalization(nameof(RottenArmorSetBonus));
             DisplayName.SetDefault("Condensed Rotten Helmet");
             Tooltip.SetDefault("Helmet eyepieces give +7% сrit сhance");
             DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённый Гнилой Шлем");
             Tooltip.AddTranslation(FSHelper.RuTrans, "Окуляры шлема придают +7% к шансу крита");
-
+            Item.ResearchUnlockCount = 1;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 
-			// If your head equipment should draw hair while drawn, use one of the following:
-			ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false; // Don't draw the head at all. Used by Space Creature Mask
+            // If your head equipment should draw hair while drawn, use one of the following:
+            ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false; // Don't draw the head at all. Used by Space Creature Mask
 			// ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true; // Draw hair as if a hat was covering the top. Used by Wizards Hat
 			// ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true; // Draw all hair as normal. Used by Mime Mask, Sunglasses
 			ArmorIDs.Head.Sets.DrawBackHair[Item.headSlot] = true;
@@ -56,7 +63,7 @@ namespace Ferustria.Content.Items.Armor
                 "Cannot exceed 30% of your initial defence.\n" +
                 "Additionaly reduces taken damage by 10%.";
             if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans)
-                tip = "Каждый раз, как вы полчаете урон, ваша защита и регенерация возростает.\n" +
+                tip = "Каждый раз, как вы полчаете урон, ваша защита и регенерация возрастает.\n" +
                     "Максимум до дополнительных 30% от изначальной защиты.\n" +
                     "Дополнительно уменьшает получаемый урон на 10%.";
                 player.setBonus = tip; // This is the setbonus tooltip

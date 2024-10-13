@@ -3,22 +3,26 @@ using Ferustria.Content.Items.Materials.Drop;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Ferustria.Content.Items.Armor
 {
-	// The AutoloadEquip attribute automatically attaches an equip texture to this item.
-	// Providing the EquipType.Body value here will result in TML expecting X_Arms.png, X_Body.png and X_FemaleBody.png sprite-sheet files to be placed next to the item's main texture.
-	[AutoloadEquip(EquipType.Body)]
+    // The AutoloadEquip attribute automatically attaches an equip texture to this item.
+    // Providing the EquipType.Body value here will result in TML expecting X_Arms.png, X_Body.png and X_FemaleBody.png sprite-sheet files to be placed next to the item's main texture.
+    [AutoloadEquip(EquipType.Body)]
 	public class Rotten_Chest_Cover : ModItem
 	{
-		public override void SetStaticDefaults() {
+        public LocalizedText RottenChestCover => this.GetLocalization(nameof(RottenChestCover));
+
+        public override void SetStaticDefaults() {
+            _ = RottenChestCover;
             DisplayName.SetDefault("Condensed Rotten Chest Cover");
             Tooltip.SetDefault("Decreases taken damage by 5%");
             DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённый Гнилой Грудной Каркас");
             Tooltip.AddTranslation(FSHelper.RuTrans, "Уменьшает получаемый урон на 5%");
-
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
+            //CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

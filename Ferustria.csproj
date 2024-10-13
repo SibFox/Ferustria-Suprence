@@ -13,6 +13,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Content\Projectiles\Friendly\Pyrite_Shot_Bugged.png" />
+    <None Remove="Localization\en-EN.hjson" />
+    <None Remove="localization\ru-RU.hjson" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />

@@ -54,10 +54,11 @@ namespace Ferustria.Content.Items.Tools
 			}
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
-			target.AddBuff(BuffID.OnFire3, Main.rand.Next(2, 7) * 60);
-		}
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.OnFire3, Main.rand.Next(2, 7) * 60);
+            base.OnHitNPC(player, target, hit, damageDone);
+        }
 
 
 	}

@@ -27,11 +27,11 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
             NPCDebuffImmunityData debuffData = new()
             {
-                SpecificallyImmuneTo = new int[] {
+                SpecificallyImmuneTo = [
                     BuffID.Poisoned,
                     ModContent.BuffType<Rapid_Blood_Loss>(),
                     BuffID.Confused
-                }
+                ]
             };
             NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
         }
@@ -164,14 +164,14 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             }
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             if (Main.rand.NextFloat() < .35f) target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(4, 8) * 60);
             if (enraged)
             {
                 target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(5, 10) * 60);
                 if (Main.rand.NextFloat() < .65f) target.AddBuff(ModContent.BuffType<Rapid_Blood_Loss>(), (int)(Main.rand.NextFloat(1f, 2.5f) * 60));
-                int heal = (int)(damage / 1.5);
+                int heal = (int)(info.Damage / 1.5);
                 if (heal > 0)
                 {
                     NPC.life += heal;
@@ -180,14 +180,13 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             }
         }
 
-
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             if (NPC.life <= 0)
             {
                 for (int k = 0; k < 80; k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 1.3f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hit.HitDirection, -2.5f, 0, default, 1.3f);
                 }
                 /*Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore1"), 1f);
                 Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore2"), 1f);
@@ -199,7 +198,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             {
                 for (int k = 0; k < Main.rand.Next(10, 20); k++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hitDirection, -2.5f, 0, default, 1.3f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hit.HitDirection, -2.5f, 0, default, 1.3f);
                 }
             }
         }

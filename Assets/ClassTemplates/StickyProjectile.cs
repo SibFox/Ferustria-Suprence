@@ -170,17 +170,17 @@ namespace Ferustria.Assets.ClassTemplates
 
         public virtual void OnFirstNPCHit() { }
 
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-		{
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
             SetPointArray();
-			IsStickingToTarget = true; // we are sticking to a target
-			TargetWhoAmI = target.whoAmI; // Set the target whoAmI
-			Projectile.velocity = (target.Center - Projectile.Center) * 0.75f; // Change velocity based on delta center of targets (difference between entity centers)
-			Projectile.netUpdate = true; // netUpdate this javelin
-			Projectile.damage = 0;
+            IsStickingToTarget = true; // we are sticking to a target
+            TargetWhoAmI = target.whoAmI; // Set the target whoAmI
+            Projectile.velocity = (target.Center - Projectile.Center) * 0.75f; // Change velocity based on delta center of targets (difference between entity centers)
+            Projectile.netUpdate = true; // netUpdate this javelin
+            Projectile.damage = 0;
             OnFirstNPCHit();
-			UpdateStickyProjectiles(target);
-		}
+            UpdateStickyProjectiles(target);
+        }
 
 		/*
 		* The following code handles the javelin sticking to the enemy hit.
