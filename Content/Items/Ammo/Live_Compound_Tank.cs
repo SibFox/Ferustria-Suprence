@@ -11,13 +11,8 @@ namespace Ferustria.Content.Items.Ammo
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Live Compound Tank");
-			Tooltip.SetDefault("The living compound is used in weapon received in experiments with flesh.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Баллон с Живым Соединением");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Живое соединение использующееся в оружиях получившихся после экспериментов с плотью.");
-
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
-		}
+            Item.ResearchUnlockCount = 100;
+        }
 
 		public override void SetDefaults()
 		{
@@ -36,8 +31,7 @@ namespace Ferustria.Content.Items.Ammo
 
         public override void AddRecipes()
         {
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ModContent.ItemType<Rotten_Skin>()), new(ModContent.ItemType<Impure_Dust>(), 2), new(ItemID.Bottle) }, Type, 275, TileID.AlchemyTable);
+            RegisterRecipe.Reg([ new(ModContent.ItemType<Rotten_Skin>()), new(ModContent.ItemType<Impure_Dust>(), 3), new(ItemID.Bottle) ], Type, 250, TileID.AlchemyTable);
         }
     }
 }

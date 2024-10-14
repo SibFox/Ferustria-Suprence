@@ -8,19 +8,14 @@ using Terraria.Audio;
 
 namespace Ferustria.Content.Projectiles.Hostile
 {
-	public class Void_Echo : ModProjectile
+	public class Barathrum_Echo : ModProjectile
 	{
-        public override string Texture => "Ferustria/Assets/Textures/Projectiles/Void_Echo";
-
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Void Echo");
-		}
+        public override string Texture => Ferustria.Paths.TexturesPathPrj + "Barathrum_Echo";
 
 		public override void SetDefaults()
 		{
 			Projectile.width = 6;
-			Projectile.height = 6;
+			Projectile.height = 6; 
 			Projectile.aiStyle = 0;
 			Projectile.hostile = true;
 			Projectile.timeLeft = 600;
@@ -34,8 +29,6 @@ namespace Ferustria.Content.Projectiles.Hostile
 		private void Shrink()
 		{
 			Projectile.scale *= 0.86f;
-			/*Projectile.width = (int)(14.5f * Projectile.scale);
-			Projectile.height = (int)(14.5f * Projectile.scale);*/
 			Projectile.damage = (int)(Projectile.originalDamage * Projectile.scale);
 		}
 
@@ -69,7 +62,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 			if (Projectile.penetrate <= 0)
 				Projectile.Kill();
 			if (Main.rand.NextFloat() < .75f)
-				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Void_Particles>(), 
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Barathrum_Particles>(), 
                     Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
 
             if (Projectile.velocity.Y < 16f && Projectile.penetrate < 3)
@@ -82,7 +75,7 @@ namespace Ferustria.Content.Projectiles.Hostile
         {
             Projectile.penetrate--;
             Projectile.velocity *= 0.9f;
-            target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 10) * 60);
+            target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(4, 10) * 60);
             Shrink();
         }
 
@@ -90,7 +83,7 @@ namespace Ferustria.Content.Projectiles.Hostile
         {
             Projectile.penetrate--;
             Projectile.velocity *= 0.9f;
-            target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 10) * 60);
+            target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(4, 10) * 60);
             Shrink();
         }
 

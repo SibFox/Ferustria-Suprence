@@ -32,7 +32,7 @@ namespace Ferustria.Players
             PyriteMachinegun,
             PyriteShotgun,
             CKnife1,
-            VoidPruner,
+            BarathrumPruner,
         }
 
         Weapons wieldedWeapon;
@@ -61,8 +61,8 @@ namespace Ferustria.Players
         [CloneByReference] public bool CKnifeL1_ChargedUp_Notification;
 
         //// ~~~~ Пустотный секатор
-        [CloneByReference] public float VoidPruner_Charge = 0f;
-        [CloneByReference] public int VoidPruner_Charge_DepleteTimer = 420;
+        [CloneByReference] public float BarathrumPruner_Charge = 0f;
+        [CloneByReference] public int BarathrumPruner_Charge_DepleteTimer = 420;
 
 
         public override void ResetEffects()
@@ -74,7 +74,7 @@ namespace Ferustria.Players
             if (heldItem == FSHelper.GetItem<Pyrite_Machinegun>().Name) wieldedWeapon = Weapons.PyriteMachinegun;
             if (heldItem == FSHelper.GetItem<Pyrite_Shotgun>().Name) wieldedWeapon = Weapons.PyriteShotgun;
             if (heldItem == FSHelper.GetItem<Ceremonial_Knife>().Name) wieldedWeapon = Weapons.CKnife1;
-            if (heldItem == FSHelper.GetItem<Void_Pruner>().Name) wieldedWeapon = Weapons.VoidPruner;
+            if (heldItem == FSHelper.GetItem<Barathrum_Pruner>().Name) wieldedWeapon = Weapons.BarathrumPruner;
 
 
             //// ~~~ Копьё Розалина
@@ -170,16 +170,16 @@ namespace Ferustria.Players
             if (wieldedWeapon != Weapons.CKnife1 && CKnifeL1_Knifes_Charge >= 100f) { CKnifeL1_Knifes_Charge = 99f; }
 
             //// ~~~ Секатор пустоты
-            if (VoidPruner_Charge > 100f)
-                VoidPruner_Charge = 100f;
-            if (VoidPruner_Charge < 0f)
-                VoidPruner_Charge = 0f;
-            if (VoidPruner_Charge_DepleteTimer > 0)
-                VoidPruner_Charge_DepleteTimer--;
-            if (VoidPruner_Charge_DepleteTimer <= 0)
+            if (BarathrumPruner_Charge > 100f)
+                BarathrumPruner_Charge = 100f;
+            if (BarathrumPruner_Charge < 0f)
+                BarathrumPruner_Charge = 0f;
+            if (BarathrumPruner_Charge_DepleteTimer > 0)
+                BarathrumPruner_Charge_DepleteTimer--;
+            if (BarathrumPruner_Charge_DepleteTimer <= 0)
             {
-                VoidPruner_Charge_DepleteTimer = 0;
-                VoidPruner_Charge -= 3.5f / 60f;
+                BarathrumPruner_Charge_DepleteTimer = 0;
+                BarathrumPruner_Charge -= 3.5f / 60f;
             }
 
         }
@@ -208,8 +208,8 @@ namespace Ferustria.Players
             Rozaline_SpearTime = 0;
             Rozaline_UseCooldown = 0;
             Rozaline_ChargedUp_Notification = false;
-            VoidPruner_Charge = 0;
-            VoidPruner_Charge_DepleteTimer = 420;
+            BarathrumPruner_Charge = 0;
+            BarathrumPruner_Charge_DepleteTimer = 420;
         }
 
         public override void UpdateDead()

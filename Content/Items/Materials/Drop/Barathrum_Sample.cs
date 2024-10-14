@@ -6,15 +6,15 @@ using Terraria.GameContent.Creative;
 
 namespace Ferustria.Content.Items.Materials.Drop
 {
-    public class Void_Sample : ModItem
+    public class Barathrum_Sample : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Void Sample");
-            Tooltip.SetDefault("");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Образец Пустоты");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            //DisplayName.SetDefault("Barathrum Sample");
+            //Tooltip.SetDefault("");
+            //DisplayName.AddTranslation(FSHelper.RuTrans, "Образец Пустоты");
+            //Tooltip.AddTranslation(FSHelper.RuTrans, "");
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()

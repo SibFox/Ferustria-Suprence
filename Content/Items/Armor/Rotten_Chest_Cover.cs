@@ -17,10 +17,6 @@ namespace Ferustria.Content.Items.Armor
 
         public override void SetStaticDefaults() {
             _ = RottenChestCover;
-            DisplayName.SetDefault("Condensed Rotten Chest Cover");
-            Tooltip.SetDefault("Decreases taken damage by 5%");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённый Гнилой Грудной Каркас");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Уменьшает получаемый урон на 5%");
             Item.ResearchUnlockCount = 1;
             //CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

@@ -11,8 +11,6 @@ namespace Ferustria.Content.Buffs.Statuses
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrite Overheating");
-			Description.SetDefault("Your machinegun become more hot.\nContinue shooting for more effectiveness");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

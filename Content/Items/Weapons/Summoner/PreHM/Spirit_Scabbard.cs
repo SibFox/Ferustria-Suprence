@@ -16,11 +16,7 @@ namespace Ferustria.Content.Items.Weapons.Summoner.PreHM
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Spirit Scabbard");
-            Tooltip.SetDefault("Summons the helping-knight Angel, who became the echo of past.");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Ножны духа");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Призывает Ангела рыцаря-помощника, ставшего отголоском времени.");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
             ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
             ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }

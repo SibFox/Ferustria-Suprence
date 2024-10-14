@@ -16,12 +16,12 @@ namespace Ferustria.Content.Projectiles.Friendly.HealProj
             timeLeft = 240;
             speed = 22f;
             Light = (0, 0.4f, 0.4f);
-            SetTexture = "Assets/Textures/Projectiles/Neon_Heal";
+            SetTexture = "Neon_Heal";
         }
 
         public override void CreateTrail()
         {
-            Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, new(0, 0), 60, new(0, Main.rand.Next(180, 256), 255), 1f);
+            Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, (0, 0), 60, (0, Main.rand.Next(180, 256), 255), 1f);
         }
     }
 }

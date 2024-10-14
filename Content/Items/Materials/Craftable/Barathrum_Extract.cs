@@ -3,11 +3,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.GameContent.Creative;
+using static Terraria.ModLoader.ModContent;
 using Ferustria.Content.Items.Materials.Drop;
 
 namespace Ferustria.Content.Items.Materials.Craftable
 {
-    public class Reinforced_Living_Fiber_Tube : ModItem
+    public class Barathrum_Extract : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -16,16 +17,16 @@ namespace Ferustria.Content.Items.Materials.Craftable
 
         public override void SetDefaults()
         {
-            Item.width = 32;
-            Item.height = 32;
+            Item.width = 18;
+            Item.height = 30;
             Item.maxStack = 999;
-            Item.value = Item.sellPrice(0, 0, 1, 65);
-            Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 3, 0);
+            Item.rare = ItemRarityID.LightPurple;
         }
 
         public override void AddRecipes()
         {
-            RegisterRecipe.Reg([ new(ModContent.ItemType<Rotten_Skin>(), 3), new(ItemID.Cobweb, 10), new(ItemID.Wire, 2), new(ItemID.Bone, 6) ], Type, 1, TileID.Loom);
+            RegisterRecipe.Reg([ new(ItemType<Barathrum_Sample>()), new(ItemID.Bottle), new(ItemID.PixieDust, 10), new(ItemID.PurificationPowder, 5) ], Type, tile: TileID.AlchemyTable);
         }
 
     }

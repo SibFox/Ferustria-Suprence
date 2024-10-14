@@ -11,21 +11,15 @@ namespace Ferustria.Content.Items.Consumables
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Flask of Fine Blood");
-            Tooltip.SetDefault("\"Makes you fight to the beat of your heart\"\n" +
-                "Your damage is increased according to your health regeneration");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Флакон Прекрасной Крови");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "\"Заставляет вас драться под ритм сердца\"\n" +
-                "Ваш урон увеличивается в соответствии с вашей регенерацией здоровья");
 
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            Item.ResearchUnlockCount = 20;
 
             // Dust that will appear in these colors when the item with ItemUseStyleID.DrinkLiquid is used
-            ItemID.Sets.DrinkParticleColors[Type] = new Color[3] {
+            ItemID.Sets.DrinkParticleColors[Type] = [
                 new Color(240, 240, 240),
                 new Color(200, 200, 200),
                 new Color(140, 140, 140)
-            };
+            ];
         }
 
         public override void SetDefaults()

@@ -16,12 +16,12 @@ namespace Ferustria.Content.Projectiles.Friendly.HealProj
             timeLeft = 120;
             speed = 17f;
             Light = (0.4f, 0.08f, 0.08f);
-            SetTexture = "Assets/Textures/Projectiles/Crimson_Heal";
+            SetTexture = "Crimson_Heal";
         }
 
         public override void CreateTrail()
         {
-            Dust.NewDustPerfect(Projectile.Center, DustID.Blood, new(0, 0), 60, default, 1.2f);
+            Dust.NewDustPerfect(Projectile.Center, DustID.Blood, (0, 0), 60, default, 1.2f);
         }
     }
 

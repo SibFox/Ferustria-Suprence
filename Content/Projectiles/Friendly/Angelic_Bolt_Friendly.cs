@@ -10,11 +10,8 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Angelic_Bolt_Friendly : ModProjectile
 	{
-        public override string Texture => "Ferustria/Assets/Textures/Projectiles/Angelic_Bolt";
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Angelic Bolt");
-		}
+        public override string Texture => Ferustria.Paths.TexturesPathPrj + "Angelic_Bolt";
+
 		
 		public override void SetDefaults()
 		{
@@ -36,7 +33,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 		}
 
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			if (Projectile.ai[0] == 1)
             {
@@ -73,20 +70,19 @@ namespace Ferustria.Content.Projectiles.Friendly
 				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Angelic_Particles>(), Projectile.velocity.X * .25f, Projectile.velocity.Y * .25f, 0, default, Main.rand.NextFloat(.77f, 1.35f));
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
-		{
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
 
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
 			//target.immune[Projectile.owner] = 1;
 			Projectile.localNPCHitCooldown = 2; 
 			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 2)
             {
 				for (int i = 0; i < Main.rand.Next(2) + 2; i++)
                 {
-
 					//float distance = Main.rand.NextFloat(85f, 195f);
 					int max;
 					if (target.width > target.height) max = target.width;
@@ -104,7 +100,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 					{
 						pos = new Vector2(0f, 13f);
 					}
-					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), setPos, pos, ModContent.ProjectileType<Angelic_Bolt_Friendly>(), damage, 0, Projectile.owner, 0);
+					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), setPos, pos, ModContent.ProjectileType<Angelic_Bolt_Friendly>(), hit.Damage, 0, Projectile.owner, 0);
 					Main.projectile[proj].timeLeft = 13;
 					Main.projectile[proj].tileCollide = false;
 					Main.projectile[proj].arrow = false;

@@ -10,8 +10,6 @@ namespace Ferustria.Content.Buffs.Negatives
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Under Crusifixion");
-			Description.SetDefault("You feel blessed!\nEven if you don't think, you are...");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

@@ -21,7 +21,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             stickyTimeLeft = 120;
             hitEffectTimer = 120;
             MAX_STICKY_PROJECTILE = 3;
-            SetTexture = "Assets/Textures/Projectiles/Rot_Sac";
+            SetTexture = Ferustria.Paths.TexturesPathPrj + "Rot_Sac";
         }
 
         public override void CreateTrail()
@@ -51,7 +51,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             Projectile.rotation = (Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y)) / 2 * -Projectile.direction;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);

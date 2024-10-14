@@ -17,11 +17,6 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
         private Player player = null;
         public float gravityStrength = 0.18f;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Rose Thorn");
-        }
-
         public override void SetDefaults()
         {
             Projectile.width = 14;
@@ -45,7 +40,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
             if (ChargedAttack) { chargeAmount = 0.045f; gravityStrength = 0.13f; }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
             //Main.PlaySound(SoundID.Item10, Projectile.position);
@@ -63,7 +58,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                 Projectile.velocity.Y * .2f, 150, default, 1f);
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Players.FSSpesialWeaponsPlayer chargeManager = Main.player[Projectile.owner].GetModPlayer<Players.FSSpesialWeaponsPlayer>();
             chargeManager.Rozaline_Spikes_ChargeMeter += chargeAmount;

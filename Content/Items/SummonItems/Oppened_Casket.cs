@@ -7,31 +7,27 @@ using System.Collections.Generic;
 using Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss;
 using Terraria.Audio;
 
-namespace Ferustria.Content.Items.Materials
+namespace Ferustria.Content.Items.SummonItems
 {
-	public class Oppened_Casket : ModItem
-	{
-        public override string Texture => "Ferustria/Content/Items/Materials/Drop/Void_Sample";
+    public class Oppened_Casket : ModItem
+    {
+        public override string Texture => "Ferustria/Content/Items/Materials/Drop/Barathrum_Sample";
         public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Oppend Casket");
-			//DisplayName.AddTranslation(FSHelper.RuTrans, "Нечистая пыль");
-			//Tooltip.SetDefault("Little echo from afar");
-			//Tooltip.AddTranslation(FSHelper.RuTrans, "Маленький отголосок из далека");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+        {
+            Item.ResearchUnlockCount = 3;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
         }
 
-		public override void SetDefaults()
-		{
-			Item.width = 24;
-			Item.height = 20;
-			Item.maxStack = 99;
+        public override void SetDefaults()
+        {
+            Item.width = 24;
+            Item.height = 20;
+            Item.maxStack = 99;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.value = Item.sellPrice(0, 0, 0, 0);
-			Item.rare = ItemRarityID.White;
-		}
+            Item.value = Item.sellPrice(0, 0, 0, 0);
+            Item.rare = ItemRarityID.White;
+        }
 
         public override bool? UseItem(Player player)
         {

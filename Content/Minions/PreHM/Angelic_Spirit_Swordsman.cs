@@ -25,8 +25,6 @@ namespace Ferustria.Content.Minions.PreHM
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("");
-
             Main.projFrames[Projectile.type] = 4;
             // This is necessary for right-click targeting
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
@@ -58,11 +56,11 @@ namespace Ferustria.Content.Minions.PreHM
         }
 
 
-        public override void Kill(int timeLeft)
-		{
-			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-		}
+        //public override void OnKill(int timeLeft)
+		//{
+		//	Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
+		//	SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+		//}
 
         public override void AI()
         {

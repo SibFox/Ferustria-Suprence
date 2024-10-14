@@ -41,8 +41,8 @@ namespace Ferustria.Assets.ClassTemplates
         public string displayName = "";
 
         
-        private string _texture = "Ferustria/emptyPixel";
-        public string SetTexture { get => _texture; set => _texture = Mod.Name + "/" + value; }
+        private string _texture = Ferustria.emptyPixel;
+        public string SetTexture { get => _texture; set => _texture = value; }
         public override string Texture => SetTexture;
 
 
@@ -228,7 +228,7 @@ namespace Ferustria.Assets.ClassTemplates
         /// </summary>
         public SoundStyle killSound = SoundID.Item10;
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(killSound, Projectile.position);

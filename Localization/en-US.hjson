@@ -1,0 +1,375 @@
+
+Mods: {
+	Ferustria: {
+		Buffs: {
+			Rapid_Blood_Loss: {
+				DisplayName: Rapid Blood Loss
+				Description: You're losing your life quickly
+			}
+
+			Shattered_Armor: {
+				DisplayName: Armor shatter
+				Description: Your defence is broken
+			}
+
+			Sliced_Defense: {
+				DisplayName: Armor sliced
+				Description: Your defence is incinerated
+			}
+
+			Under_Crucifixion_Tier1: {
+				DisplayName: Under Crusifixion
+				Description:
+					'''
+					You feel blessed!
+					Even if you don't think, you are...
+					'''
+			}
+
+			Under_Crucifixion_Tier2: {
+				DisplayName: Under Crusifixion
+				Description:
+					'''
+					You feel your sins crawl on your back.
+					Something not good is going to happen...
+					'''
+			}
+
+			Weak_Barathrum_Leach: {
+				DisplayName: Weak Barathrum leach
+				Description: Your body slowly exhausting
+			}
+
+			Thick_Blood: {
+				DisplayName: Thick Blood
+				Description: Health regeneration is increased while you're on the move
+			}
+
+			Vitality_Rage: {
+				DisplayName: Vitality Rage
+				Description: The more you have regeneration - the more you deal damage
+			}
+
+			Angelic_Swordsman_Summoned_Buff.DisplayName: Angelic Swordsman
+
+			Pyrite_Ignition_Status: {
+				DisplayName: Pyrite Ignition
+				Description:
+					'''
+					Your shotgun become more hot
+					Shoot more to give a HEAT!
+					'''
+			}
+
+			Pyrite_Overheat_Status: {
+				DisplayName: Pyrite Overheat
+				Description:
+					'''
+					You've shot too much.
+					Pyrite rod is overheated
+					'''
+			}
+
+			Pyrite_Overheating_Status: {
+				DisplayName: Pyrite Overheating
+				Description:
+					'''
+					Your machinegun become more hot.
+					Continue shooting for more effectiveness
+					'''
+			}
+		}
+
+		Items: {
+			Mushrooms_Spawner: {
+				DisplayName: Mushrooms Spawner
+				Tooltip:
+					'''
+					
+					'''
+			}
+
+			Pyrite_Cooler: {
+				DisplayName: Pyrite Cooler
+				Tooltip:
+					'''
+					Enchanses Pyrite gear.
+					Increases amount of time until machinegun overheat, and overheat damage increased.
+					Shotgun shoot speed increased, and shot spread decreased
+					'''
+			}
+
+			Star_of_Hope: {
+				DisplayName: Star of Hope
+				Tooltip:
+					'''
+					You lose 15% of your damage resistance
+					But it increases for short period every time you get hit.
+					After getting max resistance, you become resistant to knockback.
+					'''
+			}
+
+			Live_Compound_Tank: {
+				DisplayName: Live Compound Tank
+				Tooltip: The living compound is used in weapon received in experiments with flesh.
+			}
+
+			Pyrite_Blend: {
+				DisplayName: Pyrite Blend
+				Tooltip: Pyrite compound that is used in pyrite weapon
+			}
+
+			Rotten_Chest_Cover: {
+				DisplayName: Condensed Rotten Chest Cover
+				Tooltip: Decreases taken damage by 5%
+			}
+
+			Rotten_Helmet: {
+				DisplayName: Condensed Rotten Helmet
+				Tooltip: Helmet eyepieces give +7% сrit сhance
+			}
+
+			Rotten_Leggings: {
+				DisplayName: Condensed Rotten Leggings
+				Tooltip: 5% decreased movement speed
+			}
+
+			Thick_Blood_Potion: {
+				DisplayName: Sanguine Flask
+				Tooltip: Health regeneration is increased while you're on the move
+			}
+
+			Vitality_Rage_Potion: {
+				DisplayName: Flask of Fine Blood
+				Tooltip:
+					'''
+					"Makes you fight to the beat of your heart"
+					Your damage is increased according to your health regeneration
+					'''
+			}
+
+			Reinforced_Living_Fiber_Tube: {
+				DisplayName: Reinforced living fiber Tube
+				Tooltip: Surprisingly, incredibly solid thing.
+			}
+
+			Barathrum_Extract: {
+				DisplayName: Barathrum Extract
+				Tooltip:
+					'''
+					Concentrated Barathrum matter.
+					You shouldn't drink that...
+					'''
+			}
+
+			Impure_Dust: {
+				DisplayName: Impure Dust
+				Tooltip: Little echo from afar
+			}
+
+			Rotten_Skin: {
+				DisplayName: Rotten Skin
+				Tooltip: Disgusting thing, but higly durable
+			}
+
+			Barathrum_Sample.DisplayName: Barathrum Sample
+			Oppened_Casket.DisplayName: Oppend Casket
+			Inactive_Pyrite.DisplayName: Inactive Pyrite
+			Ceremonial_Knife_Piece.DisplayName: Broken Ceremonial Knife Piece
+			Pyrite_Core_Tool.DisplayName: Miltitool with Pyrite Core
+			Scavenger.DisplayName: Scavenger
+
+			Unfinished_Guzzler: {
+				DisplayName: Unfinished Guzzler
+				Tooltip:
+					'''
+					"This thing weights over 30 killogramms"
+					Right Click to shoot Barathrum projectile that splits into smaller projectiles.
+					'''
+			}
+
+			Barathrum_Blaster: {
+				DisplayName: Barathrum Blaster
+				Tooltip: Shoots 4 neon lasers in a row, that pierce through enemies.
+			}
+
+			Barathrum_Wrecker: {
+				DisplayName: Barathrum Wrecker
+				Tooltip:
+					'''
+					Shoots a heavy neon blast that explodes upon contact.
+					Explosion stays for a time and heals you if hits enemies.
+					'''
+			}
+
+			Book_of_Roots.DisplayName: Book of Roots
+
+			Ceremonial_Knife: {
+				DisplayName: Ceremonial Knife
+				Tooltip:
+					'''
+					Fires a magical slash that can cut through multiple enemies at once.
+					Each damage dealt charges the blade.
+					When the blade is fully charged, press RMB to release 3 blades.
+					These blades will circle around you.
+					Knife also charges over time.
+					Discharges quickly, when the weapon is not in your hands.
+					Charge costs 25 mana.
+					<CHARGE>
+					'''
+			}
+
+			Corruption_Spreader: {
+				DisplayName: Corruption Spreader
+				Tooltip: Sends rot sacks, that sticks to enemies and explodes into small corrupted petals.
+			}
+
+			Crimtane_Needler: {
+				DisplayName: Crimtane Needler
+				Tooltip: Sends thin needles that attaches to enemies and sucks their life.
+			}
+
+			Vicious_Herrscher: {
+				DisplayName: Vicious Herrscher
+				Tooltip: "[c/FA0000:WIP]"
+			}
+
+			Barathrum_Pruner: {
+				DisplayName: Barathrum Pruner
+				Tooltip:
+					'''
+					Giant sword that cuts enemies defence with its neon blade.
+					Deals more damage to unhurt enemies.
+					With each hit, it accumulates a charge of the kinetic coil.
+					RMB to release [c/00f1f1:Neon Cleaver] that cuts through enemies.
+					The strength of [c/00f1f1:Neon Cleaver] depends on the charge level.
+					At level 3, unleash [c/00bbbb:Giant Cleaver] that inflicts Frostburn.
+					[c/00f1f1:Neon Cleaver] also heals you when you hit an enemy. Regeneration depends on the level of charge.
+					'''
+			}
+
+			Crucifix_Sword: {
+				DisplayName: Crucifix Sword
+				Tooltip: Absolution to your enemies.
+			}
+
+			Impure_Barathrum_Sword: {
+				DisplayName: Impure Barathrum Sword
+				Tooltip: Exhausts your enemies
+			}
+
+			Kanabo: {
+				DisplayName: Kanabo
+				Tooltip: Crushes foes defense.
+			}
+
+			Rozaline: {
+				DisplayName: Rozaline
+				Tooltip:
+					'''
+					Attacks with unique pattern.
+					Leaves a trail of [c/E45C5F:Blood Roses] at the tip of the spear.
+					[c/E45C5F:Roses] stick to the enemy and make him [c/e43a20:Rapidly Bleed].
+					While [c/E45C5F:Rose] sticks to the enemy, it slowly [c/a6cc34:charges] [c/ff9ba8:the Rozaline]
+					After a while, [c/E45C5F:the Rose] explodes into the [c/885041:Thorns].
+					On hitting the enemy, they make the victim [c/e43a20:Rapidly Bleed] and [c/a6cc34:charge] [c/ff9ba8:the Rozaline]
+					Killing the enemy [c/a6cc34:charges] [c/ff9ba8:the Rozaline]
+					When [c/ff9ba8:Rozaline] is fully [c/a6cc34:charged], press RMB to create a circle of [c/885041:Thorns] around you.
+					They have a chanse to heal you a little.
+					<CHARGE>
+					'''
+			}
+
+			Pyrite_Machinegun: {
+				DisplayName: Pyrite Machinegun
+				Tooltip:
+					'''
+					Accuracy improves over time.
+					Warms up for more damage. Beware of overheat!
+					50% chance not to consume ammo
+					'''
+			}
+
+			Pyrite_Shotgun: {
+				DisplayName: Pyrite Shotgun
+				Tooltip:
+					'''
+					It's hard to control this beast.
+					Warms up for more damage
+					'''
+			}
+
+			Barathrum_Spreader: {
+				DisplayName: Barathrum Spreader
+				Tooltip:
+					'''
+					Flames of the Barathrum. Sets enemies onto Barathrum fire.
+					25% chanse to not consume gel.
+					'''
+			}
+
+			Boomflake: {
+				DisplayName: Boomflake
+				Tooltip: Shoots a barrage of snowballs.
+			}
+
+			Cross_Bow: {
+				DisplayName: Cross-Bow
+				Tooltip:
+					'''
+					Shoots angelic bolts.
+					On hit they spawn additional bolts around the target.
+					'''
+			}
+
+			Recraphor: {
+				DisplayName: Recraphor
+				Tooltip:
+					'''
+					Shoots homing Barathrum micro-organisms.
+					Microorganisms, upon hitting an enemy, slowly infect them.
+					Infection increases microbial damage against the target.
+					Sufficient infestation will produce more micro-organisms from the victim.
+					Shoots 1 to 4 microorganisms.
+					Requires [c/a0af6a:Living Compound Tank] to shoot
+					'''
+			}
+
+			Spirit_Scabbard: {
+				DisplayName: Spirit Scabbard
+				Tooltip: Summons the helping-knight Angel, who became the echo of past.
+			}
+		}
+
+		NPCs: {
+			Balistic_Firing_TestNPC.DisplayName: TestNPC Balistic
+			Six_Winged_Seraph_Boss.DisplayName: Morghos, Six-Winged Seraph
+			Mutilated_Zombie.DisplayName: Mutilated zombie
+			Fathomless_Fly.DisplayName: Fathomless Fly
+			Shroom_Budy_Melee.DisplayName: Shroom Budy
+		}
+
+		Projectiles: {
+			Angelic_Bolt_Friendly.DisplayName: Angelic Bolt
+			Angelic_Spirit_Sword.DisplayName: Angelic Spirit Sword
+			Ceremonial_Proejctile_Circle_Friendly.DisplayName: Ceremonial Slice
+			Ceremonial_Proejctile_Forward_Friendly.DisplayName: Ceremonial Slice
+			Microorganism.DisplayName: Microorganism
+			Neon_Blast.DisplayName: Neon Blast
+			Neon_Laser.DisplayName: Neon Laser
+			Neon_Pruner_Slice.DisplayName: Neon Cleave
+			Pyrite_Shot.DisplayName: Pyrite Shot
+			Rot_Petal.DisplayName: Rot Petal
+			Rozaline_SpearProjectile.DisplayName: Rozaline Spear
+			Rozaline_ThornProjectile.DisplayName: Rose Thorn
+			Testing_Projectile_FromGround.DisplayName: Test proj
+			Barathrum_Opposite_Bounce.DisplayName: Jumpy Barathrum Echo
+			Barathrum_Spreader_Flame.DisplayName: Barathrum Flame
+			Angelic_Scythe.DisplayName: Angelic Scythe
+			Gathering_Light.DisplayName: Gathering Light
+			Light_Ball_Circle_6.DisplayName: Burning Light Ball
+			Light_Ball_Forward.DisplayName: Burning Light Ball
+			Barathrum_Echo.DisplayName: Barathrum Echo
+		}
+	}
+}

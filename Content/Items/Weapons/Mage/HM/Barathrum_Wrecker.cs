@@ -13,14 +13,10 @@ using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Mage.HM
 {
-	public class Void_Wrecker : ModItem
+	public class Barathrum_Wrecker : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Wrecker");
-			Tooltip.SetDefault("Shoots a heavy neon blast that explodes upon contact.\nExplosion stays for a time and heals you if hits enemies.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Пустотный Разрушитель");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Выстреливает тяжёлый неоновый лазер, который взрывается при контакте.\nВзрыв на время остаётся и лечит вас при нанесении урона врагам.");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
@@ -48,9 +44,8 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 
 		public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.LaserRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofMight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Extract>(), 3)
-            }, Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ new(ItemID.LaserRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofMight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Barathrum_Extract>(), 3) ], 
+                Type, tile: TileID.MythrilAnvil);
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

@@ -14,11 +14,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 	{		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Cross-Bow");
-			Tooltip.SetDefault("Shoots angelic bolts.\nOn hit they spawn additional bolts around the target.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Кресто-Лук");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Стреляет англельскими болтами.\nПри попадании, они вызывают дополнительные болты вокруг цели.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -44,11 +40,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
-			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
-			{
-				position += muzzleOffset;
-			}
+			position.ApplyMuzzleOffset(velocity);
 			type = ModContent.ProjectileType<Angelic_Bolt_Friendly>();
 			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI, 1f);
 			return false;

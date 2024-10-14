@@ -18,7 +18,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.HM
             //DisplayName.AddTranslation(FSHelper.RuTrans, "Беспощадный Правитель");
             //Tooltip.AddTranslation(FSHelper.RuTrans, "\"Двуручный меч элитных королевских войск, избранных самим Королём,
             //способный разрубать, казалось бы, не разрубаемое, своим тонким лезвием заточённым в усиливающий конструкцию каркас\"");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            
 		}
 
 		public override void SetDefaults()
@@ -45,20 +45,11 @@ namespace Ferustria.Content.Items.Weapons.Melee.HM
 			//.AddIngredient(ItemID.HallowedBar, 10)
 			//.AddIngredient(ItemID.SoulofFright, 10)
 			//.AddIngredient(Mod, "Impure_Dust", 10)
-			//.AddIngredient(Mod, "Void_Sample", 3)
+			//.AddIngredient(Mod, "Barathrum_Sample", 3)
 			//.AddTile(TileID.MythrilAnvil)
 			//.Register();
 		}
 
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
-        {
-			
-		}
-
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-        {
-			
-        }
 
     }
 

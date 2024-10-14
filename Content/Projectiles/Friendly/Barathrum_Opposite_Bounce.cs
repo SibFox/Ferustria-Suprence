@@ -8,14 +8,9 @@ using Terraria.Audio;
 
 namespace Ferustria.Content.Projectiles.Friendly
 {
-	public class Void_Opposite_Bounce : ModProjectile
+	public class Barathrum_Opposite_Bounce : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/Projectiles/Void_Echo";
-
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Jumpy Void Echo");
-		}
+		public override string Texture => Ferustria.Paths.TexturesPathPrj + "Barathrum_Echo";
 
 		public override void SetDefaults()
 		{
@@ -35,9 +30,8 @@ namespace Ferustria.Content.Projectiles.Friendly
 			DrawOriginOffsetY = -6;
 		}
 
-
-		public override void Kill(int timeLeft)
-		{
+        public override void OnKill(int timeLeft)
+        {
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			if (Projectile.ai[0] != 1f && Projectile.ai[0] != 0.9f && Projectile.owner == Main.myPlayer)
@@ -47,7 +41,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 					float kos = Main.rand.NextFloat(0.6f, 1.025f);
 					float speedX = -Projectile.velocity.X * Main.rand.NextFloat(.7f, 0.9f) + Main.rand.NextFloat(-2f, 2f);
 					float speedY = -Projectile.velocity.Y * Main.rand.NextFloat(.7f, 0.9f) + Main.rand.NextFloat(-2f, 2f);
-					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position.X + speedX, Projectile.position.Y + speedY, speedX, speedY, ModContent.ProjectileType<Void_Opposite_Bounce>(), (int)(Projectile.damage * kos), 1.2f, Projectile.owner, 1f, kos);
+					int proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position.X + speedX, Projectile.position.Y + speedY, speedX, speedY, ModContent.ProjectileType<Barathrum_Opposite_Bounce>(), (int)(Projectile.damage * kos), 1.2f, Projectile.owner, 1f, kos);
 					Main.projectile[proj].timeLeft = 70;
 				}
 				float koso = Main.rand.NextFloat(0.6f, 1.025f);
@@ -62,7 +56,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 					speedYo = -Projectile.oldVelocity.Y * Main.rand.NextFloat(.4f, 0.6f) + Main.rand.NextFloat(-3.5f, 3.5f);
 				}
 				
-				int proj2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position.X + speedXo, Projectile.position.Y + speedYo, speedXo, speedYo, ModContent.ProjectileType<Void_Opposite_Bounce>(), (int)(Projectile.damage * koso), 1.2f, Projectile.owner, 1f, koso);
+				int proj2 = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position.X + speedXo, Projectile.position.Y + speedYo, speedXo, speedYo, ModContent.ProjectileType<Barathrum_Opposite_Bounce>(), (int)(Projectile.damage * koso), 1.2f, Projectile.owner, 1f, koso);
 				Main.projectile[proj2].timeLeft = 80;
 			}
 		}
@@ -98,22 +92,22 @@ namespace Ferustria.Content.Projectiles.Friendly
             }
 			if (Main.rand.NextFloat() < .75f)
 			{
-				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height , ModContent.DustType<Void_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
+				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height , ModContent.DustType<Barathrum_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
 			}
             Projectile.SetStraightRotation();
 		}
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
 			Projectile.penetrate--;
 			Projectile.velocity *= 0.9f;
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 8) * 60);
+			target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(4, 8) * 60);
 			Projectile.scale *= .8f;
 		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(2, 5) * 60);
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+			target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(2, 5) * 60);
 		}
 
 	}

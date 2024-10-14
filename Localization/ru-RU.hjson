@@ -1,0 +1,380 @@
+
+Mods: {
+	Ferustria: {
+		Buffs: {
+			Rapid_Blood_Loss: {
+				DisplayName: Быстрая кровопотеря
+				Description: Вы быстро теряете своё здоровье
+			}
+
+			Shattered_Armor: {
+				DisplayName: Разрушение брони
+				Description: Ваша броня поломана
+			}
+
+			Sliced_Defense: {
+				DisplayName: Разрез брони
+				Description: Ваша броня испепелена
+			}
+
+			Under_Crucifixion_Tier1: {
+				/* DisplayName: Under Crusifixion */
+				/* Description:
+					'''
+					You feel blessed!
+					Even if you don't think, you are...
+					''' */
+			}
+
+			Under_Crucifixion_Tier2: {
+				/* DisplayName: Under Crusifixion */
+				/* Description:
+					'''
+					You feel your sins crawl on your back.
+					Something not good is going to happen...
+					''' */
+			}
+
+			Weak_Barathrum_Leach: {
+				DisplayName: Слабое истощение Баратрума
+				Description: Ваше тело медленно истощается
+			}
+
+			Thick_Blood: {
+				DisplayName: Сгущенная кровь
+				Description: Регенерация здоровья увеличена, пока вы двигаетесь
+			}
+
+			Vitality_Rage: {
+				DisplayName: Ярость Жизни
+				Description: Чем больше ваша регенерация - тем больше вы наносите урона
+			}
+
+			Angelic_Swordsman_Summoned_Buff.DisplayName: Ангельский Мечник
+
+			Pyrite_Ignition_Status: {
+				DisplayName: Воспламенение Пирита
+				Description:
+					'''
+					Дробовик начинает сильно греться
+					Стреляй доталого, чтобы дать ЖАРУ!
+					'''
+			}
+
+			Pyrite_Overheat_Status: {
+				DisplayName: Перегрев Пирита 
+				Description:
+					'''
+					Вы отстреляли достаточно.
+					Пиритовый стержень перегрет.
+					'''
+			}
+
+			Pyrite_Overheating_Status: {
+				DisplayName: Пирит перегревается
+				Description:
+					'''
+					Пулемёт начинает перегреваться.
+					Продолжай стрелять для большей эффективности.
+					'''
+			}
+		}
+
+		Items: {
+			Mushrooms_Spawner: {
+				DisplayName: Грибной Рассадник
+				Tooltip:
+					'''
+					
+					'''
+			}
+
+			Pyrite_Cooler: {
+				DisplayName: Пиритовый охладитель
+				Tooltip:
+					'''
+					Усиливает Пиритовое вооружение.
+					Колличество выстрелов перед перегревом пулемёта сильно увеличено и урон от перегрева увеличен.
+					Скорость стрельбы дробовика увеличена, а разброс уменьшен.
+					'''
+			}
+
+			Star_of_Hope: {
+				DisplayName: Звезда Надежды
+				Tooltip:
+					'''
+					Сопротивление урону уменьшается на 15%
+					Но с каждым полученным ударом, оно возростает на короткий промежуток.
+					При достижении максимального сопротивления, вы получаете иммунитет к отбрасыванию.
+					'''
+			}
+
+			Live_Compound_Tank: {
+				DisplayName: Баллон с Живым Соединением
+				Tooltip: Живое соединение использующееся в оружиях получившихся после экспериментов с плотью.
+			}
+
+			Pyrite_Blend: {
+				DisplayName: Пиритовая смесь
+				Tooltip: Пиритовое соединение использующееся в пиритовом оружие
+			}
+
+			Rotten_Chest_Cover: {
+				DisplayName: Уплотнённый Гнилой Грудной Каркас
+				Tooltip: Уменьшает получаемый урон на 5%
+			}
+
+			Rotten_Helmet: {
+				DisplayName: Уплотнённый Гнилой Шлем
+				Tooltip: Окуляры шлема придают +7% к шансу крита
+			}
+
+			Rotten_Leggings: {
+				DisplayName: Уплотнённые Гнилые Поножи
+				Tooltip: Уменьшает скорость передвижения на 5%
+			}
+
+			Thick_Blood_Potion: {
+				DisplayName: Кровавый флакон
+				Tooltip: Регенерация здоровья увеличена, пока вы двигаетесь
+			}
+
+			Vitality_Rage_Potion: {
+				DisplayName: Флакон Прекрасной Крови
+				Tooltip:
+					'''
+					"Заставляет вас драться под ритм сердца"
+					Ваш урон увеличивается в соответствии с вашей регенерацией здоровья
+					'''
+			}
+
+			Reinforced_Living_Fiber_Tube: {
+				DisplayName: Укреплённая Трубка из живого волокна
+				Tooltip: На удивление, невероятно плотная штука.
+			}
+
+			Barathrum_Extract: {
+				DisplayName: Экстракт Пропасти
+				Tooltip:
+					'''
+					Концентрированная материя Пропасти.
+					Не стоит это пить...
+					'''
+			}
+
+			Impure_Dust: {
+				DisplayName: Нечистая пыль
+				Tooltip: Маленький отголосок из далека
+			}
+
+			Rotten_Skin: {
+				DisplayName: Гнилая кожа
+				Tooltip: Мерзкая штука, однако крайне прочная
+			}
+
+			Barathrum_Sample.DisplayName: Образец Баратрума
+			Oppened_Casket.DisplayName: Открытая шкатулка
+			Inactive_Pyrite.DisplayName: Неактивный Пирит
+			Ceremonial_Knife_Piece.DisplayName: Сломанная часть Церемониального Ножа
+			Pyrite_Core_Tool.DisplayName: Мультитул с Пиритовым сердечником
+			Scavenger.DisplayName: Мусорщик
+
+			Unfinished_Guzzler: {
+				DisplayName: Незавершённый Пожиратель
+				Tooltip:
+					'''
+					"Эта штука весит около 30 киллограмм"
+					Нажмите ПКМ, чтобы выстрелить пустотный снаряд, который разделяется на кучку маленьких.
+					'''
+			}
+
+			Barathrum_Blaster: {
+				DisplayName: Бластер Пропасти
+				Tooltip: Выстреливает 4 неоновых лазера очередью, пробивающих врагов насквозь.
+			}
+
+			Barathrum_Wrecker: {
+				DisplayName: Разрушитель Пропасти
+				Tooltip:
+					'''
+					Выстреливает тяжёлый неоновый лазер, который взрывается при контакте.
+					Взрыв на время остаётся и лечит вас при нанесении урона врагам.
+					'''
+			}
+
+			/* Book_of_Roots.DisplayName: Book of Roots */
+
+			Ceremonial_Knife: {
+				DisplayName: Церемониальный нож
+				Tooltip:
+					'''
+					Выпускает магический разрез, который может разрезать нескольких врагов за раз.
+					Каждое нанесение урона заряжает этот клинок.
+					Когда клинок полностью заряжен, нажмите ПКМ, чтобы выпустить 3 клинка.
+					Эти клинки будут кружить вокруг вас.
+					Нож также заряжается сам со временем.
+					Заряд начинает быстро спадать, если убрать оружие из рук.
+					Заряд стоит 25 маны.
+					<CHARGE>
+					'''
+			}
+
+			Corruption_Spreader: {
+				DisplayName: Распространитель Искажения
+				Tooltip: Выплёвывает гнилые мешочки, которые прилипают к врагам и разрываются распростроняя маленькие заражённые лепестки.
+			}
+
+			Crimtane_Needler: {
+				DisplayName: Кримтановый Игольщик
+				Tooltip: Выплёвывает тонкие иглы, которые проникают во врагов и высасывают их жизнь.
+			}
+
+			Vicious_Herrscher: {
+				DisplayName: Беспощадный Правитель
+				Tooltip: 
+				'''
+				"[c/FA0000:WIP]"
+				"Двуручный меч элитных королевских войск, избранных самим Королём,
+				способный разрубать, казалось бы, не разрубаемое, своим тонким лезвием заточённым в усиливающий конструкцию каркас"
+				'''
+			}
+
+			Barathrum_Pruner: {
+				DisplayName: Секатор Пропасти
+				Tooltip:
+					'''
+					Гигантсикй меч, который разрезает броню врага своим неоновым клинком.
+					Наносит больше урона неповреждённым врагам.
+					При каждом ударе накапливает заряд кинетической катушки.
+					При нажатии ПКМ выпускает [c/00f1f1:Неоновый Тесак] прорубающий врагов насквозь.
+					Сила [c/00f1f1:Тесака] зависит от уровня заряда.
+					На 3-ем уровне заряда выпускает [c/00bbbb:Гигантский Тесак], который при этом накладывает Ледяной Ожог.
+					[c/00f1f1:Неоновый Тесак] также излечивает вас при попадании по врагу. Лечение зависит от уровня заряда.
+					'''
+			}
+
+			Crucifix_Sword: {
+				DisplayName: Меч-распятие
+				Tooltip: Очищение вашим врагам.
+			}
+
+			Impure_Barathrum_Sword: {
+				DisplayName: Нечистый Меч Пропасти
+				Tooltip: Истощает ваших врагов.
+			}
+
+			Kanabo: {
+				DisplayName: Канабо
+				Tooltip: Рушит броню врагов.
+			}
+
+			Rozaline: {
+				DisplayName: Розалина
+				Tooltip:
+					'''
+					Бьёт уникальной комбо атакой.
+					Оставляет след из [c/E45C5F:Кровавых Роз] на кончике копья.
+					[c/E45C5F:Розы] присасываются к врагу и заставляют его [c/e43a20:Быстро Кровоточить].
+					Пока [c/E45C5F:Розы] вистя на враге, они медленно [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
+					Через время, [c/E45C5F:Роза] распадается на [c/885041:Шипы].
+					При поадании по врагу, они вызывают у него  [c/e43a20:Быстро Кровопотерю] и [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
+					Убийство врага [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
+					Когда [c/ff9ba8:Розалина] полностью [c/a6cc34:заряжена], нажмите ПКМ, чтобы испустить вокруг себя кучу [c/885041:Шипов].
+					Они имеют шанс слабо вас излечить.
+					<CHARGE>
+					'''
+			}
+
+			Pyrite_Machinegun: {
+				DisplayName: Пиритовый Пулемёт
+				Tooltip:
+					'''
+					Точность повышается со временем
+					Разогревается для нанесения большего урона. Остерегайтесь перегрева!
+					50% шанс не потратить боеприпас
+					'''
+			}
+
+			Pyrite_Shotgun: {
+				DisplayName: Пиритовый Дробовик
+				Tooltip:
+					'''
+					Этого зверя сложно контрлировать.
+					Разогревается для нанесения большего урона.
+					'''
+			}
+
+			Barathrum_Spreader: {
+				DisplayName: Распростронитель Пустоты
+				Tooltip:
+					'''
+					Пламя Пустоты. Поджигает врагов пустотным пламенем.
+					25% шанс не потратить гель.
+					'''
+			}
+
+			Boomflake: {
+				DisplayName: Снего-шот
+				Tooltip: Стреляет шквалом снежков.
+			}
+
+			Cross_Bow: {
+				DisplayName: Кресто-Лук
+				Tooltip:
+					'''
+					Стреляет англельскими болтами.
+					При попадании, они вызывают дополнительные болты вокруг цели.
+					'''
+			}
+
+			Recraphor: {
+				DisplayName: Рекрафор
+				Tooltip:
+					'''
+					Стреляет самонаводящимеся пустотными микроорганизмами.
+					Микрооргаизмы, при попадании по врагу, медленно заражают его.
+					Заражение увеличивает урон микрооганизмов по цели.
+					При достаточном заражении, из жертвы появятся ещё микроорганизмы.
+					Выстреливает от 1 до 4 микроорганизмов.
+					Для стрельбы необходим [c/a0af6a:Баллон с Живыми Соединениями]
+					'''
+			}
+
+			Spirit_Scabbard: {
+				DisplayName: Ножны духа
+				Tooltip: Призывает Ангела рыцаря-помощника, ставшего отголоском времени.
+			}
+		}
+
+		NPCs: {
+			/* Balistic_Firing_TestNPC.DisplayName: TestNPC Balistic */
+			Six_Winged_Seraph_Boss.DisplayName: Моргос, Шести-крылый Серафим
+			Mutilated_Zombie.DisplayName: Изуродованный зомби
+			Fathomless_Fly.DisplayName: Бездонная мушка
+			Shroom_Budy_Melee.DisplayName: Грибной дружок
+		}
+
+		Projectiles: {
+			/* Angelic_Bolt_Friendly.DisplayName: Angelic Bolt */
+			/* Angelic_Spirit_Sword.DisplayName: Angelic Spirit Sword */
+			/* Ceremonial_Proejctile_Circle_Friendly.DisplayName: Ceremonial Slice */
+			/* Ceremonial_Proejctile_Forward_Friendly.DisplayName: Ceremonial Slice */
+			/* Microorganism.DisplayName: Microorganism */
+			/* Neon_Blast.DisplayName: Neon Blast */
+			/* Neon_Laser.DisplayName: Neon Laser */
+			/* Neon_Pruner_Slice.DisplayName: Neon Cleave */
+			/* Pyrite_Shot.DisplayName: Pyrite Shot */
+			/* Rot_Petal.DisplayName: Rot Petal */
+			/* Rozaline_SpearProjectile.DisplayName: Rozaline Spear */
+			/* Rozaline_ThornProjectile.DisplayName: Rose Thorn */
+			/* Testing_Projectile_FromGround.DisplayName: Test proj */
+			/* Barathrum_Opposite_Bounce.DisplayName: Jumpy Barathrum Echo */
+			/* Barathrum_Spreader_Flame.DisplayName: Barathrum Flame */
+			/* Angelic_Scythe.DisplayName: Angelic Scythe */
+			/* Gathering_Light.DisplayName: Gathering Light */
+			/* Light_Ball_Circle_6.DisplayName: Burning Light Ball */
+			/* Light_Ball_Forward.DisplayName: Burning Light Ball */
+			/* Barathrum_Echo.DisplayName: Barathrum Echo */
+		}
+	}
+}

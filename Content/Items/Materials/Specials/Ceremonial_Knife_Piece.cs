@@ -10,9 +10,7 @@ namespace Ferustria.Content.Items.Materials.Specials
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Broken Ceremonial Knife Piece");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Сломанная часть Церемониального Ножа");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()

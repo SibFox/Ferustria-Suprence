@@ -66,7 +66,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
             base.HitEffect();
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
             for (int i = 0; i < Main.rand.Next(1, 3); i++)

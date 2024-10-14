@@ -17,27 +17,23 @@ using Microsoft.CodeAnalysis.Operations;
 namespace Ferustria.Content.NPCs.Enemies.PreHM
 {
 
-    public class Voidless_Fly : ModNPC
+    public class Fathomless_Fly : ModNPC
 	{
 		public float scale;
 
-		public override string Texture => Ferustria.TexturesPath + "NPCs/Enemies/PreHM/" + (!Main.hardMode ? "Voidless_Fly_1" : "Voidless_Fly_2");
+		public override string Texture => Ferustria.Paths.TexturesPathNPCs + "Enemies/PreHM/" + (!Main.hardMode ? "Fathomless_Fly_1" : "Fathomless_Fly_2");
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Voidless Fly");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Безпустотная мушка");
 			Main.npcFrameCount[NPC.type] = 4;
-
-            NPCDebuffImmunityData debuffData = new()
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new()
             {
-                SpecificallyImmuneTo = new int[] {
+                SpecificallyImmuneTo = [
                     BuffID.Poisoned,
                     BuffID.OnFire,
-                    ModContent.BuffType<Weak_Void_Leach>(),
-                }
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+                    ModContent.BuffType<Weak_Barathrum_Leach>()
+                ]
+            });
         }
 
         public override void SetDefaults()
@@ -58,8 +54,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 			NPC.DeathSound = SoundID.NPCDeath4;
             NPC.value = Item.buyPrice(0, 0, 1, 35);
 			AIType = NPCID.CaveBat;
-			AnimationType = NPCID.GiantBat;
-            
+			AnimationType = NPCID.GiantBat;            
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -70,7 +65,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (NPC.CountNPCS(ModContent.NPCType<Voidless_Fly>()) < 3)
+			if (NPC.CountNPCS(ModContent.NPCType<Fathomless_Fly>()) < 3)
 			{
 				if (NPC.downedBoss1 == true)
 				{
@@ -89,25 +84,25 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 			return 0f;
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
-		{
-			if (NPC.life > 0)
-			{
-				double num11 = NPC.life + damage / 3;
-				if (num11 > 35) num11 = 35;
-				for (int i = 0; i < num11 / 10; i++)
-				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<Void_Particles>(), hitDirection, -2f, 0, default, Main.rand.NextFloat(0.6f, 0.8f));
-					dust.noGravity = true;
-				}
-				return;
-			}
-			for (int i = 0; i < 55; i++)
-			{
-				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<Void_Particles>(), 2.5f * hitDirection, -2.3f, 0, default, Main.rand.NextFloat(0.4f, 1f));
-				dust.noGravity = true;
-			}
-		}
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.life > 0)
+            {
+                double num11 = NPC.life + hit.Damage / 3;
+                if (num11 > 35) num11 = 35;
+                for (int i = 0; i < num11 / 10; i++)
+                {
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<Barathrum_Particles>(), hit.HitDirection, -2f, 0, default, Main.rand.NextFloat(0.6f, 0.8f));
+                    dust.noGravity = true;
+                }
+                return;
+            }
+            for (int i = 0; i < 55; i++)
+            {
+                Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<Barathrum_Particles>(), 2.5f * hit.HitDirection, -2.3f, 0, default, Main.rand.NextFloat(0.4f, 1f));
+                dust.noGravity = true;
+            }
+        }
 
 
         bool setTimer = false;
@@ -120,7 +115,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 			bool triple;
             float distance = NPC.Distance(player.position);
             Vector2 playerPrediction = ((player.Center - NPC.Center) + player.velocity);
-            playerPrediction = playerPrediction * distance;
+            playerPrediction *= distance;
             playerPrediction = playerPrediction.SafeNormalize(default) * 13.5f;
 			if (scale > 1.05f && !Main.hardMode) triple = true;
 			else if (scale > 1.12f && Main.hardMode) triple = true;
@@ -142,14 +137,14 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                     {
                         if (!triple)
                         {
-                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
                         }
                         else if (triple)
                         {
                             float rotation = MathHelper.ToRadians(14);
-                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(-rotation), ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                            Projectile proj2 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                            Projectile proj3 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(rotation), ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(-rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                            Projectile proj2 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                            Projectile proj3 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
                         }
                     }
                     NPC.velocity.X = -NPC.velocity.X * 4.5f;
@@ -163,22 +158,23 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 			base.AI();
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(5, 10)*60);
+            target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(5, 10) * 60);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Impure_Dust>(), 1, 1, 3));
-            //npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Void_Sample>(), 9, 6));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Void_Sample>(), 11));
+            //npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Barathrum_Sample>(), 9, 6));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Barathrum_Sample>(), 11));
 		}
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             string text;
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) text = "Эта мушка ищет хоть что, чем бы себя заполнить.";
+            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
+                text = "Эта мушка ищет хоть что, чем бы себя заполнить.";
             else text = "This fly is looking for anything to fill itself.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

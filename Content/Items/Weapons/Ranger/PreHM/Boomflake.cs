@@ -13,11 +13,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Boomflake");
-			Tooltip.SetDefault("Shoots a barrage of snowballs.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Снего-шот");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Стреляет шквалом снежков.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -43,11 +39,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
-			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
-			{
-				position += muzzleOffset;
-			}
+			position.ApplyMuzzleOffset(velocity);
 			type = ProjectileID.SnowBallFriendly;
 			for (int i = 0; i < Main.rand.Next(1) + 3; i++)
 			{
@@ -60,12 +52,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
         public override void AddRecipes()
         {
 
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.Boomstick), new(ItemID.SnowballCannon), new(ItemID.GoldBar, 6)
-            }, Type, tile: TileID.Anvils);
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.Boomstick), new(ItemID.SnowballCannon), new(ItemID.PlatinumBar, 6)
-            }, Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ (ItemID.Boomstick), (ItemID.SnowballCannon), (ItemID.GoldBar, 6) ], Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ (ItemID.Boomstick), (ItemID.SnowballCannon), (ItemID.PlatinumBar, 6) ], Type, tile: TileID.Anvils);
         }
 
         public override Vector2? HoldoutOffset() => new Vector2(-8f, 0);

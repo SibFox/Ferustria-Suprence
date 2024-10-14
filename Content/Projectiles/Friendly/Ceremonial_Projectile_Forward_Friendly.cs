@@ -11,11 +11,10 @@ namespace Ferustria.Content.Projectiles.Friendly
     // This file also shows advanced drawing to center the drawn projectile correctly
     public class Ceremonial_Proejctile_Forward_Friendly : ModProjectile
     {
-        public override string Texture => Ferustria.TexturesPath + "Projectiles/Ceremonial_Slice";
+        public override string Texture => Ferustria.Paths.TexturesPathPrj + "Ceremonial_Slice";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ceremonial Slice");
             // Total count animation frames
             Main.projFrames[Projectile.type] = 4;
         }
@@ -114,7 +113,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             int startY = frameHeight * Projectile.frame;
 
             // Get this frame on texture
-            Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
+            Rectangle sourceRectangle = (0, startY, texture.Width, frameHeight);
 
             // Alternatively, you can skip defining frameHeight and startY and use this:
             // Rectangle sourceRectangle = texture.Frame(1, Main.projFrames[Projectile.type], frameY: Projectile.frame);
@@ -141,7 +140,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Players.FSSpesialWeaponsPlayer weaponManager = Main.player[Projectile.owner].GetModPlayer<Players.FSSpesialWeaponsPlayer>();
             if (Projectile.penetrate > 7) weaponManager.CKnifeL1_Knifes_Charge += 1.25f;

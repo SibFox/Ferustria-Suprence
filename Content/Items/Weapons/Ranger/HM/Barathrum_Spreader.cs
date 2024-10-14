@@ -13,15 +13,11 @@ using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Ranger.HM
 {
-	public class Void_Spreader : ModItem
+	public class Barathrum_Spreader : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Spreader");
-			Tooltip.SetDefault("Flames of the Void. Sets enemies onto void fire.\n25% chanse to not consume gel.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Распростронитель Пустоты");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Пламя Пустоты. Поджигает врагов пустотным пламенем.\n25% шанс не потратить гель.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -35,7 +31,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 			Item.useAnimation = 40;
 			Item.useTime = 8;
 			Item.shootSpeed = 14.5f;
-			Item.shoot = ModContent.ProjectileType<Void_Spreader_Flame>();
+			Item.shoot = ModContent.ProjectileType<Barathrum_Spreader_Flame>();
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1f;
 			Item.UseSound = SoundID.Item74;
@@ -48,9 +44,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
 		public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.IllegalGunParts), new(ItemID.HallowedBar, 15), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 15), new(ItemType<Void_Extract>(), 3)
-            }, Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ new CraftMaterial(ItemID.IllegalGunParts), new(ItemID.HallowedBar, 15), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 15), 
+                new(ItemType<Barathrum_Extract>(), 3) ], Type, tile: TileID.MythrilAnvil);
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

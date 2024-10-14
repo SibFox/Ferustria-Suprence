@@ -13,15 +13,11 @@ using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Mage.HM
 {
-	public class Void_Blaster : ModItem
+	public class Barathrum_Blaster : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Void Blaster");
-			Tooltip.SetDefault("Shoots 4 neon lasers in a row, that pierce through enemies.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Бластер Пустоты");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Выстреливает 4 неоновых лазера очередью, пробивающих врагов насквозь.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -48,9 +44,8 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 
 		public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.ClockworkAssaultRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Void_Extract>(), 3)
-            }, Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ new(ItemID.ClockworkAssaultRifle), new(ItemID.HallowedBar, 10), new(ItemID.SoulofSight, 10), new(ItemType<Impure_Dust>(), 12), new(ItemType<Barathrum_Extract>(), 3)],
+                                 Type, tile: TileID.MythrilAnvil);
 		}
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

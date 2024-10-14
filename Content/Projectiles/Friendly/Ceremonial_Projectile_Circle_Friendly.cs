@@ -13,17 +13,16 @@ namespace Ferustria.Content.Projectiles.Friendly
     // This file also shows advanced drawing to center the drawn projectile correctly
     public class Ceremonial_Proejctile_Circle_Friendly : ModProjectile
     {
-        public override string Texture => "Ferustria/Assets/Textures/Projectiles/Ceremonial_Slice";
+        public override string Texture => Ferustria.Paths.TexturesPathPrj + "Ceremonial_Slice";
 
         public float maxDistance = 220f;
         public float currentDistance { get => Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
         public float rotation { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
         public int projectileNumber { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
-        public Dictionary<int, int> cooldownSlots = new();
+        public Dictionary<int, int> cooldownSlots = [];
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ceremonial Slice");
             // Total count animation frames
             Main.projFrames[Projectile.type] = 4;
         }
@@ -138,7 +137,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             int startY = frameHeight * Projectile.frame;
 
             // Get this frame on texture
-            Rectangle sourceRectangle = new Rectangle(0, startY, texture.Width, frameHeight);
+            Rectangle sourceRectangle = (0, startY, texture.Width, frameHeight);
 
             // Alternatively, you can skip defining frameHeight and startY and use this:
             // Rectangle sourceRectangle = texture.Frame(1, Main.projFrames[Projectile.type], frameY: Projectile.frame);
@@ -165,7 +164,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.immune[0] = 10;
         }

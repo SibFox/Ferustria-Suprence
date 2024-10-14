@@ -8,19 +8,13 @@ namespace Ferustria.Content.Buffs.Negatives
 {
 	public class Sliced_Defense : ModBuff
 	{
-        bool set;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Armor sliced");
-			Description.SetDefault("Your defence is incinerated");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Разрез брони");
-			Description.AddTranslation(FSHelper.RuTrans, "Ваша броня испепелена");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
 			BuffID.Sets.LongerExpertDebuff[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
-			set = false;
 			//BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
 		}
 

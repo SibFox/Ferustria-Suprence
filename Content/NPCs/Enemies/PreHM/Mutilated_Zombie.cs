@@ -21,19 +21,15 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Mutilated zombie");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Изуродованный зомби");
             Main.npcFrameCount[NPC.type] = 9;
-
-            NPCDebuffImmunityData debuffData = new()
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new()
             {
                 SpecificallyImmuneTo = [
                     BuffID.Poisoned,
                     ModContent.BuffType<Rapid_Blood_Loss>(),
                     BuffID.Confused
                 ]
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+            });
         }
 
         public override void SetDefaults()
@@ -222,8 +218,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             string text = "The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.";
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) text = "Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. " +
-                    "Они становятся в разы страшнее, чем меньше у них здоровье.";
+            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
+                text = "Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. Они становятся в разы страшнее, чем меньше у них здоровье.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				// Sets the spawning conditions of this NPC that is listed in the bestiary.

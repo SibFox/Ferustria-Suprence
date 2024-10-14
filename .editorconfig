@@ -1,6 +1,6 @@
 ﻿[*.cs]
 
-# CS0414: The field 'Void_Opposite_Bounce.split' is assigned but its value is never used
+# CS0414: The field 'Barathrum_Opposite_Bounce.split' is assigned but its value is never used
 dotnet_diagnostic.CS0414.severity = none
 csharp_indent_switch_labels=true
 csharp_indent_case_contents=true

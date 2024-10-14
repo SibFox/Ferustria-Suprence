@@ -18,7 +18,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Microorganism");
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
         }
 
@@ -50,7 +49,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			//Main.PlaySound(SoundID.Item10, Projectile.position);
@@ -93,7 +92,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             if (Main.rand.NextFloat() < 0.75f)
             {
                 int type = ModContent.DustType<Rot_Particles>();
-                if (Main.rand.NextBool() && Main.rand.NextBool()) type = ModContent.DustType<Void_Particles>();
+                if (Main.rand.NextBool() && Main.rand.NextBool()) type = ModContent.DustType<Barathrum_Particles>();
                 Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, type, -Projectile.velocity.X * 0.45f, -Projectile.velocity.Y * 0.45f,
                     Scale: Main.rand.NextFloat(0.45f, 1.1f));
             }
@@ -111,14 +110,14 @@ namespace Ferustria.Content.Projectiles.Friendly
             }
         }
 
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            float holder = damage;
-            holder += holder * (target.GetGlobalNPC<GlobalNPCEffects>().Recraphor_Infestation / 100);
-            damage = (int)holder;
+            //float holder = modifiers.SourceDamage;
+            modifiers.SourceDamage += modifiers.SourceDamage * (target.GetGlobalNPC<GlobalNPCEffects>().Recraphor_Infestation / 100);
+            //modifiers.SourceDamage = (int)holder;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.GetGlobalNPC<GlobalNPCEffects>().Recraphor_Infestation += 1.35f;
         }

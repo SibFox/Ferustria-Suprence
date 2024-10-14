@@ -12,17 +12,12 @@ using Ferustria.Content.Items.Materials.Drop;
 
 namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 {
-	public class Impure_Void_Sword : ModItem
+	public class Impure_Barathrum_Sword : ModItem
 	{
 		public override void SetStaticDefaults() 
 		{
-			DisplayName.SetDefault("Impure Void Sword");
-			Tooltip.SetDefault("Exhausts your enemies");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Неочищенный Меч Пустоты");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Истощает ваших врагов.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
-
 
 		public override void SetDefaults() 
 		{
@@ -44,25 +39,21 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
         public override void AddRecipes()
         {
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.DemoniteBar, 10), new(ModContent.ItemType<Impure_Dust>(), 8)
-            }, Type, tile: TileID.DemonAltar);
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.CrimtaneBar, 10), new(ModContent.ItemType<Impure_Dust>(), 8)
-            }, Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.DemoniteBar, 10), new(ModContent.ItemType<Impure_Dust>(), 8) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.CrimtaneBar, 10), new(ModContent.ItemType<Impure_Dust>(), 8) ], Type, tile: TileID.DemonAltar);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
 			if (Main.rand.NextFloat() < .38f)
 			{
-				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Void_Particles>(), player.direction / 4, -0.3f, 0, default, Main.rand.NextFloat(0.45f, 0.8f));
+				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Barathrum_Particles>(), player.direction / 4, -0.3f, 0, default, Main.rand.NextFloat(0.45f, 0.8f));
 			}
 		}
 
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(4, 6) * 60);
+            target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(4, 6) * 60);
         }
 
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
@@ -71,7 +62,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
             {
 				for (int i = 0; i < Main.rand.Next(6); i++)
                 {
-					Dust.NewDust(Item.position, Item.width, Item.height, ModContent.DustType<Void_Particles>(), Main.rand.NextFloat(-.2f, .2f), Main.rand.NextFloat(-.2f, .2f), 0, default, Main.rand.NextFloat(0.45f, 0.8f));
+					Dust.NewDust(Item.position, Item.width, Item.height, ModContent.DustType<Barathrum_Particles>(), Main.rand.NextFloat(-.2f, .2f), Main.rand.NextFloat(-.2f, .2f), 0, default, Main.rand.NextFloat(0.45f, 0.8f));
                 }
             }
         }

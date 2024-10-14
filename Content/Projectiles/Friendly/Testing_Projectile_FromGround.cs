@@ -7,12 +7,8 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Testing_Projectile_FromGround : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/Projectiles/A_poop_QM";
+		public override string Texture => Ferustria.Paths.TexturesPathPrj + "A_poop_QM";
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Test proj");
-		}
 
 		public override void SetDefaults()
 		{
@@ -29,7 +25,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 		}
 
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
             if (Projectile.ai[0] != 1)
             {
@@ -49,7 +45,7 @@ namespace Ferustria.Content.Projectiles.Friendly
                                 {
                                     if (++Projectile.localAI[0] % 5 == 0)
                                     {
-                                        Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), new(x * 16, y * 16), new(0f, -4.5f), Projectile.type, Projectile.damage, 0.5f,
+                                        Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), (x * 16, y * 16), (0f, -4.5f), Projectile.type, Projectile.damage, 0.5f,
                                         Projectile.owner, 1f);
                                         proj.tileCollide = false;
                                         //Mod.Logger.Debug($"Checked Tile: {checkingTile};\n Above Tile: {tileAbove};\n X and Y: {x} : {y};\n" +

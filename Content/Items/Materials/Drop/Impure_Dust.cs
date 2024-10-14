@@ -10,11 +10,7 @@ namespace Ferustria.Content.Items.Materials.Drop
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Impure Dust");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Нечистая пыль");
-            Tooltip.SetDefault("Little echo from afar");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Маленький отголосок из далека");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            Item.ResearchUnlockCount = 50;
         }
 
         public override void SetDefaults()

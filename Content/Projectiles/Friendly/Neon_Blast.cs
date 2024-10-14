@@ -13,7 +13,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Neon Blast");
 		}
 
 		public override void SetDefaults()
@@ -73,12 +72,12 @@ namespace Ferustria.Content.Projectiles.Friendly
 			}
 		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if (Main.rand.NextFloat() <= .3f && Projectile.localAI[0] < 3 && Projectile.ai[1] > 0)
 			{
 				Projectile.localAI[0]++;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new(0, 0), ModContent.ProjectileType<Neon_Heal>(), 0, 0, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (0, 0), ModContent.ProjectileType<Neon_Heal>(), 0, 0, Projectile.owner);
 			}
 			if (Projectile.ai[1]++ <= 1 && Projectile.timeLeft > 0)
 			{

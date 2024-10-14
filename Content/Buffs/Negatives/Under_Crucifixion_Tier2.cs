@@ -13,8 +13,6 @@ namespace Ferustria.Content.Buffs.Negatives
 		int Crucifixion_Timer;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Under Crusifixion");
-			Description.SetDefault("You feel your sins crawl on your back.\nSomething not good is going to happen..."); //3: Punishment awaits you.
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

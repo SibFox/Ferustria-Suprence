@@ -8,10 +8,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Rot_Petal : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Rot Petal");
-		}
 
 		public override void SetDefaults()
 		{
@@ -30,7 +26,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 		}
 
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			//Main.PlaySound(SoundID.Item10, Projectile.position);

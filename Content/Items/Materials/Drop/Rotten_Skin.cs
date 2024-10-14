@@ -10,11 +10,7 @@ namespace Ferustria.Content.Items.Materials.Drop
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rotten Skin");
-            Tooltip.SetDefault("Disgusting thing, but higly durable");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Гнилая кожа");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Мерзкая штука, однако крайне прочная");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 50;
+            Item.ResearchUnlockCount = 50;
         }
 
         public override void SetDefaults()

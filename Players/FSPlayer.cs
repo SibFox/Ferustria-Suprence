@@ -115,8 +115,8 @@ namespace Ferustria.Players
                 Player.GetDamage(DamageClass.Generic) += Player.lifeRegen * 0.008f;
         }
 
-
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter)
+        //Альтернатива PreHurt?
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
         {
             //// ~~~ Star of Hope          (Акссессуар увеличивающий сопротивляемость урону и откидыванию с каждым ударом)
             if (Acc_StarOfHope_Equiped)
@@ -141,15 +141,14 @@ namespace Ferustria.Players
                 }
             }
             // ---------------------------
-            return true;
         }
 
 
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Acc_MushroomsSpawner_Equiped)
             {
-                Acc_MushroomsSpawner_DamageAccumulated += damage;
+                Acc_MushroomsSpawner_DamageAccumulated += hit.Damage;
                 Acc_MushroomsSpawner_DeaccumulationTimer = Acc_MushroomsSpawner_DeaccumulationTimer_Max;
 
                 while (Acc_MushroomsSpawner_DamageAccumulated >= 100)

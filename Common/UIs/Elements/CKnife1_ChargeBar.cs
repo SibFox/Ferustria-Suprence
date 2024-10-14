@@ -14,8 +14,8 @@ namespace Ferustria.Common.UIs.Elements
     {
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D texture = (Texture2D)Request<Texture2D>(Ferustria.GetChargeBarTexture("CKnife1"));
-            Texture2D textureBG = (Texture2D)Request<Texture2D>(Ferustria.GetChargeBarTexture("CKnife1", true));
+            Texture2D texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("CKnife1"));
+            Texture2D textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("CKnife1", true));
 
 
             if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Ceremonial_Knife>().Name && !Main.LocalPlayer.dead)

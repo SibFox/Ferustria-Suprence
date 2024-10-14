@@ -21,11 +21,6 @@ namespace Ferustria.Content.Items.Armor
         public override void SetStaticDefaults()
         {
             _ = RottenHelmet;
-            RottenArmorSetBonus = this.GetLocalization(nameof(RottenArmorSetBonus));
-            DisplayName.SetDefault("Condensed Rotten Helmet");
-            Tooltip.SetDefault("Helmet eyepieces give +7% сrit сhance");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённый Гнилой Шлем");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Окуляры шлема придают +7% к шансу крита");
             Item.ResearchUnlockCount = 1;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 

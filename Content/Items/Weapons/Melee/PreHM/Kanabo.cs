@@ -14,11 +14,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Kanabo");
-			Tooltip.SetDefault("Crushes foes defense.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Канабо");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Рушит броню врагов.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -41,19 +37,16 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
 		public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.DemoniteBar, 8), new(ItemID.Ebonwood, 25)
-            }, Type, tile: TileID.DemonAltar);
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.CrimtaneBar, 8), new(ItemID.Shadewood, 25)
-            }, Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ (ItemID.DemoniteBar, 8), (ItemID.Ebonwood, 25) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.CrimtaneBar, 8), new(ItemID.Shadewood, 25) ], Type, tile: TileID.DemonAltar);
         }
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
+
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+        {
 			target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(12, 16) * 60);
         }
 
-        public override void OnHitPvp(Player player, Player target, int damage, bool crit)
+        public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo)
         {
 			target.AddBuff(ModContent.BuffType<Shattered_Armor>(), Main.rand.Next(12, 16) * 60);
 		}

@@ -21,11 +21,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
         int definedDamage;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrite Shotgun");
-			Tooltip.SetDefault("It's hard to control this beast.\nWarms up for more damage");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Пиритовый Дробовик");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Этого зверя сложно контрлировать.\nРазогревается для нанесения большего урона.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -116,14 +112,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
         public override void AddRecipes()
         {
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.TitaniumBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16),
-            new CraftMaterial(ItemID.IllegalGunParts)
-            }, Type, tile: TileID.MythrilAnvil);
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.AdamantiteBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16),
-            new CraftMaterial(ItemID.IllegalGunParts)
-            }, Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ (ItemID.TitaniumBar, 8), (ItemID.HallowedBar, 14), (ModContent.ItemType<Inactive_Pyrite>(), 16), (ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ (ItemID.AdamantiteBar, 8), (ItemID.HallowedBar, 14), (ModContent.ItemType<Inactive_Pyrite>(), 16), (ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
         }
 
         public override Vector2? HoldoutOffset()

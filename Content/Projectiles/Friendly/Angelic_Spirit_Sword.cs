@@ -11,10 +11,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 	public class Angelic_Spirit_Sword : ModProjectile
 	{
         Players.FSMinionsPlayer minionsManager = null;
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Angelic Spirit Sword");
-		}
 
 		public override void SetDefaults()
 		{
@@ -35,7 +31,7 @@ namespace Ferustria.Content.Projectiles.Friendly
         }
 
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
@@ -64,17 +60,17 @@ namespace Ferustria.Content.Projectiles.Friendly
             Dust.NewDust(Projectile.Center, 4, 4, ModContent.DustType<Angelic_Particles>(), Projectile.velocity.X / 2.5f, Projectile.velocity.Y / 2.5f, 85, Scale: Main.rand.NextFloat(.85f, 1.25f));
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-        {
-            //Players.FSMinionsPlayer minionsManager = Main.player[Projectile.owner].GetModPlayer<Players.FSMinionsPlayer>();
-            //minionsManager.Minion_AngelicSwordsman_Charge++;
-            //minionsManager.Minion_AngelicSwordsman_DischargeCooldown = 180;
-        }
+  //      public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+  //      {
+  //          //Players.FSMinionsPlayer minionsManager = Main.player[Projectile.owner].GetModPlayer<Players.FSMinionsPlayer>();
+  //          //minionsManager.Minion_AngelicSwordsman_Charge++;
+  //          //minionsManager.Minion_AngelicSwordsman_DischargeCooldown = 180;
+  //      }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-		{
+  //      public override void OnHitPlayer(Player target, int damage, bool crit)
+		//{
 			
-		}
+		//}
 
 	}
 

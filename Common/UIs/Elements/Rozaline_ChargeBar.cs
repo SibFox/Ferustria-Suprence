@@ -14,8 +14,8 @@ namespace Ferustria.Common.UIs.Elements
     {
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D texture = (Texture2D)Request<Texture2D>(Ferustria.GetChargeBarTexture("Rozaline"));
-            Texture2D textureBG = (Texture2D)Request<Texture2D>(Ferustria.GetChargeBarTexture("Rozaline", true));
+            Texture2D texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("Rozaline"));
+            Texture2D textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("Rozaline", true));
 
             if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Rozaline>().Name && !Main.LocalPlayer.dead)
             {

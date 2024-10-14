@@ -7,13 +7,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Ferustria.Content.Projectiles.Friendly
 {
-	public class Void_Spreader_Flame : ModProjectile
+	public class Barathrum_Spreader_Flame : ModProjectile
 	{
-        public override string Texture => "Ferustria/emptyPixel";
-        public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Void Flame");
-		}
+        public override string Texture => Ferustria.emptyPixel;
 
 		public override void SetDefaults()
 		{
@@ -38,14 +34,14 @@ namespace Ferustria.Content.Projectiles.Friendly
 		{
             for (int i = 0; i < Main.rand.Next(1, 3); i++)
             {
-                Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Void_Particles>(), Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 
+                Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustType<Barathrum_Particles>(), Projectile.velocity.X / 2, Projectile.velocity.Y / 2, 
                     Alpha: 70, Scale: Main.rand.NextFloat(1.8f, 2.35f));
             }
 		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(BuffType<Buffs.Negatives.Weak_Void_Leach>(), 120);
+            target.AddBuff(BuffType<Buffs.Negatives.Weak_Barathrum_Leach>(), 120);
 		}
 
 

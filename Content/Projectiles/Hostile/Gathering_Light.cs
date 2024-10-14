@@ -10,16 +10,11 @@ namespace Ferustria.Content.Projectiles.Hostile
 {
 	public class Gathering_Light : ModProjectile
 	{
-		public override string Texture => "Ferustria/Assets/Textures/Projectiles/Burning_Light_Ball";
+		public override string Texture => Ferustria.Paths.TexturesPathPrj + "Burning_Light_Ball";
 
         int gather = 0;
         int NeedToGrow { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         bool doneShooting { get => toShoot == 0; }
-
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Gathering Light");
-		}
 
 		public override void SetDefaults()
 		{
@@ -120,8 +115,8 @@ namespace Ferustria.Content.Projectiles.Hostile
             return gather >= NeedToGrow;
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit)
-		{
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
             Projectile.Kill();
 			//target.AddBuff(ModContent.BuffType<Under_Crucifixion_Tier2>(), Main.rand.Next(4, 10) * 60);
 		}

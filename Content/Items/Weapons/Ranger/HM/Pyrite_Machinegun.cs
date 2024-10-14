@@ -21,13 +21,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrite Machinegun");
-			Tooltip.SetDefault("Accuracy improves over time.\nWarms up for more damage. Beware of overheat!\n50% chance not to consume ammo");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Пиритовый Пулемёт");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Точность повышается со временем\nРазогревается для нанесения большего урона. Остерегайтесь перегрева!\n50% шанс не потратить боеприпас");
-
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -79,7 +74,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 			if (weaponManager.PMachinegun_ShotsDone > weaponManager.PMachinegun_WarningShots && player.HasBuff(ModContent.BuffType<Pyrite_Overheating_Status>()))
             {
 				weaponManager.PMachinegun_ShotsDone++;
-				if (weaponManager.PMachinegun_ShotsDone % 4 == 0) CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y - 5, 20, 20), Color.DarkRed, "!!!", weaponManager.PMachinegun_ShotsDone >= alert ? true : false, false);
+				if (weaponManager.PMachinegun_ShotsDone % 4 == 0) CombatText.NewText(new Rectangle((int)player.position.X, (int)player.position.Y - 5, 20, 20), Color.DarkRed, "!!!", weaponManager.PMachinegun_ShotsDone >= alert, false);
 				if (angle < 26 && weaponManager.Accessory_PMachinegun_Enchanser_Equiped) angle += 2;
 				else if (angle < 28 && !weaponManager.Accessory_PMachinegun_Enchanser_Equiped) angle += 1;
 				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(angle));
@@ -139,15 +134,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
         public override void AddRecipes()
         {
-            _= new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.TitaniumBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16),
-            new CraftMaterial(ItemID.IllegalGunParts)
-            }, Type, tile: TileID.MythrilAnvil);
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.AdamantiteBar, 8), new CraftMaterial(ItemID.HallowedBar, 14), new CraftMaterial(ModContent.ItemType<Inactive_Pyrite>(), 16),
-            new CraftMaterial(ItemID.IllegalGunParts)
-            }, Type, tile: TileID.MythrilAnvil);
-
+            RegisterRecipe.Reg([ (ItemID.TitaniumBar, 8), (ItemID.HallowedBar, 14), (ModContent.ItemType<Inactive_Pyrite>(), 16), (ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ (ItemID.AdamantiteBar, 8), (ItemID.HallowedBar, 14), (ModContent.ItemType<Inactive_Pyrite>(), 16), (ItemID.IllegalGunParts)], Type, tile: TileID.MythrilAnvil);
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)

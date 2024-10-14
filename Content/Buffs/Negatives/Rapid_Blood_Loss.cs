@@ -10,10 +10,6 @@ namespace Ferustria.Content.Buffs.Negatives
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Rapid Blood Loss");
-			Description.SetDefault("You're losing your life quickly");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Быстрая кровопотеря");
-			Description.AddTranslation(FSHelper.RuTrans, "Вы быстро теряете своё здоровье");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

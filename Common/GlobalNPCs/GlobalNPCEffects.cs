@@ -2,7 +2,6 @@
 using Ferustria.Content.Items.Materials.Drop;
 using Ferustria.Content.Items.Materials.Specials;
 using Ferustria.Content.Projectiles.Friendly;
-using IL.Terraria.GameContent.ObjectInteractions;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -47,8 +46,8 @@ namespace Ferustria.Common.GlobalNPCs
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     for (int i = 0; i < projs; i++)
                     {
-                        Vector2 velocity = new(Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection()
-                           , Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection());
+                        Vector2 velocity = new(Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection(),
+                            Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection());
 
                         if (Math.Abs(velocity.X) + Math.Abs(velocity.Y) < 5f) velocity *= 5f;
                         velocity = Vector2.Clamp(velocity, new Vector2(-12f, -12f), new Vector2(12f, 12f));
@@ -72,8 +71,8 @@ namespace Ferustria.Common.GlobalNPCs
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 for (int i = 0; i < Recraphor_OnDeathOut; i++)
                 {
-                    Vector2 velocity = new(Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection()
-                       , Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection());
+                    Vector2 velocity = new(Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection(),
+                        Main.rand.NextFloat() * 10f * Main.rand.NextFloatDirection());
 
                     if (Math.Abs(velocity.X) + Math.Abs(velocity.Y) < 5f) velocity *= 5f;
                     velocity = Vector2.Clamp(velocity, new Vector2(-12f, -12f), new Vector2(12f, 12f));

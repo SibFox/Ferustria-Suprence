@@ -17,21 +17,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 	{		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Recraphor");
-			Tooltip.SetDefault("Shoots homing void micro-organisms.\n" +
-                 "Microorganisms, upon hitting an enemy, slowly infect them.\n" +
-                 "Infection increases microbial damage against the target.\n" +
-                 "Sufficient infestation will produce more micro-organisms from the victim.\n" +
-                 "Shoots 1 to 4 microorganisms.\n" +
-                 "Requires [c/a0af6a:Living Compound Tank] to shoot");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Рекрафор");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Стреляет самонаводящимеся пустотными микроорганизмами.\n" +
-                "Микрооргаизмы, при попадании по врагу, медленно заражают его.\n" +
-                "Заражение увеличивает урон микрооганизмов по цели.\n" +
-                "При достаточном заражении, из жертвы появятся ещё микроорганизмы.\n" +
-                "Выстреливает от 1 до 4 микроорганизмов.\n" +
-                "Для стрельбы необходим [c/a0af6a:Баллон с Живыми Соединениями]");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()

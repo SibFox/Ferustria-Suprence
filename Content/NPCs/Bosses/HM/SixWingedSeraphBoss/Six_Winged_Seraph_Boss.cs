@@ -25,9 +25,9 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
         public int choosenAttack, continueAttack, moveChoise, continueMove;
         public int dashed, face, sequenceTimer;
         public float fromAngle, flyDistanceToPlayer;
-        public List<int> attackWeights = new() { 200, 800, 600, 240 };
-        public List<int> sequenceWeights = new() { 600, 325 }; //1 - Тройной дэш; 2 - Кружения с обстрелом
-        public List<int> movementWeights = new() { 80, 250, 135 }; //Продление, движение в стороне от игрока, дэш в игрока
+        public List<int> attackWeights = [200, 800, 600, 240];
+        public List<int> sequenceWeights = [600, 325]; //1 - Тройной дэш; 2 - Кружения с обстрелом
+        public List<int> movementWeights = [80, 250, 135]; //Продление, движение в стороне от игрока, дэш в игрока
         public int allAttackWeights, allSequenceWeights, allMovementWeights;
 		public float accSpeedY, accSpeedX, rotate;
 		public string sequence;
@@ -56,8 +56,6 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Morghos, Six-Winged Seraph");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Моргос, Шести-крылый Серафим");
 			Main.npcFrameCount[NPC.type] = 1;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 
@@ -67,16 +65,15 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
             // Specify the debuffs it is immune to
-            NPCDebuffImmunityData debuffData = new()
+            NPCID.Sets.DebuffImmunitySets.Add(Type, new()
             {
-                SpecificallyImmuneTo = new int[] {
+                SpecificallyImmuneTo = [
                     BuffID.Poisoned,
                     BuffID.OnFire,
-                    ModContent.BuffType<Weak_Void_Leach>(),
+                    ModContent.BuffType<Weak_Barathrum_Leach>(),
                     BuffID.Confused // Most NPCs have this
-				}
-            };
-            NPCID.Sets.DebuffImmunitySets.Add(Type, debuffData);
+				]
+            });
 
             // Influences how the NPC looks in the Bestiary
             //NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -221,7 +218,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     //// ~~~~ Веса Второй фазы
                     if (GetPhase == 2 && !setSecondPhaseWeights)
                     {
-                        attackWeights = new List<int> { 275, 750, 585, 350, 325, 260 };
+                        attackWeights = [275, 750, 585, 350, 325, 260];
                         CalculateWeights(true);
                         setSecondPhaseWeights = true;
                     }
@@ -237,7 +234,6 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                         {
                             if (attackWeights[i] > attackDeterminator) { choosenAttack = i; break; }
                         }
-                        //choosenAttack = Main.rand.NextBool() ? 3 : 4;
                         switch (choosenAttack)
                         {
                             case 0: RotationAttackToCenter(); attackTimer = Main.rand.Next(160 - rageBuff / 2, 280 - rageBuff); break;
@@ -662,52 +658,52 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 
         bool[] line = new bool[9];
         bool[] line2 = new bool[3]; 
-        readonly List<string> text = new();
-        readonly List<string> text2 = new();
+        readonly List<string> text = [];
+        readonly List<string> text2 = [];
 
         void SetTextTranslation()
         {
             if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans)
             {
-                text.AddRange(new string[]
-                {
+                text.AddRange(
+                [
                     "Террариан...",
                     "Благодарю тебя за своё освобождение.",
                     "Наконец-то я свободен...",
-                    "Пустота заточили меня в эту шкатулку.",
+                    "Пропасть заточила меня в эту шкатулку.",
                     "Но...",
                     "Преступления... Которые ты совершил против ангелов...",
                     "Не могут быть прощены.",
-                    "И наказание за это...",
+                    "И наказание твоё...",
                     "Смерть!"
-                });
-                text2.AddRange(new string[]
-                {
+                ]);
+                text2.AddRange(
+                [
                     "Ах, вот оно что...",
                     "Так ты.. не отсюда...",
                     "Да простят нас.. всевышние..."
-                });
+                ]);
             }
             else
             {
-                text.AddRange(new string[]
-                {
+                text.AddRange(
+                [
                     "Terrarian...",
-                    "My gratitude upon my freedom.",
+                    "My gratitude upon thy for my freedom.",
                     "Free at last...",
-                    "The Void sealed me inside this box.",
+                    "The Barathrum sealed me inside this casket.",
                     "But...",
                     "Crimes... thy have commited against the angels...",
                     "Could not be forgiven.",
-                    "And thy punishment for it...",
+                    "And thy punishment...",
                     "Is Death!"
-                });
-                text2.AddRange(new string[]
-                {
+                ]);
+                text2.AddRange(
+                [
                     "Ah, so that's how it is...",
                     "Thy.. not from here...",
                     "May the Almighty.. forgive us..."
-                });
+                ]);
             }
                 
         }
@@ -793,8 +789,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
             return null;
         }
 
-
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
             target.AddBuff(ModContent.BuffType<Sliced_Defense>(), Main.rand.Next(4, 8) * 60);
 			//target.AddBuff(ModContent.BuffType<Under_Crucifixion_Tier2>(), Main.rand.Next(6, 13)*60);

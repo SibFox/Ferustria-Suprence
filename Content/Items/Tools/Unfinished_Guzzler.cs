@@ -16,13 +16,8 @@ namespace Ferustria.Content.Items.Tools
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Unfinished Guzzler");
-			Tooltip.SetDefault("'This thing weights over 50 killogramms'" +
-				"\nRight Click to shoot void projectile that splits into smaller projectiles.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Незавершённый Пожиратель");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "'Эта штука весит около 50 киллограмм'\nНажмите ПКМ, чтобы выстрелить пустотный снаряд, который разделяется на кучку маленьких.");
 			Item.staff[Item.type] = true;
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -60,7 +55,7 @@ namespace Ferustria.Content.Items.Tools
 				Item.knockBack = 3f;
 				Item.UseSound = SoundID.Item20;
 				Item.autoReuse = false;
-				Item.shoot = ModContent.ProjectileType<Void_Opposite_Bounce>();
+				Item.shoot = ModContent.ProjectileType<Barathrum_Opposite_Bounce>();
 				Item.shootSpeed = 11.8f;
 				Item.mana = 12;
 			}
@@ -84,25 +79,21 @@ namespace Ferustria.Content.Items.Tools
 
         public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.WarAxeoftheNight), new CraftMaterial(ItemID.TheBreaker), new CraftMaterial(ModContent.ItemType<Impure_Dust>(), 10)
-            }, Type, tile: TileID.DemonAltar);
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new CraftMaterial(ItemID.BloodLustCluster), new CraftMaterial(ItemID.FleshGrinder), new CraftMaterial(ModContent.ItemType<Impure_Dust>(), 10)
-            }, Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ (ItemID.WarAxeoftheNight), (ItemID.TheBreaker), (ModContent.ItemType<Impure_Dust>(), 10) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ (ItemID.BloodLustCluster), (ItemID.FleshGrinder), (ModContent.ItemType<Impure_Dust>(), 10)], Type, tile: TileID.DemonAltar);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
 			if (Main.rand.NextFloat() < 0.65f)
 			{
-				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height / 2, ModContent.DustType<Void_Particles>(), player.direction / 4, -0.34f, 0, default, Main.rand.NextFloat(0.52f, 0.84f));
+				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height / 2, ModContent.DustType<Barathrum_Particles>(), player.direction / 4, -0.34f, 0, default, Main.rand.NextFloat(0.52f, 0.84f));
 			}
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
-		{
-			target.AddBuff(ModContent.BuffType<Weak_Void_Leach>(), Main.rand.Next(2, 7) * 60);
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+			target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(2, 7) * 60);
 		}
 		
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
@@ -111,7 +102,7 @@ namespace Ferustria.Content.Items.Tools
 			{
 				for (int i = 0; i < Main.rand.Next(6); i++)
 				{
-					Dust.NewDust(Item.position, Item.width, Item.height, ModContent.DustType<Void_Particles>(), Main.rand.NextFloat(-.2f, .2f), Main.rand.NextFloat(-.2f, .2f), 0, default, Main.rand.NextFloat(0.45f, 0.8f));
+					Dust.NewDust(Item.position, Item.width, Item.height, ModContent.DustType<Barathrum_Particles>(), Main.rand.NextFloat(-.2f, .2f), Main.rand.NextFloat(-.2f, .2f), 0, default, Main.rand.NextFloat(0.45f, 0.8f));
 				}
 			}
 		}

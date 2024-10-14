@@ -17,10 +17,6 @@ namespace Ferustria.Content.Items.Armor
         public override void SetStaticDefaults()
         {
             _ = RottenLeggings;
-            DisplayName.SetDefault("Condensed Rotten Leggings");
-            Tooltip.SetDefault("5% dencreased movement speed");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Уплотнённые Гнилые Поножи");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Уменьшает скорость передвижения на 5%");
             Item.ResearchUnlockCount = 1;
 			//CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

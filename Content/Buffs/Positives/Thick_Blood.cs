@@ -12,10 +12,6 @@ namespace Ferustria.Content.Buffs.Positives
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Thick Blood");
-			Description.SetDefault("Health regeneration is increased while you're on the move");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Сгущенная кровь");
-			Description.AddTranslation(FSHelper.RuTrans, "Регенерация здоровья увеличена, пока вы двигаетесь");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = false;
@@ -26,7 +22,6 @@ namespace Ferustria.Content.Buffs.Positives
 		{
             if (player.velocity != Vector2.Zero)
             {
-                //player.lifeRegenTime = 2;
                 player.lifeRegen += (int)(8 * (Math.Abs(player.velocity.X + player.velocity.Y)) / 9.5f);
             }
                 

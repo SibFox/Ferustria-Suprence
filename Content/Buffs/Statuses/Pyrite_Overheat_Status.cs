@@ -11,8 +11,6 @@ namespace Ferustria.Content.Buffs.Statuses
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrite Overheat");
-			Description.SetDefault("You've shot too much.\nPyrite rod is overheated");
 			Main.debuff[Type] = false;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

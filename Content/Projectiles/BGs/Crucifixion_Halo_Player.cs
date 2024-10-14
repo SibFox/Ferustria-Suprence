@@ -9,10 +9,9 @@ namespace Ferustria.Content.Projectiles.BGs
 	public class Crucifixion_Halo_Player : ModProjectile
 	{
 		Player owner = null;
-		public override string Texture => Ferustria.TexturesPath + "BGs/Crucifixion_Halo";
+		public override string Texture => Ferustria.Paths.TexturesPathBGs + "Crucifixion_Halo";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("");
 		}
 
 		public override void SetDefaults()
@@ -29,7 +28,7 @@ namespace Ferustria.Content.Projectiles.BGs
 		}
 
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
             Players.FSPlayer refer = owner.GetModPlayer<Players.FSPlayer>();
 			refer.Crucifixion_Tier2 = false;
@@ -74,7 +73,7 @@ namespace Ferustria.Content.Projectiles.BGs
 
 			/*if (Main.rand.NextFloat() < .25f)
 			{
-				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, ModContent.DustType<Void_Particles>(), projectile.velocity.X * .8f, projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
+				Dust.NewDust(projectile.position + projectile.velocity, projectile.width, projectile.height, ModContent.DustType<Barathrum_Particles>(), projectile.velocity.X * .8f, projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
 			}*/
 
 		}

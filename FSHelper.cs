@@ -117,6 +117,14 @@ namespace Ferustria
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
         internal static Vector2 GetVectorToAngleWithMult(this Vector2 vector, double angle, float speed) =>
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
+        public static void ApplyMuzzleOffset(this Vector2 position, Vector2 velocity, float offset = 25f)
+        {
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+            {
+                position += muzzleOffset;
+            }
+        }
 
 
         // Tile
@@ -230,39 +238,73 @@ namespace Ferustria
         }
     }
 
-    internal class RegisterRecipe
+    internal static class RegisterRecipe
     {
-        internal RegisterRecipe(CraftMaterial[] items, int result, int resultCount = 1, int tile = -1)
+
+        internal static void Reg(CraftMaterial[] items, int result, int resultCount = 1, int tile = -1)
         {
             Recipe recipe = Recipe.Create(result, resultCount);
             foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
             if (tile > -1) recipe.AddTile(tile);
             recipe.Register();
+        }
+
+        internal static void Reg(CraftMaterial item, int result, int resultCount = 1, int tile = -1)
+        {
+            Recipe recipe = Recipe.Create(result, resultCount);
+            recipe.AddIngredient(item.itemID, item.count);
+            if (tile > -1) recipe.AddTile(tile);
+            recipe.Register();
+        }
+
+        internal static void Reg(CraftMaterial[] items, int result, int[] tiles, int resultCount = 1)
+        {
+            Recipe recipe = Recipe.Create(result, resultCount);
+            foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
+            foreach (var tile in tiles) recipe.AddTile(tile);
+            recipe.Register();
+        }
+
+        internal static void Reg(CraftMaterial item, int result, int[] tiles, int resultCount = 1)
+        {
+            Recipe recipe = Recipe.Create(result, resultCount);
+            recipe.AddIngredient(item.itemID, item.count);
+            foreach (var tile in tiles) recipe.AddTile(tile);
+            recipe.Register();
+        }
+
+
+        //internal RegisterRecipe(CraftMaterial[] items, int result, int resultCount = 1, int tile = -1)
+        //{
+        //    Recipe recipe = Recipe.Create(result, resultCount);
+        //    foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
+        //    if (tile > -1) recipe.AddTile(tile);
+        //    recipe.Register();
             
-        }
-        internal RegisterRecipe(CraftMaterial item, int result, int resultCount = 1, int tile = -1)
-        {
-            Recipe recipe = Recipe.Create(result, resultCount);
-            recipe.AddIngredient(item.itemID, item.count);
-            if (tile > -1) recipe.AddTile(tile);
-            recipe.Register();
-        }
+        //}
+        //internal RegisterRecipe(CraftMaterial item, int result, int resultCount = 1, int tile = -1)
+        //{
+        //    Recipe recipe = Recipe.Create(result, resultCount);
+        //    recipe.AddIngredient(item.itemID, item.count);
+        //    if (tile > -1) recipe.AddTile(tile);
+        //    recipe.Register();
+        //}
 
-        internal RegisterRecipe(CraftMaterial[] items, int result, int[] tiles, int resultCount = 1)
-        {
-            Recipe recipe = Recipe.Create(result, resultCount);
-            foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
-            foreach (var tile in tiles) recipe.AddTile(tile);
-            recipe.Register();
-        }
+        //internal RegisterRecipe(CraftMaterial[] items, int result, int[] tiles, int resultCount = 1)
+        //{
+        //    Recipe recipe = Recipe.Create(result, resultCount);
+        //    foreach (var item in items) recipe.AddIngredient(item.itemID, item.count);
+        //    foreach (var tile in tiles) recipe.AddTile(tile);
+        //    recipe.Register();
+        //}
 
-        internal RegisterRecipe(CraftMaterial item, int result, int[] tiles, int resultCount = 1)
-        {
-            Recipe recipe = Recipe.Create(result, resultCount);
-            recipe.AddIngredient(item.itemID, item.count);
-            foreach (var tile in tiles) recipe.AddTile(tile);
-            recipe.Register();
-        }
+        //internal RegisterRecipe(CraftMaterial item, int result, int[] tiles, int resultCount = 1)
+        //{
+        //    Recipe recipe = Recipe.Create(result, resultCount);
+        //    recipe.AddIngredient(item.itemID, item.count);
+        //    foreach (var tile in tiles) recipe.AddTile(tile);
+        //    recipe.Register();
+        //}
 
         
     }

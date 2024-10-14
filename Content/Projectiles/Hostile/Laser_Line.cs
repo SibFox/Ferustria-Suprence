@@ -25,11 +25,6 @@ namespace Ferustria.Content.Projectiles.Hostile
             set => Projectile.ai[1] = value;
         }
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("");
-		}
-
 		public override void SetDefaults()
 		{
             Projectile.damage = 0;

@@ -23,8 +23,6 @@ namespace Ferustria.Content.NPCs.Friendlies.PlayerBehalf
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Shroom Budy");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Грибной дружок");
 			//Main.npcFrameCount[NPC.type] = 4;
 
         }
@@ -53,22 +51,22 @@ namespace Ferustria.Content.NPCs.Friendlies.PlayerBehalf
 			return 0f;
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
-		{
+        public override void HitEffect(NPC.HitInfo hit)
+        {
 			if (NPC.life > 0)
 			{
-				double particles = damage;
+				double particles = hit.Damage;
                 if (particles > NPC.lifeMax) particles = NPC.lifeMax;
 				if (particles > 35) particles = 35;
 				for (int i = 0; i < particles; i++)
 				{
-					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, hitDirection, -2f, 0, default, Main.rand.NextFloat(0.6f, 0.8f));
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, hit.HitDirection, -2f, 0, default, Main.rand.NextFloat(0.6f, 0.8f));
 				}
 				return;
 			}
 			for (int i = 0; i < 30; i++)
 			{
-				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, 2.5f * hitDirection, -2.3f, 0, default, Main.rand.NextFloat(0.4f, 1f));
+				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, 2.5f * hit.HitDirection, -2.3f, 0, default, Main.rand.NextFloat(0.4f, 1f));
 			}
 		}
 

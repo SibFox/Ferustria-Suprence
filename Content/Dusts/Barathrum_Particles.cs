@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 
 namespace Ferustria.Content.Dusts
 {
-	public class Void_Particles : ModDust
+	public class Barathrum_Particles : ModDust
 	{
 		public override void OnSpawn(Dust dust)
 		{

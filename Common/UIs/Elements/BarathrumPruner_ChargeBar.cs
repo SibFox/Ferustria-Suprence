@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 
 namespace Ferustria.Common.UIs.Elements
 {
-    internal class VoidPruner_ChargeBar : UIElement
+    internal class BarathrumPruner_ChargeBar : UIElement
     {
         private float pixelOff;
 
@@ -29,14 +29,14 @@ namespace Ferustria.Common.UIs.Elements
             pixelOff = 130;
 
 
-            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Void_Pruner>().Name && !Main.LocalPlayer.dead)
+            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Barathrum_Pruner>().Name && !Main.LocalPlayer.dead)
             {
-                texture = (Texture2D)Request<Texture2D>(Ferustria.GetChargeBarTexture("VoidPruner"));
-                textureBG = (Texture2D)Request<Texture2D>(Ferustria.GetChargeBarTexture("VoidPruner", true));
-                textureSuperMeterAct = (Texture2D)Request<Texture2D>(Ferustria.GetCahrgeBarElement("VoidPruner", "SuperMeter_Activated"));
-                textureSuperMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.GetCahrgeBarElement("VoidPruner", "SuperMeter_Deactivated"));
-                textureMeterAct = (Texture2D)Request<Texture2D>(Ferustria.GetCahrgeBarElement("VoidPruner", "Meter_Activated"));
-                textureMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.GetCahrgeBarElement("VoidPruner", "Meter_Deactivated"));
+                texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner"));
+                textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner", true));
+                textureSuperMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "SuperMeter_Activated"));
+                textureSuperMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "SuperMeter_Deactivated"));
+                textureMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "Meter_Activated"));
+                textureMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "Meter_Deactivated"));
 
 
 
@@ -46,10 +46,10 @@ namespace Ferustria.Common.UIs.Elements
 
                 spriteBatch.Draw(textureBG, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight + pixelOff) / 2f, null, Color.White, 0f,
                     new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0);
-                Color gradientA = new Color(0, (float)Main.time % 255, 255);
-                Color gradientB = new Color(11, 18, 136);
+                Color gradientA = (0, (float)Main.time % 255, 255);
+                Color gradientB = new(11, 18, 136);
                 Color gradientC = Color.AliceBlue;
-                float charge = Main.LocalPlayer.GetModPlayer<Players.FSSpesialWeaponsPlayer>().VoidPruner_Charge * 0.01f;
+                float charge = Main.LocalPlayer.GetModPlayer<Players.FSSpesialWeaponsPlayer>().BarathrumPruner_Charge * 0.01f;
                 charge = Utils.Clamp(charge, 0f, 1f); // Clamping it to 0-1f so it doesn't go over that.
 
                 //CheckForTextures(ref smt, ref mt1, ref mt2, charge);

@@ -14,11 +14,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Crimtane Needler");
-			Tooltip.SetDefault("Sends thin needles that attaches to enemies and sucks their life.");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Кримтановый Игольщик");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Выплёвывает тонкие иглы, которые проникают во врагов и высасывают их жизнь.");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 			Item.staff[Item.type] = true;
 		}
 
@@ -45,9 +41,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 
 		public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.CrimtaneBar, 8), new(ItemID.TissueSample, 7), new(ItemID.ViciousMushroom, 3), new(ItemID.Deathweed, 5)
-            }, Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ (ItemID.CrimtaneBar, 8), (ItemID.TissueSample, 7), (ItemID.ViciousMushroom, 3), (ItemID.Deathweed, 5) ], Type, tile: TileID.Anvils);
         }
 
 	}

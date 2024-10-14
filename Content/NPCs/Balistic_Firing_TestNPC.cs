@@ -15,7 +15,6 @@ namespace Ferustria.Content.NPCs
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("TestNPC Balistic");
         }
 
         public override void SetDefaults()
@@ -60,26 +59,26 @@ namespace Ferustria.Content.NPCs
 
                     //if (s1 != Vector2.Zero && (player.Center.Y + 60f < NPC.Center.Y || player.Center.Y - 60f > NPC.Center.Y))
                     //{
-                    //    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, s1, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 0f, Main.myPlayer);
+                    //    Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, s1, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 0f, Main.myPlayer);
                     //}
                     //else
                     if (s0 != Vector2.Zero)
                         Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center, s0/*.RotatedBy((NPC.Center - player.Center).SafeNormalize(Vector2.Zero).ToRotation())*/,
-                            ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 0f, Main.myPlayer);
+                            ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 0f, Main.myPlayer);
 
                     //if (Math.Abs(NPC.Center.Y - player.Center.Y) < NPC.Center.Y && Math.Abs(NPC.Center.X - player.Center.X) < 6f * 16f)
                     //{
                     //    float velY = NPC.velocity.Y * 1.5f;
                     //    if (NPC.velocity.Y <= 0) velY *= -1;
-                    //Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * -0.4f + playerXvel, velY + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                    //Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * -0.4f + playerXvel, velY + playerYvel, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
 
                     //}
-                    //else if (!triple) Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.4f + playerXvel, NPC.velocity.Y * 2.4f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                    //else if (!triple) Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.4f + playerXvel, NPC.velocity.Y * 2.4f + playerYvel, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
                     //else if (triple)
                     //{
-                    //    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * 2.2f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                    //    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.8f + playerXvel, NPC.velocity.Y + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                    //    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * -2.2f + playerYvel, ModContent.ProjectileType<Void_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                    //    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * 2.2f + playerYvel, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                    //    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.8f + playerXvel, NPC.velocity.Y + playerYvel, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                    //    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center.X, NPC.Center.Y, NPC.velocity.X * 2.45f + playerXvel, NPC.velocity.Y * -2.2f + playerYvel, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
 
                     //}
                 }

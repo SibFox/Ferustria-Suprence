@@ -12,7 +12,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 	{
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrite Shot");
 		}
 
 		public override void SetDefaults()
@@ -34,7 +33,7 @@ namespace Ferustria.Content.Projectiles.Friendly
         }
 
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
@@ -55,26 +54,26 @@ namespace Ferustria.Content.Projectiles.Friendly
 			Lighting.AddLight(Projectile.position, 0.8f, 0.5f, 0);
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
-		{
-			if (Main.rand.NextFloat() < .2f)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+			if (Main.rand.NextFloat() < .5f)
 			{
 				target.AddBuff(BuffID.OnFire3, Main.rand.Next(5, 8) * 60);
 			}
-			else if (crit)
-			{
-				target.AddBuff(BuffID.OnFire3, Main.rand.Next(6, 8) * 70);
-				//target.AddBuff(BuffID., Main.rand.Next(6, 10) * 60); //Увеличение получаемого урона
-			}
+			//else if (false)
+			//{
+			//	target.AddBuff(BuffID.OnFire3, Main.rand.Next(6, 8) * 70);
+			//	//target.AddBuff(BuffID., Main.rand.Next(6, 10) * 60); //Увеличение получаемого урона
+			//}
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
-		{
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
 			if (Main.rand.NextFloat() < .2f)
 			{
 				target.AddBuff(BuffID.OnFire3, Main.rand.Next(5, 10) * 60);
 			}
-			else if (crit)
+			else if (hit.Crit)
 			{
 				target.AddBuff(BuffID.OnFire3, Main.rand.Next(6, 12) * 70);
 				//target.AddBuff(BuffID., Main.rand.Next(6, 10) * 60); //Увеличение получаемого урона

@@ -13,7 +13,7 @@ namespace Ferustria.Content.Projectiles.Friendly
     // This file also shows advanced drawing to center the drawn projectile correctly
     public class Neon_Pruner_Slice : ModProjectile
     {
-        public override string Texture => Ferustria.TexturesPathPrj + "Neon_Pruner_Slice";
+        public override string Texture => Ferustria.Paths.TexturesPathPrj + "Neon_Pruner_Slice";
 
         public float Pruner_Charge { get => Projectile.ai[0]; set => Projectile.ai[0] = value; }
 
@@ -37,7 +37,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Neon Cleave");
             // Total count animation frames
             Main.projFrames[Projectile.type] = 1;
         }
@@ -114,7 +113,7 @@ namespace Ferustria.Content.Projectiles.Friendly
                 SoundEngine.PlaySound(SoundID.Item96.WithPitchOffset(-.3f).WithVolumeScale(1.9f), Main.player[Projectile.owner].position);
             }
                                              //122
-            //SoundEngine.PlaySound(SoundID.Item96.WithPitchOffset(.2f).WithVolumeScale(1.2f), Main.player[Projectile.owner].position);
+            //SoundEngine.PlaySound(SoundID.Item96.WithPitchchOffset(.2f).WithVolumeScale(1.2f), Main.player[Projectile.owner].position);
 
 
             Projectile.height = Projectile.width = (int)(70 * Projectile.scale);
@@ -219,7 +218,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<Buffs.Negatives.Sliced_Defense>(), (Cleave_Level * 2 + 1) * 60);
             Projectile.damage = (int)(Projectile.damage / penDenum);
@@ -231,7 +230,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 
             if (Projectile.owner == Main.myPlayer && !player.moonLeech)
             {
-                int heal = Main.rand.Next(0, Cleave_Level * 2 +1);
+                int heal = Main.rand.Next(0, Cleave_Level * 2 + 1);
                 if (heal > 0)
                 {
                     if (target.life <= 0) heal = (int)(heal * 1.5f);

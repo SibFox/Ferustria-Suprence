@@ -17,31 +17,31 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
         float charge;
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Rozaline");
-            Tooltip.SetDefault("Attacks with unique pattern.\n" +
-                "Leaves a trail of [c/E45C5F:Blood Roses] at the tip of the spear.\n" +
-                "[c/E45C5F:Roses] stick to the enemy and make him [c/e43a20:Rapidly Bleed].\n" +
-                "While [c/E45C5F:Rose] sticks to the enemy, it slowly [c/a6cc34:charges] [c/ff9ba8:the Rozaline]\n" +
-                "After a while, [c/E45C5F:the Rose] explodes into the [c/885041:Thorns].\n" +
-                "On hitting the enemy, they make the victim [c/e43a20:Rapidly Bleed] and [c/a6cc34:charge] [c/ff9ba8:the Rozaline]\n" +
-                "Killing the enemy [c/a6cc34:charges] [c/ff9ba8:the Rozaline]\n" +
-                "When [c/ff9ba8:Rozaline] is fully [c/a6cc34:charged], press RMB to create a circle of [c/885041:Thorns] around you.\n" +
-                "They have a chanse to heal you a little.\n" +
-                "<CHARGE>");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Розалина");
-            Tooltip.AddTranslation(FSHelper.RuTrans, "Бьёт уникальной комбо атакой.\n" +
-                "Оставляет след из [c/E45C5F:Кровавых Роз] на кончике копья.\n" +
-                "[c/E45C5F:Розы] присасываются к врагу и заставляют его [c/e43a20:Быстро Кровоточить].\n" +
-                "Пока [c/E45C5F:Розы] вистя на враге, они медленно [c/a6cc34:заряжают] [c/ff9ba8:Розалину].\n" +
-                "Через время, [c/E45C5F:Роза] распадается на [c/885041:Шипы].\n" +
-                "При поадании по врагу, они вызывают у него  [c/e43a20:Быстро Кровопотерю] и [c/a6cc34:заряжают] [c/ff9ba8:Розалину].\n" +
-                "Убийство врага [c/a6cc34:заряжают] [c/ff9ba8:Розалину].\n" +
-                "Когда [c/ff9ba8:Розалина] полностью [c/a6cc34:заряжена], нажмите ПКМ, чтобы испустить вокруг себя кучу [c/885041:Шипов].\n" +
-                "Они имеют шанс слабо вас излечить.\n" +
-                "<CHARGE>");
+            //DisplayName.SetDefault("Rozaline");
+            //Tooltip.SetDefault("Attacks with unique pattern.\n" +
+            //    "Leaves a trail of [c/E45C5F:Blood Roses] at the tip of the spear.\n" +
+            //    "[c/E45C5F:Roses] stick to the enemy and make him [c/e43a20:Rapidly Bleed].\n" +
+            //    "While [c/E45C5F:Rose] sticks to the enemy, it slowly [c/a6cc34:charges] [c/ff9ba8:the Rozaline]\n" +
+            //    "After a while, [c/E45C5F:the Rose] explodes into the [c/885041:Thorns].\n" +
+            //    "On hitting the enemy, they make the victim [c/e43a20:Rapidly Bleed] and [c/a6cc34:charge] [c/ff9ba8:the Rozaline]\n" +
+            //    "Killing the enemy [c/a6cc34:charges] [c/ff9ba8:the Rozaline]\n" +
+            //    "When [c/ff9ba8:Rozaline] is fully [c/a6cc34:charged], press RMB to create a circle of [c/885041:Thorns] around you.\n" +
+            //    "They have a chanse to heal you a little.\n" +
+            //    "<CHARGE>");
+            //DisplayName.AddTranslation(FSHelper.RuTrans, "Розалина");
+            //Tooltip.AddTranslation(FSHelper.RuTrans, "Бьёт уникальной комбо атакой.\n" +
+            //    "Оставляет след из [c/E45C5F:Кровавых Роз] на кончике копья.\n" +
+            //    "[c/E45C5F:Розы] присасываются к врагу и заставляют его [c/e43a20:Быстро Кровоточить].\n" +
+            //    "Пока [c/E45C5F:Розы] вистя на враге, они медленно [c/a6cc34:заряжают] [c/ff9ba8:Розалину].\n" +
+            //    "Через время, [c/E45C5F:Роза] распадается на [c/885041:Шипы].\n" +
+            //    "При поадании по врагу, они вызывают у него  [c/e43a20:Быстро Кровопотерю] и [c/a6cc34:заряжают] [c/ff9ba8:Розалину].\n" +
+            //    "Убийство врага [c/a6cc34:заряжают] [c/ff9ba8:Розалину].\n" +
+            //    "Когда [c/ff9ba8:Розалина] полностью [c/a6cc34:заряжена], нажмите ПКМ, чтобы испустить вокруг себя кучу [c/885041:Шипов].\n" +
+            //    "Они имеют шанс слабо вас излечить.\n" +
+            //    "<CHARGE>");
 
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true; // This skips use animation-tied sound playback, so that we're able to make it be tied to use time instead in the UseItem() hook.
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
         }
 
         public override void SetDefaults()
@@ -161,9 +161,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
         public override void AddRecipes()
         {
-            _ = new RegisterRecipe(new CraftMaterial[]
-            { new(ItemID.JungleSpores, 12), new(ItemID.Vine, 8), new(ItemID.Stinger, 6), new(ItemID.JungleRose)
-            }, Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ new(ItemID.JungleSpores, 12), new(ItemID.Vine, 8), new(ItemID.Stinger, 6), new(ItemID.JungleRose) ], Type, tile: TileID.Anvils);
         }
     }
 }

@@ -24,11 +24,6 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
         float maxAngle => Projectile.ai[1];
         bool secondHitbox = false;
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Rozaline Spear");
-        }
-
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.Spear); // Clone the default values for a vanilla spear. Spear specific values set for width, height, aiStyle, friendly, penetrate, tileCollide, scale, hide, ownerHitCheck, and melee.
@@ -166,7 +161,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
             return false;
         }
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Players.FSSpesialWeaponsPlayer chargeManager = player.GetModPlayer<Players.FSSpesialWeaponsPlayer>();
             //if (Main.rand.NextFloat() < .35f) { chargeManager.Rozaline_Spikes_ChargeMeter += 0.06f; chargeManager.Rozaline_Spikes_UnchargeCooldown = 600; }

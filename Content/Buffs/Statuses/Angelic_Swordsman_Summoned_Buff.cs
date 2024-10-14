@@ -10,9 +10,6 @@ namespace Ferustria.Content.Buffs.Statuses
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Angelic Swordsman");
-			Description.SetDefault("");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Ангельский Мечник");
 			Main.debuff[Type] = false;
 			Main.buffNoSave[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;

@@ -15,9 +15,7 @@ namespace Ferustria.Content.Items.Tools
         public override string Texture => "Ferustria/Content/Items/Tools/Scavenger";
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Miltitool with Pyrite Core");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Мультитул с Пиритовым сердечником");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults()
@@ -42,15 +40,14 @@ namespace Ferustria.Content.Items.Tools
 
 		public override void AddRecipes()
 		{
-            _ = new RegisterRecipe(new CraftMaterial[] { new CraftMaterial(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>(), 16), new CraftMaterial(ItemID.HallowedBar, 6) },
-                Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ (ModContent.ItemType<Materials.Ore.Inactive_Pyrite>(), 16), (ItemID.HallowedBar, 6) ], Type, tile: TileID.MythrilAnvil);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
 		{
 			if (Main.rand.NextFloat() < 0.75f)
 			{
-				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height / 3, ModContent.DustType<Void_Particles>(), player.direction / 4, -0.34f, 0, default, Main.rand.NextFloat(0.4f, 0.78f));
+				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height / 3, ModContent.DustType<Barathrum_Particles>(), player.direction / 4, -0.34f, 0, default, Main.rand.NextFloat(0.4f, 0.78f));
 			}
 		}
 

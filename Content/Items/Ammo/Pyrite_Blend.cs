@@ -10,10 +10,6 @@ namespace Ferustria.Content.Items.Ammo
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Pyrite Blend");
-			Tooltip.SetDefault("Pyrite compound that is used in pyrite weapon");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Пиритовая смесь");
-			Tooltip.AddTranslation(FSHelper.RuTrans, "Пиритовое соединение использующееся в пиритовом оружие");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
 		}
 
@@ -35,7 +31,7 @@ namespace Ferustria.Content.Items.Ammo
 
         public override void AddRecipes()
         {
-            _ = new RegisterRecipe(new CraftMaterial(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>()), Type, 150);
+            RegisterRecipe.Reg(new(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>()), Type, 150);
         }
     }
 }

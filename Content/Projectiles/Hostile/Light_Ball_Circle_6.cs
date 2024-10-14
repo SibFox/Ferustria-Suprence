@@ -22,7 +22,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 		}
 		private bool secondLayer
         {
-			get => Projectile.localAI[0] == 1 ? true : false;
+			get => Projectile.localAI[0] == 1;
 		}
 
 		private bool set, set2;
@@ -31,11 +31,10 @@ namespace Ferustria.Content.Projectiles.Hostile
 		private float stopDistance;
         private Vector2 holdPlayerPos;
 
-        public override string Texture => Ferustria.TexturesPath + "Projectiles/Burning_Light_Ball";
+        public override string Texture => Ferustria.Paths.TexturesPathPrj + "Burning_Light_Ball";
 
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Burning Light Ball");
 		}
 
 		public override void SetDefaults()

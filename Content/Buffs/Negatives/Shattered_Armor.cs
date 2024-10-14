@@ -11,10 +11,6 @@ namespace Ferustria.Content.Buffs.Negatives
 		bool set;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Armor shatter");
-			Description.SetDefault("Your defence is broken");
-			DisplayName.AddTranslation(FSHelper.RuTrans, "Разрушение брони");
-			Description.AddTranslation(FSHelper.RuTrans, "Ваша броня поломана");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

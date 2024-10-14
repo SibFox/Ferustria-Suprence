@@ -10,9 +10,7 @@ namespace Ferustria.Content.Items.Materials.Ore
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Inactive Pyrite");
-            DisplayName.AddTranslation(FSHelper.RuTrans, "Неактивный Пирит");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            Item.ResearchUnlockCount = 25;
         }
 
         public override void SetDefaults()
