@@ -64,16 +64,10 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
             // Automatically group with other bosses
             NPCID.Sets.BossBestiaryPriority.Add(Type);
 
-            // Specify the debuffs it is immune to
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new()
-            {
-                SpecificallyImmuneTo = [
-                    BuffID.Poisoned,
-                    BuffID.OnFire,
-                    ModContent.BuffType<Weak_Barathrum_Leach>(),
-                    BuffID.Confused // Most NPCs have this
-				]
-            });
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Weak_Barathrum_Leach>()] = true;
 
             // Influences how the NPC looks in the Bestiary
             //NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)

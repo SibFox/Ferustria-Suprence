@@ -52,8 +52,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
         public override void AddRecipes()
         {
 
-            RegisterRecipe.Reg([ (ItemID.Boomstick), (ItemID.SnowballCannon), (ItemID.GoldBar, 6) ], Type, tile: TileID.Anvils);
-            RegisterRecipe.Reg([ (ItemID.Boomstick), (ItemID.SnowballCannon), (ItemID.PlatinumBar, 6) ], Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ new(ItemID.Boomstick), new(ItemID.SnowballCannon), new(ItemID.GoldBar, 6) ], Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ new(ItemID.Boomstick), new(ItemID.SnowballCannon), new(ItemID.PlatinumBar, 6) ], Type, tile: TileID.Anvils);
         }
 
         public override Vector2? HoldoutOffset() => new Vector2(-8f, 0);

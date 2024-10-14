@@ -11,15 +11,6 @@ namespace Ferustria.Content.Items.Weapons.Melee.HM
 {
 	public class Vicious_Herrscher : ModItem
 	{
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Vicious Herrscher"); //Gnadenlos
-			Tooltip.SetDefault("[c/FA0000:WIP]");
-            //DisplayName.AddTranslation(FSHelper.RuTrans, "Беспощадный Правитель");
-            //Tooltip.AddTranslation(FSHelper.RuTrans, "\"Двуручный меч элитных королевских войск, избранных самим Королём,
-            //способный разрубать, казалось бы, не разрубаемое, своим тонким лезвием заточённым в усиливающий конструкцию каркас\"");
-            
-		}
 
 		public override void SetDefaults()
 		{

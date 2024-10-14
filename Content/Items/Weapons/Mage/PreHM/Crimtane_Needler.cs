@@ -41,7 +41,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 
 		public override void AddRecipes()
 		{
-            RegisterRecipe.Reg([ (ItemID.CrimtaneBar, 8), (ItemID.TissueSample, 7), (ItemID.ViciousMushroom, 3), (ItemID.Deathweed, 5) ], Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ new(ItemID.CrimtaneBar, 8), new(ItemID.TissueSample, 7), new(ItemID.ViciousMushroom, 3), new(ItemID.Deathweed, 5) ], Type, tile: TileID.Anvils);
         }
 
 	}

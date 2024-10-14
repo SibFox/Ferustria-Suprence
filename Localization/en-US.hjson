@@ -1,4 +1,3 @@
-
 Mods: {
 	Ferustria: {
 		Buffs: {
@@ -50,7 +49,10 @@ Mods: {
 				Description: The more you have regeneration - the more you deal damage
 			}
 
-			Angelic_Swordsman_Summoned_Buff.DisplayName: Angelic Swordsman
+			Angelic_Swordsman_Summoned_Buff: {
+				DisplayName: Angelic Swordsman
+				Description: Mods.Ferustria.Buffs.Angelic_Swordsman_Summoned_Buff.Description
+			}
 
 			Pyrite_Ignition_Status: {
 				DisplayName: Pyrite Ignition
@@ -83,10 +85,7 @@ Mods: {
 		Items: {
 			Mushrooms_Spawner: {
 				DisplayName: Mushrooms Spawner
-				Tooltip:
-					'''
-					
-					'''
+				Tooltip: ""
 			}
 
 			Pyrite_Cooler: {
@@ -122,16 +121,24 @@ Mods: {
 			Rotten_Chest_Cover: {
 				DisplayName: Condensed Rotten Chest Cover
 				Tooltip: Decreases taken damage by 5%
+				RottenChestCover: Mods.Ferustria.Items.Rotten_Chest_Cover.RottenChestCover
 			}
 
 			Rotten_Helmet: {
 				DisplayName: Condensed Rotten Helmet
 				Tooltip: Helmet eyepieces give +7% сrit сhance
+				SetBonus:
+					'''
+					Every time you get damage you gain additional defence and life regen.
+					Cannot exceed 30% of your initial defence.
+					Additionaly reduces taken damage by {0}%.
+					'''
 			}
 
 			Rotten_Leggings: {
 				DisplayName: Condensed Rotten Leggings
 				Tooltip: 5% decreased movement speed
+				RottenLeggings: Mods.Ferustria.Items.Rotten_Leggings.RottenLeggings
 			}
 
 			Thick_Blood_Potion: {
@@ -172,12 +179,35 @@ Mods: {
 				Tooltip: Disgusting thing, but higly durable
 			}
 
-			Barathrum_Sample.DisplayName: Barathrum Sample
-			Oppened_Casket.DisplayName: Oppend Casket
-			Inactive_Pyrite.DisplayName: Inactive Pyrite
-			Ceremonial_Knife_Piece.DisplayName: Broken Ceremonial Knife Piece
-			Pyrite_Core_Tool.DisplayName: Miltitool with Pyrite Core
-			Scavenger.DisplayName: Scavenger
+			Barathrum_Sample: {
+				DisplayName: Barathrum Sample
+				Tooltip: ""
+			}
+
+			Oppened_Casket: {
+				DisplayName: Oppend Casket
+				Tooltip: ""
+			}
+
+			Inactive_Pyrite: {
+				DisplayName: Inactive Pyrite
+				Tooltip: ""
+			}
+
+			Ceremonial_Knife_Piece: {
+				DisplayName: Broken Ceremonial Knife Piece
+				Tooltip: ""
+			}
+
+			Pyrite_Core_Tool: {
+				DisplayName: Miltitool with Pyrite Core
+				Tooltip: ""
+			}
+
+			Scavenger: {
+				DisplayName: Scavenger
+				Tooltip: ""
+			}
 
 			Unfinished_Guzzler: {
 				DisplayName: Unfinished Guzzler
@@ -202,7 +232,10 @@ Mods: {
 					'''
 			}
 
-			Book_of_Roots.DisplayName: Book of Roots
+			Book_of_Roots: {
+				DisplayName: Book of Roots
+				Tooltip: ""
+			}
 
 			Ceremonial_Knife: {
 				DisplayName: Ceremonial Knife
@@ -370,6 +403,15 @@ Mods: {
 			Light_Ball_Circle_6.DisplayName: Burning Light Ball
 			Light_Ball_Forward.DisplayName: Burning Light Ball
 			Barathrum_Echo.DisplayName: Barathrum Echo
+			Angelic_Spirit_Swordsman.DisplayName: Angelic_ Spirit_ Swordsman
+			Crucifixion_Halo_Foe.DisplayName: Crucifixion_ Halo_ Foe
+			Crucifixion_Halo_Player.DisplayName: Crucifixion_ Halo_ Player
+			Blood_Needle.DisplayName: Blood_ Needle
+			Crimson_Heal.DisplayName: Crimson_ Heal
+			Neon_Heal.DisplayName: Neon_ Heal
+			Rot_Sac.DisplayName: Rot_ Sac
+			Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
+			Laser_Line.DisplayName: Laser_ Line
 		}
 	}
 }

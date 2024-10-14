@@ -40,7 +40,7 @@ namespace Ferustria.Content.Items.Tools
 
 		public override void AddRecipes()
 		{
-            RegisterRecipe.Reg([ (ModContent.ItemType<Materials.Ore.Inactive_Pyrite>(), 16), (ItemID.HallowedBar, 6) ], Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ new(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>(), 16), new(ItemID.HallowedBar, 6) ], Type, tile: TileID.MythrilAnvil);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)

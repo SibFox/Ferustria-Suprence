@@ -84,17 +84,17 @@ namespace Ferustria.Players
             {
                 if (Player.HasBuff(BuffType<Shattered_Armor>()))
                 {
-                    int getMinuser = Convert.ToInt32(Math.Round(Player.statDefense / 2.0));
-                    if (getMinuser > 25) getMinuser = Convert.ToInt32(Player.statDefense - 25.0);
-                    Player.statDefense = getMinuser;
+                    int getMinuser = Player.statDefense / 2;
+                    if (getMinuser > 25) Player.statDefense -= 25;
+                    else Player.statDefense /= 2;
                 }
             }
 
             if (DeBuff_SlicedDefense_Applied)
             {
                 int getMinuser = Convert.ToInt32(Math.Round(Player.statDefense / 1.5));
-                if (getMinuser > 60) getMinuser = Convert.ToInt32(Player.statDefense - 60.0);
-                Player.statDefense = getMinuser;
+                if (getMinuser > 60) Player.statDefense -= 60;
+                else Player.statDefense -= Player.statDefense - getMinuser;
             }
         }
 

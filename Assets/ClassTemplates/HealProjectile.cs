@@ -68,7 +68,7 @@ namespace Ferustria.Assets.ClassTemplates
             }
             Lighting.AddLight(Projectile.position, Light.r, Light.g, Light.b);
             CreateTrail();
-            Vector2 center = (Projectile.position.X + Projectile.width * 0.5f, Projectile.position.Y + Projectile.height * 0.5f);
+            Vector2 center = new Vector2(Projectile.position.X + Projectile.width * 0.5f, Projectile.position.Y + Projectile.height * 0.5f);
             Projectile.velocity = (player.Center - Projectile.Center).SafeNormalize(default) * speed;
             if ((player.Center - center).Length() < 50f && Projectile.position.X < player.position.X + player.width && Projectile.position.X + Projectile.width > player.position.X && Projectile.position.Y < player.position.Y + player.height && Projectile.position.Y + Projectile.height > player.position.Y)
             {
@@ -86,7 +86,7 @@ namespace Ferustria.Assets.ClassTemplates
 
         public virtual void CreateTrail()
         {
-            Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, (0, 0), 60, default, 1f);
+            Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, new(0, 0), 60, default, 1f);
         }
     }
 }

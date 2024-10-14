@@ -45,7 +45,7 @@ namespace Ferustria.Content.Projectiles.Friendly
                                 {
                                     if (++Projectile.localAI[0] % 5 == 0)
                                     {
-                                        Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), (x * 16, y * 16), (0f, -4.5f), Projectile.type, Projectile.damage, 0.5f,
+                                        Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), new(x * 16, y * 16), new(0f, -4.5f), Projectile.type, Projectile.damage, 0.5f,
                                         Projectile.owner, 1f);
                                         proj.tileCollide = false;
                                         //Mod.Logger.Debug($"Checked Tile: {checkingTile};\n Above Tile: {tileAbove};\n X and Y: {x} : {y};\n" +

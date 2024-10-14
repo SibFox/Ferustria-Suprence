@@ -46,7 +46,7 @@ namespace Ferustria.Common.UIs.Elements
 
                 spriteBatch.Draw(textureBG, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight + pixelOff) / 2f, null, Color.White, 0f,
                     new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0);
-                Color gradientA = (0, (float)Main.time % 255, 255);
+                Color gradientA = new(0, (float)Main.time % 255, 255);
                 Color gradientB = new(11, 18, 136);
                 Color gradientC = Color.AliceBlue;
                 float charge = Main.LocalPlayer.GetModPlayer<Players.FSSpesialWeaponsPlayer>().BarathrumPruner_Charge * 0.01f;

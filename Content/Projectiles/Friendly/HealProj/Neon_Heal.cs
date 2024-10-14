@@ -21,7 +21,7 @@ namespace Ferustria.Content.Projectiles.Friendly.HealProj
 
         public override void CreateTrail()
         {
-            Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, (0, 0), 60, (0, Main.rand.Next(180, 256), 255), 1f);
+            Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, new(0, 0), 60, new(0, Main.rand.Next(180, 256), 255), 1f);
         }
     }
 }

@@ -22,14 +22,17 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 9;
-            NPCID.Sets.DebuffImmunitySets.Add(Type, new()
+
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rapid_Blood_Loss>()] = true;
+            // Influences how the NPC looks in the Bestiary
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
-                SpecificallyImmuneTo = [
-                    BuffID.Poisoned,
-                    ModContent.BuffType<Rapid_Blood_Loss>(),
-                    BuffID.Confused
-                ]
-            });
+                Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+                Direction = -1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
 
         public override void SetDefaults()

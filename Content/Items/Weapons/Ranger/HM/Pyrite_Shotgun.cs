@@ -112,8 +112,8 @@ namespace Ferustria.Content.Items.Weapons.Ranger.HM
 
         public override void AddRecipes()
         {
-            RegisterRecipe.Reg([ (ItemID.TitaniumBar, 8), (ItemID.HallowedBar, 14), (ModContent.ItemType<Inactive_Pyrite>(), 16), (ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
-            RegisterRecipe.Reg([ (ItemID.AdamantiteBar, 8), (ItemID.HallowedBar, 14), (ModContent.ItemType<Inactive_Pyrite>(), 16), (ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ new(ItemID.TitaniumBar, 8), new(ItemID.HallowedBar, 14), new(ModContent.ItemType<Inactive_Pyrite>(), 16), new(ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
+            RegisterRecipe.Reg([ new(ItemID.AdamantiteBar, 8), new(ItemID.HallowedBar, 14), new(ModContent.ItemType<Inactive_Pyrite>(), 16), new(ItemID.IllegalGunParts) ], Type, tile: TileID.MythrilAnvil);
         }
 
         public override Vector2? HoldoutOffset()

@@ -17,26 +17,12 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 	{
         public bool MakeCircle;
 
-		public override void SetStaticDefaults()
+        public static LocalizedText ChargeText { get; private set; }
+            
+
+
+        public override void SetStaticDefaults()
 		{
-			//DisplayName.SetDefault("Ceremonial Knife");
-   //         DisplayName.AddTranslation(FSHelper.RuTrans, "Церемониальный нож");
-   //         Tooltip.SetDefault("Fires a magical slash that can cut through multiple enemies at once.\n" +
-   //             "Each damage dealt charges the blade.\n" +
-   //             "When the blade is fully charged, press RMB to release 3 blades.\n" +
-   //             "These blades will circle around you.\n" +
-   //             "Knife also charges over time.\n" +
-   //             "Discharges quickly, when the weapon is not in your hands.\n" +
-   //             "Charge costs 25 mana." +
-   //             "\n<CHARGE>");
-   //         Tooltip.AddTranslation(FSHelper.RuTrans, "Выпускает магический разрез, который может разрезать нескольких врагов за раз.\n" +
-   //             "Каждое нанесение урона заряжает этот клинок.\n" +
-   //             "Когда клинок полностью заряжен, нажмите ПКМ, чтобы выпустить 3 клинка.\n" +
-   //             "Эти клинки будут кружить вокруг вас.\n" +
-   //             "Нож также заряжается сам со временем.\n" +
-   //             "Заряд начинает быстро спадать, если убрать оружие из рук.\n" +
-   //             "Заряд стоит 25 маны." +
-   //             "\n<CHARGE>");
             Item.ResearchUnlockCount = 1;
 		}
 
@@ -102,15 +88,15 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            string theText;
             float charge = Main.LocalPlayer.GetModPlayer<Players.FSSpesialWeaponsPlayer>().CKnifeL1_Knifes_Charge;
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) theText = $"Клинки заряжены на {charge:N1}%";
-            else theText = $"Blades are charged for {charge:N1}%";
+            //string theText;
+            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) theText = $"Клинки заряжены на {charge:N1}%";
+            //else theText = $"Blades are charged for {charge:N1}%";
             foreach (var line in tooltips)
             {
                 if (line.Mod == "Terraria" && line.Text == "<CHARGE>")
                 {
-                    line.Text = theText;
+                    line.Text = this.GetLocalization("SetBonus").Format(charge);
                     line.OverrideColor = charge >= 100f ? Color.Aqua : Color.Blue;
                 }
             }
@@ -123,10 +109,10 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 
         public override void AddRecipes()
         {
-            RegisterRecipe.Reg([ (ModContent.ItemType<Ceremonial_Knife_Piece>(), 5), (ItemID.Bone, 30), (ModContent.ItemType<Reinforced_Living_Fiber_Tube>(), 5),
-                (ItemID.IllegalGunParts), (ItemID.GoldBar, 8) ], Type, tile: TileID.Anvils);
-            RegisterRecipe.Reg([ (ModContent.ItemType<Ceremonial_Knife_Piece>(), 5), (ItemID.Bone, 30), (ModContent.ItemType<Reinforced_Living_Fiber_Tube>(), 5),
-                (ItemID.IllegalGunParts), (ItemID.PlatinumBar, 8) ], Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ new(ModContent.ItemType<Ceremonial_Knife_Piece>(), 5), new(ItemID.Bone, 30), new(ModContent.ItemType<Reinforced_Living_Fiber_Tube>(), 5),
+                new(ItemID.IllegalGunParts), new(ItemID.GoldBar, 8) ], Type, tile: TileID.Anvils);
+            RegisterRecipe.Reg([ new(ModContent.ItemType<Ceremonial_Knife_Piece>(), 5), new(ItemID.Bone, 30), new(ModContent.ItemType<Reinforced_Living_Fiber_Tube>(), 5),
+                new(ItemID.IllegalGunParts), new(ItemID.PlatinumBar, 8) ], Type, tile: TileID.Anvils);
         }
     }
 }

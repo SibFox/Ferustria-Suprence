@@ -9,12 +9,8 @@ namespace Ferustria.Content.Projectiles.Hostile
 	public class Light_Ball_Forward : ModProjectile
 	{
 		private int upwards;
-		public override string Texture => "Ferustria/Assets/Textures/Projectiles/Burning_Light_Ball";
+		public override string Texture => Ferustria.Paths.TexturesPathPrj + "Burning_Light_Ball";
 
-		public override void SetStaticDefaults()
-		{
-			DisplayName.SetDefault("Burning Light Ball");
-		}
 
 		public override void SetDefaults()
 		{
@@ -63,8 +59,8 @@ namespace Ferustria.Content.Projectiles.Hostile
 			Projectile.rotation += 0.15f * Projectile.direction;
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
-		{
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
 			//target.AddBuff(ModContent.BuffType<Under_Crucifixion_Tier2>(), Main.rand.Next(4, 10) * 60);
 		}
 	}

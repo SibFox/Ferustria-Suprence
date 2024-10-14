@@ -37,7 +37,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
 		public override void AddRecipes()
 		{
-            RegisterRecipe.Reg([ (ItemID.DemoniteBar, 8), (ItemID.Ebonwood, 25) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([new(ItemID.DemoniteBar, 8), new(ItemID.Ebonwood, 25) ], Type, tile: TileID.DemonAltar);
             RegisterRecipe.Reg([ new(ItemID.CrimtaneBar, 8), new(ItemID.Shadewood, 25) ], Type, tile: TileID.DemonAltar);
         }
 

@@ -112,9 +112,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            //float holder = modifiers.SourceDamage;
-            modifiers.SourceDamage += modifiers.SourceDamage * (target.GetGlobalNPC<GlobalNPCEffects>().Recraphor_Infestation / 100);
-            //modifiers.SourceDamage = (int)holder;
+            modifiers.SourceDamage += modifiers.SourceDamage.Base * (target.GetGlobalNPC<GlobalNPCEffects>().Recraphor_Infestation / 100);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

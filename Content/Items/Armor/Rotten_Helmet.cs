@@ -14,21 +14,21 @@ namespace Ferustria.Content.Items.Armor
 	[AutoloadEquip(EquipType.Head)]
 	public class Rotten_Helmet : ModItem
 	{
-        public LocalizedText RottenHelmet => this.GetLocalization(nameof(RottenHelmet));
-
-        public static LocalizedText RottenArmorSetBonus { get; private set; }
+        public static LocalizedText SetBonusText { get; private set; }
+        private int bonusEndurance = 10;
 
         public override void SetStaticDefaults()
         {
-            _ = RottenHelmet;
+            SetBonusText = this.GetLocalization("SetBonus").WithFormatArgs(bonusEndurance);
+
             Item.ResearchUnlockCount = 1;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+            //CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
 
             // If your head equipment should draw hair while drawn, use one of the following:
             ArmorIDs.Head.Sets.DrawHead[Item.headSlot] = false; // Don't draw the head at all. Used by Space Creature Mask
 			// ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true; // Draw hair as if a hat was covering the top. Used by Wizards Hat
 			// ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true; // Draw all hair as normal. Used by Mime Mask, Sunglasses
-			ArmorIDs.Head.Sets.DrawBackHair[Item.headSlot] = true;
+			ArmorIDs.Head.Sets.DrawsBackHairWithoutHeadgear[Item.headSlot] = true;
 			// ArmorIDs.Head.Sets.DrawsBackHairWithoutHeadgear[Item.headSlot] = true; 
 		}
 
@@ -52,16 +52,16 @@ namespace Ferustria.Content.Items.Armor
 
 		// UpdateArmorSet allows you to give set bonuses to the armor.
 		public override void UpdateArmorSet(Player player) {
-            player.endurance += 0.1f;
+            player.endurance += bonusEndurance / 100f;
             player.GetModPlayer<FSSpecialArmorPlayer>().RottenArmor_SetBonus = true;
-            string tip = "Every time you get damage you gain additional defence and life regen.\n" +
-                "Cannot exceed 30% of your initial defence.\n" +
-                "Additionaly reduces taken damage by 10%.";
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans)
-                tip = "Каждый раз, как вы полчаете урон, ваша защита и регенерация возрастает.\n" +
-                    "Максимум до дополнительных 30% от изначальной защиты.\n" +
-                    "Дополнительно уменьшает получаемый урон на 10%.";
-                player.setBonus = tip; // This is the setbonus tooltip
+            //string tip = "Every time you get damage you gain additional defence and life regen.\n" +
+            //    "Cannot exceed 30% of your initial defence.\n" +
+            //    "Additionaly reduces taken damage by 10%.";
+            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans)
+            //    tip = "Каждый раз, как вы полчаете урон, ваша защита и регенерация возрастает.\n" +
+            //        "Максимум до дополнительных 30% от изначальной защиты.\n" +
+            //        "Дополнительно уменьшает получаемый урон на 10%.";
+                player.setBonus = SetBonusText.Value; // This is the setbonus tooltip
 		}
 
         public override void AddRecipes()

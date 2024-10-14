@@ -39,8 +39,8 @@ namespace Ferustria.Content.Items.Tools
 
 		public override void AddRecipes()
 		{
-            RegisterRecipe.Reg([ (ItemID.NightmarePickaxe), (ModContent.ItemType<Impure_Dust>(), 8) ], Type, tile: TileID.DemonAltar);
-            RegisterRecipe.Reg([ (ItemID.DeathbringerPickaxe), (ModContent.ItemType<Impure_Dust>(), 8) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.NightmarePickaxe), new(ModContent.ItemType<Impure_Dust>(), 8) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.DeathbringerPickaxe), new(ModContent.ItemType<Impure_Dust>(), 8) ], Type, tile: TileID.DemonAltar);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)

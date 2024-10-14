@@ -27,11 +27,6 @@ namespace Ferustria.Assets.ClassTemplates
 			set => Projectile.ai[1] = value;
 		}
 
-		public override void SetStaticDefaults()
-		{
-            DisplayName.SetDefault("");
-        }
-
         public int hitbox = 10;
         public float scale = 1f;
         public DamageClass damgeType = DamageClass.Default;
@@ -42,7 +37,7 @@ namespace Ferustria.Assets.ClassTemplates
 
         
         private string _texture = Ferustria.emptyPixel;
-        public string SetTexture { get => _texture; set => _texture = value; }
+        public string SetTexture { get => _texture; set => _texture = Mod.Name + "/" + value; }
         public override string Texture => SetTexture;
 
 

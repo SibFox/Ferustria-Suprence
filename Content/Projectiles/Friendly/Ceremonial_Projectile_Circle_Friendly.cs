@@ -137,7 +137,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             int startY = frameHeight * Projectile.frame;
 
             // Get this frame on texture
-            Rectangle sourceRectangle = (0, startY, texture.Width, frameHeight);
+            Rectangle sourceRectangle = new(0, startY, texture.Width, frameHeight);
 
             // Alternatively, you can skip defining frameHeight and startY and use this:
             // Rectangle sourceRectangle = texture.Frame(1, Main.projFrames[Projectile.type], frameY: Projectile.frame);

@@ -14,7 +14,6 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Book of Roots");
             Item.ResearchUnlockCount = 1;
 			Item.staff[Item.type] = true;
 		}

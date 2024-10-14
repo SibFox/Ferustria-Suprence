@@ -31,7 +31,7 @@ namespace Ferustria.Content.Items.Ammo
 
         public override void AddRecipes()
         {
-            RegisterRecipe.Reg(new(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>()), Type, 150);
+            RegisterRecipe.Reg(new CraftMaterial(ModContent.ItemType<Materials.Ore.Inactive_Pyrite>()), Type, 150);
         }
     }
 }

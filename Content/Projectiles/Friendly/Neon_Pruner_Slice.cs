@@ -79,7 +79,7 @@ namespace Ferustria.Content.Projectiles.Friendly
         public override void OnSpawn(IEntitySource source)
         {
             if (Cleave_Level == 0)
-                Kill(0);
+                OnKill(0);
             if (Cleave_Level == 1)
             {
                 Projectile.scale = 2f;

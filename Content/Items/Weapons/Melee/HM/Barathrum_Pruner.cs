@@ -21,23 +21,6 @@ namespace Ferustria.Content.Items.Weapons.Melee.HM
 
 		public override void SetStaticDefaults()
 		{
-            //DisplayName.SetDefault("Barathrum Pruner");
-            //Tooltip.SetDefault("Giant sword that cuts enemies defence with its neon blade.\n" +
-            //             "Deals more damage to unhurt enemies.\n" +
-            //             "With each hit, it accumulates a charge of the kinetic coil.\n" +
-            //             "RMB to release [c/00f1f1:Neon Cleaver] that cuts through enemies.\n" +
-            //             "The strength of [c/00f1f1:Neon Cleaver] depends on the charge level.\n" +
-            //             "At level 3, unleash [c/00bbbb:Giant Cleaver] that inflicts Frostburn.\n" +
-            //             "[c/00f1f1:Neon Cleaver] also heals you when you hit an enemy. Regeneration depends on the level of charge.");
-            //DisplayName.AddTranslation(FSHelper.RuTrans, "Секатор Пустоты");
-            //Tooltip.AddTranslation(FSHelper.RuTrans, "Гигантсикй меч, который разрезает броню врага своим неоновым клинком.\n" +
-            //             "Наносит больше урона неповреждённым врагам.\n" +
-            //             "При каждом ударе накапливает заряд кинетической катушки.\n" +
-            //             "При нажатии ПКМ выпускает [c/00f1f1:Неоновый Тесак] прорубающий врагов насквозь.\n" +
-            //             "Сила [c/00f1f1:Тесака] зависит от уровня заряда.\n" +
-            //             "На 3-ем уровне заряда выпускает [c/00bbbb:Гигантский Тесак], который при этом накладывает Ледяной Ожог.\n" +
-            //             "[c/00f1f1:Неоновый Тесак] также излечивает вас при попадании по врагу. Лечение зависит от уровня заряда.");
-
             Item.ResearchUnlockCount = 1;
 		}
 
@@ -102,7 +85,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.HM
 
         public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (target.life >= target.lifeMax) modifiers.SourceDamage *= 2.2;
+            if (target.life >= target.lifeMax) modifiers.SourceDamage *= 2.2f;
         }
 
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)

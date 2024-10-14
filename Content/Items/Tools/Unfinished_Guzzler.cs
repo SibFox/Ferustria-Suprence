@@ -79,8 +79,8 @@ namespace Ferustria.Content.Items.Tools
 
         public override void AddRecipes()
 		{
-            RegisterRecipe.Reg([ (ItemID.WarAxeoftheNight), (ItemID.TheBreaker), (ModContent.ItemType<Impure_Dust>(), 10) ], Type, tile: TileID.DemonAltar);
-            RegisterRecipe.Reg([ (ItemID.BloodLustCluster), (ItemID.FleshGrinder), (ModContent.ItemType<Impure_Dust>(), 10)], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.WarAxeoftheNight), new(ItemID.TheBreaker), new(ModContent.ItemType<Impure_Dust>(), 10) ], Type, tile: TileID.DemonAltar);
+            RegisterRecipe.Reg([ new(ItemID.BloodLustCluster), new(ItemID.FleshGrinder), new(ModContent.ItemType<Impure_Dust>(), 10)], Type, tile: TileID.DemonAltar);
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox)
