@@ -15,7 +15,7 @@ namespace Ferustria.Content.Items.SummonItems
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 3;
-            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
+            ItemID.Sets.SortingPriorityBossSpawns[Type] = 12; // This helps sort inventory know that this is a boss summoning Item.
         }
 
         public override void SetDefaults()
@@ -27,6 +27,11 @@ namespace Ferustria.Content.Items.SummonItems
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.value = Item.sellPrice(0, 0, 0, 0);
             Item.rare = ItemRarityID.White;
+        }
+
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup)
+        {
+            itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossSpawners;
         }
 
         public override bool? UseItem(Player player)
@@ -64,7 +69,6 @@ namespace Ferustria.Content.Items.SummonItems
         public override bool CanUseItem(Player player)
         {
             return !NPC.AnyNPCs(ModContent.NPCType<Six_Winged_Seraph_Boss>());
-            //return NPC.CountNPCS(ModContent.NPCType<NPCs.Bosses.HM.SixWingedSeraphBoss.Six_Winged_Seraph_Boss>()) < 1;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             stickyTimeLeft = 120;
             hitEffectTimer = 120;
             MAX_STICKY_PROJECTILE = 3;
-            SetTexture = "Assets/Textures/Projectiles/Rot_Sac";
+            SetTexture = Ferustria.Paths.TexturesPathPrj + "Rot_Sac";
         }
 
         public override void CreateTrail()

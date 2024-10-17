@@ -53,7 +53,7 @@ namespace Ferustria.Content.Items.Tools
 
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-			target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(2, 7) * 60);
+			target.AddBuff(ModContent.BuffType<Weak_Barathrum_Leach>(), Main.rand.Next(2, 4) * 60);
 		}
 
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)

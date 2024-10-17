@@ -19,8 +19,6 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
 
         public static LocalizedText ChargeText { get; private set; }
             
-
-
         public override void SetStaticDefaults()
 		{
             Item.ResearchUnlockCount = 1;
@@ -96,7 +94,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.PreHM
             {
                 if (line.Mod == "Terraria" && line.Text == "<CHARGE>")
                 {
-                    line.Text = this.GetLocalization("SetBonus").Format(charge);
+                    line.Text = this.GetLocalization("ChargeTip").Format(charge);
                     line.OverrideColor = charge >= 100f ? Color.Aqua : Color.Blue;
                 }
             }

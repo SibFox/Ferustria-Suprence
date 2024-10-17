@@ -8,7 +8,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 {
 	public class Rot_Petal : ModProjectile
 	{
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;

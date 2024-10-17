@@ -16,8 +16,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 {
     public class Mutilated_Zombie : ModNPC
     {
-        public int jumpCD, leapCD, roarCD;
-        public bool leap = false, leaped = false, climb = false, enraged = false;
+        int jumpCD, leapCD, roarCD;
+        bool leap = false, leaped = false, climb = false, enraged = false;
 
         public override void SetStaticDefaults()
         {
@@ -26,13 +26,13 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rapid_Blood_Loss>()] = true;
+
             // Influences how the NPC looks in the Bestiary
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new()
             {
                 Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
                 Direction = -1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
-            };
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            });
         }
 
         public override void SetDefaults()
@@ -220,16 +220,16 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            string text = "The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.";
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
-                text = "Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. Они становятся в разы страшнее, чем меньше у них здоровье.";
+            //string text = "The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.";
+            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
+            //    text = "Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. Они становятся в разы страшнее, чем меньше у них здоровье.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				// Sets the spawning conditions of this NPC that is listed in the bestiary.
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 				// Sets the description of this NPC that is listed in the bestiary.
-				new FlavorTextBestiaryInfoElement(text)
+				new FlavorTextBestiaryInfoElement("Mods.Ferustria.Bestiary.Mutilated_Zombie")
             });
         }
     }

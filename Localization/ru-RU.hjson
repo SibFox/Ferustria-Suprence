@@ -1,5 +1,10 @@
 Mods: {
 	Ferustria: {
+		Common: {
+			ChargeNotifications: {
+				Rozaline: Заколи их всех!
+			}
+		}
 		Buffs: {
 			Rapid_Blood_Loss: {
 				DisplayName: Быстрая кровопотеря
@@ -17,21 +22,21 @@ Mods: {
 			}
 
 			Under_Crucifixion_Tier1: {
-				// DisplayName: Under Crusifixion
-				/* Description:
+				DisplayName: Под Распятием
+				Description:
 					'''
-					You feel blessed!
-					Even if you don't think, you are...
-					''' */
+					Вы благославлены!
+					Даже если вам так не кажется...
+					'''
 			}
 
 			Under_Crucifixion_Tier2: {
-				// DisplayName: Under Crusifixion
-				/* Description:
+				DisplayName: Под Распятием
+				Description:
 					'''
-					You feel your sins crawl on your back.
-					Something not good is going to happen...
-					''' */
+					Вы чувствуете, как по вашей спине ползут все ваши грехи.
+					Случится что-то плохое...
+					'''
 			}
 
 			Weak_Barathrum_Leach: {
@@ -250,6 +255,7 @@ Mods: {
 					Заряд стоит 25 маны.
 					<CHARGE>
 					'''
+				ChargeTip: Клинки заряжены на {0:n1}%
 			}
 
 			Corruption_Spreader: {
@@ -308,14 +314,15 @@ Mods: {
 					Бьёт уникальной комбо атакой.
 					Оставляет след из [c/E45C5F:Кровавых Роз] на кончике копья.
 					[c/E45C5F:Розы] присасываются к врагу и заставляют его [c/e43a20:Быстро Кровоточить].
-					Пока [c/E45C5F:Розы] вистя на враге, они медленно [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
+					Пока [c/E45C5F:Розы] висят на враге, они медленно [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
 					Через время, [c/E45C5F:Роза] распадается на [c/885041:Шипы].
-					При поадании по врагу, они вызывают у него  [c/e43a20:Быстро Кровопотерю] и [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
+					При поадании по врагу, они вызывают у него [c/e43a20:Быструю Кровопотерю] и [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
 					Убийство врага [c/a6cc34:заряжают] [c/ff9ba8:Розалину].
 					Когда [c/ff9ba8:Розалина] полностью [c/a6cc34:заряжена], нажмите ПКМ, чтобы испустить вокруг себя кучу [c/885041:Шипов].
 					Они имеют шанс слабо вас излечить.
 					<CHARGE>
 					'''
+				ChargeTip: Шипы заряжены на {0:N1}%
 			}
 
 			Pyrite_Machinegun: {
@@ -338,10 +345,10 @@ Mods: {
 			}
 
 			Barathrum_Spreader: {
-				DisplayName: Распростронитель Пустоты
+				DisplayName: Распростронитель Баратрума
 				Tooltip:
 					'''
-					Пламя Пустоты. Поджигает врагов пустотным пламенем.
+					Пламя Баратрума. Поджигает врагов пламенем из Пропасти.
 					25% шанс не потратить гель.
 					'''
 			}
@@ -369,7 +376,7 @@ Mods: {
 					Заражение увеличивает урон микрооганизмов по цели.
 					При достаточном заражении, из жертвы появятся ещё микроорганизмы.
 					Выстреливает от 1 до 4 микроорганизмов.
-					Для стрельбы необходим [c/a0af6a:Баллон с Живыми Соединениями]
+					Для стрельбы необходим [c/a0af6a:{$Mods.Ferustria.Items.Live_Compound_Tank.DisplayName}].
 					'''
 			}
 
@@ -417,6 +424,11 @@ Mods: {
 			// Rot_Sac.DisplayName: Rot_ Sac
 			// Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
 			// Laser_Line.DisplayName: Laser_ Line
+		}
+
+		Bestiary: {
+			Fathomless_Fly: Эта мушка ищет хоть что, чем бы себя заполнить.
+			Mutilated_Zombie: Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. Они становятся в разы страшнее, чем меньше у них здоровье.
 		}
 	}
 }

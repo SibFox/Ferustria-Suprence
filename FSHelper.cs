@@ -40,6 +40,7 @@ namespace Ferustria
         }        
 
         internal static Item GetItem<T>() where T : ModItem => ModContent.GetModItem(ModContent.ItemType<T>()).Item;
+        internal static string GetItemName<T>() where T : ModItem => ModContent.GetModItem(ModContent.ItemType<T>()).Item.Name;
 
         //// Баллистический рассчёт
         // Solve firing angles for a ballistic projectile with speed and gravity to hit a fixed position.
@@ -111,25 +112,46 @@ namespace Ferustria
     internal static class Extensions
     {
         // Vector2
-        internal static Vector2 GetVectorWithAngle(float angle) => new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
-        internal static Vector2 GetVectorToAngle(this Vector2 vector, float angle) => vector * new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default);
+        internal static Vector2 GetVectorWithAngle(float angle) => new((float)Math.Cos(angle), (float)Math.Sin(angle));
+        internal static Vector2 GetVectorWithAngle(double angle) => new((float)Math.Cos(angle), (float)Math.Sin(angle));
+        internal static Vector2 GetVectorToAngle(this Vector2 vector, float angle, bool normalize = true)
+        {
+            vector *= new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+            if (normalize) vector.SafeNormalize(default);
+            return vector;
+        }
+        internal static Vector2 GetVectorToAngle(this Vector2 vector, double angle, bool normalize = true)
+        {
+            vector *= new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+            if (normalize) vector.SafeNormalize(default);
+            return vector;
+        }
         internal static Vector2 GetVectorToAngleWithMult(this Vector2 vector, float angle, float speed) =>
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
         internal static Vector2 GetVectorToAngleWithMult(this Vector2 vector, double angle, float speed) =>
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
         public static void ApplyMuzzleOffset(this Vector2 position, Vector2 velocity, float offset = 25f)
         {
-            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * offset;
             if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
             {
                 position += muzzleOffset;
             }
         }
+        public static Vector2 ReturnMuzzleOffset(this Vector2 position, Vector2 velocity, float offset = 25f)
+        {
+            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
+            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
+            {
+                position += muzzleOffset;
+            }
+            return position;
+        }
 
 
         // Tile
-        internal static bool IsTileSolid(this Tile tile) => Main.tileSolid[tile.TileType] && tile.HasTile && tile.TileType != TileID.Platforms;
-        internal static bool IsTileEmpty(this Tile tile) => !Main.tileSolid[tile.TileType] && !tile.HasTile && tile.TileType != TileID.Platforms;
+        internal static bool IsTileSolid(this Tile tile) => tile.HasTile && Main.tileSolid[tile.TileType] && tile.TileType != TileID.Platforms;
+        internal static bool IsTileEmpty(this Tile tile) => !tile.HasTile && !Main.tileSolid[tile.TileType] && tile.TileType != TileID.Platforms;
 
 
         // NPC

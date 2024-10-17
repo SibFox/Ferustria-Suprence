@@ -18,7 +18,7 @@ namespace Ferustria.Common.UIs.Elements
             Texture2D textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("CKnife1", true));
 
 
-            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Ceremonial_Knife>().Name && !Main.LocalPlayer.dead)
+            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItemName<Ceremonial_Knife>() && !Main.LocalPlayer.dead)
             {
                 spriteBatch.Draw(textureBG, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight - 120) / 2f, Color.White);
                 Color gradientA = Color.Blue;

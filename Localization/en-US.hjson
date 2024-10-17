@@ -1,5 +1,10 @@
 Mods: {
 	Ferustria: {
+	Common: {
+			ChargeNotifications: {
+				Rozaline: Spikes ready!
+			}
+		}
 		Buffs: {
 			Rapid_Blood_Loss: {
 				DisplayName: Rapid Blood Loss
@@ -250,6 +255,7 @@ Mods: {
 					Charge costs 25 mana.
 					<CHARGE>
 					'''
+				ChargeTip: Blades are charged for {0:n1}%
 			}
 
 			Corruption_Spreader: {
@@ -311,6 +317,7 @@ Mods: {
 					They have a chanse to heal you a little.
 					<CHARGE>
 					'''
+				ChargeTip: Thorns are charged for {0:N1}%
 			}
 
 			Pyrite_Machinegun: {
@@ -364,7 +371,7 @@ Mods: {
 					Infection increases microbial damage against the target.
 					Sufficient infestation will produce more micro-organisms from the victim.
 					Shoots 1 to 4 microorganisms.
-					Requires [c/a0af6a:Living Compound Tank] to shoot
+					Requires [c/a0af6a:{$Mods.Ferustria.Items.Live_Compound_Tank.DisplayName}] to shoot.
 					'''
 			}
 
@@ -412,6 +419,11 @@ Mods: {
 			Rot_Sac.DisplayName: Rot_ Sac
 			Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
 			Laser_Line.DisplayName: Laser_ Line
+		}
+
+		Bestiary: {
+			Fathomless_Fly: This fly is searching for anything to fill itself.
+			Mutilated_Zombie: The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.
 		}
 	}
 }

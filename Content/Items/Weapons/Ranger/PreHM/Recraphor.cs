@@ -22,7 +22,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 
 		public override void SetDefaults()
 		{
-			Item.damage = 32;
+			Item.damage = 28;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;
 			Item.crit = 4;
@@ -66,6 +66,14 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
                 .AddIngredient(ItemID.IllegalGunParts)
                 .AddIngredient<Reinforced_Living_Fiber_Tube>(5)
                 .AddIngredient(ItemID.GoldBar, 8)
+                .AddTile(TileID.Anvils)
+                .Register();
+            CreateRecipe()
+                .AddIngredient<Impure_Dust>(14)
+                .AddIngredient(ItemID.Bone, 40)
+                .AddIngredient(ItemID.IllegalGunParts)
+                .AddIngredient<Reinforced_Living_Fiber_Tube>(5)
+                .AddIngredient(ItemID.PlatinumBar, 8)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

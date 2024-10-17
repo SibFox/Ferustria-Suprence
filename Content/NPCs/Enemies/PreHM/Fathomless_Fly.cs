@@ -26,15 +26,16 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 4;
+
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Weak_Barathrum_Leach>()] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new()
             {
                 Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
                 Direction = -1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
-            };
+            });
         }
 
         public override void SetDefaults()
@@ -136,17 +137,23 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        if (!triple)
+                        int projs = triple ? 3 : 1;
+                        float rotation = MathHelper.ToRadians(14);
+                        for (float i = 1; i <= projs; i++)
                         {
-                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(MathHelper.Lerp(rotation, -rotation, i / projs)), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
                         }
-                        else if (triple)
-                        {
-                            float rotation = MathHelper.ToRadians(14);
-                            Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(-rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                            Projectile proj2 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                            Projectile proj3 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                        }
+                        //if (!triple)
+                        //{
+                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                        //}
+                        //else if (triple)
+                        //{
+
+                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(-rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                        //}
                     }
                     NPC.velocity.X = -NPC.velocity.X * 4.5f;
                     NPC.velocity.Y = -NPC.velocity.Y * 4.5f;
@@ -171,19 +178,20 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Barathrum_Sample>(), 11));
 		}
 
+        public static LocalizedText BestiaryEntry { get; private set; }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            string text;
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
-                text = "Эта мушка ищет хоть что, чем бы себя заполнить.";
-            else text = "This fly is looking for anything to fill itself.";
+            //string text;
+            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
+            //    text = "Эта мушка ищет хоть что, чем бы себя заполнить.";
+            //else text = "This fly is looking for anything to fill itself.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 // Sets the spawning conditions of this NPC that is listed in the bestiary.
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
                 // Sets the description of this NPC that is listed in the bestiary.
-                new FlavorTextBestiaryInfoElement(text)
+                new FlavorTextBestiaryInfoElement("Mods.Ferustria.Bestiary.Fathomless_Fly")
             });
         }
 	}

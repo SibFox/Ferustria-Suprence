@@ -23,7 +23,7 @@ namespace Ferustria.Content.Projectiles.Friendly
             stickyTimeLeft = 180;
             hitEffectTimer = 25;
             MAX_STICKY_PROJECTILE = 4;
-            SetTexture = "Assets/Textures/Projectiles/Blood_Needle";
+            SetTexture = Ferustria.Paths.TexturesPathPrj + "Blood_Needle";
         }
 
         public override void HitEffect()

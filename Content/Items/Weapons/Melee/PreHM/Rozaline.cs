@@ -76,12 +76,12 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
             if (type == ModContent.ProjectileType<Rozaline_SpearProjectile>())
             {
-                float maxAngel = 0f;
+                float maxAngle = 0f;
                 comboManager.Rozaline_Combo_Count++;
                 if (comboManager.Rozaline_Combo_Count > 4) comboManager.Rozaline_Combo_Count = 1;
                 switch (comboManager.Rozaline_Combo_Count)
                 {
-                    case 0: case 1: case 2: comboManager.Rozaline_UseCooldown = 25; comboManager.Rozaline_SpearTime = 17; maxAngel = 90f; break;
+                    case 0: case 1: case 2: comboManager.Rozaline_UseCooldown = 25; comboManager.Rozaline_SpearTime = 17; maxAngle = 90f; break;
                     case 3: comboManager.Rozaline_UseCooldown = 40; comboManager.Rozaline_SpearTime = 8; break;
                     case 4: comboManager.Rozaline_UseCooldown = 48; comboManager.Rozaline_SpearTime = 25; break;
                 }
@@ -89,15 +89,16 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
                 comboManager.Rozaline_Combo_Timer = 25 + comboManager.Rozaline_UseCooldown;
                 if (Main.myPlayer == player.whoAmI)
                 {
-                    float putAi = 0f;
-                    switch (comboManager.Rozaline_Combo_Count)
-                    {
-                        case 1: putAi = 1f; break;
-                        case 2: putAi = 2f; break;
-                        case 3: putAi = 3f; break;
-                        case 4: putAi = 6f; break;
-                    }
-                    int id = Projectile.NewProjectile(Item.GetSource_FromThis(), position, velocity, type, (int)(damage * 1.5), knockback, player.whoAmI, putAi, maxAngel);
+                    //float putAi = 0f;
+                    //switch (comboManager.Rozaline_Combo_Count)
+                    //{
+                    //    case 1: putAi = 1f; break;
+                    //    case 2: putAi = 2f; break;
+                    //    case 3: putAi = 3f; break;
+                    //    case 4: putAi = 6f; break;
+                    //}
+                    int id = Projectile.NewProjectile(Item.GetSource_FromThis(), position, velocity, type, (int)(damage * 1.5), knockback, player.whoAmI, 
+                        comboManager.Rozaline_Combo_Count == 4 ? 6f : comboManager.Rozaline_Combo_Count, maxAngle);
                     Projectile proj = Main.projectile[id];
                     proj.timeLeft = comboManager.Rozaline_SpearTime;
                 }
@@ -121,10 +122,7 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
             return false;
         }
 
-        public override bool AltFunctionUse(Player player)
-        {
-            return player.GetModPlayer<Players.FSSpesialWeaponsPlayer>().Rozaline_ChargedUp_Notification;
-        }
+        public override bool AltFunctionUse(Player player) => player.GetModPlayer<Players.FSSpesialWeaponsPlayer>().Rozaline_ChargedUp_Notification;
 
         public override bool CanUseItem(Player player)
         {
@@ -145,15 +143,15 @@ namespace Ferustria.Content.Items.Weapons.Melee.PreHM
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            string theText;
             float charge = Main.LocalPlayer.GetModPlayer<Players.FSSpesialWeaponsPlayer>().Rozaline_Spikes_ChargeMeter;
-            if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) theText = $"Шипы заряжены на {charge:N1}%";
-            else theText = $"Thorns are charged for {charge:N1}%";
+            //string theText;
+            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) theText = $"Шипы заряжены на {charge:N1}%";
+            //else theText = $"Thorns are charged for {charge:N1}%";
             foreach (var line in tooltips)
             {
                 if (line.Mod == "Terraria" && line.Text == "<CHARGE>")
                 {
-                    line.Text = theText;
+                    line.Text = this.GetLocalization("ChargeTip").Format(charge);
                     line.OverrideColor = charge >= 100f ? Color.GreenYellow : Color.DarkGreen;
                 }
             }

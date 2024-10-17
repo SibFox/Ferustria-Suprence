@@ -21,7 +21,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
         Vector2 savedVel;
 
         float Sequence => Projectile.ai[0];
-        float maxAngle => Projectile.ai[1];
+        float MaxAngle => Projectile.ai[1];
         bool secondHitbox = false;
 
         public override void SetDefaults()
@@ -30,6 +30,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
             Projectile.width = 35;
             Projectile.height = 35;
             if (Sequence > 2) { Projectile.localNPCHitCooldown = -1; Projectile.usesLocalNPCImmunity = true; }
+            Projectile.ownerHitCheck = true;
             Projectile.hide = false;
         }
 
@@ -58,7 +59,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                         if (!secondHitbox)
                         {
                             Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis("Hitbox"), Projectile.position, savedVel, ModContent.ProjectileType<Rozaline_SpearProjectile>(),
-                                Projectile.damage, Projectile.knockBack, Projectile.owner, Sequence, maxAngle);
+                                Projectile.damage, Projectile.knockBack, Projectile.owner, Sequence, MaxAngle);
                             proj.timeLeft = duration;
                         }
                         break;
@@ -67,7 +68,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                         if (!secondHitbox)
                         {
                             Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis("Hitbox"), Projectile.position, savedVel, ModContent.ProjectileType<Rozaline_SpearProjectile>(),
-                                Projectile.damage, Projectile.knockBack, Projectile.owner, 2f, maxAngle);
+                                Projectile.damage, Projectile.knockBack, Projectile.owner, Sequence, MaxAngle);
                             proj.timeLeft = duration;
                         }
                         break;
@@ -82,15 +83,13 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
 
             if (Sequence == 1f || Sequence == 2f)
             {
-
                 int modifier = Sequence % 2 == 0 ? 1 : -1;
 
                 //float progress = modifier == -1 ? (float)Projectile.timeLeft / (float)duration : ((float)duration - (float)Projectile.timeLeft) / (float)duration;
-                float progress = Projectile.timeLeft / (float)duration * modifier;
-                angle = (float)(2.0 * Math.PI * progress) * (MathHelper.ToRadians(maxAngle) / MathHelper.TwoPi / MathHelper.TwoPi);
+                float progress = Projectile.timeLeft / (float)duration * modifier * Projectile.direction;
+                angle = (float)(MathHelper.TwoPi * progress) * (MathHelper.ToRadians(MaxAngle) / MathHelper.TwoPi / MathHelper.TwoPi);
                 Projectile.velocity = Vector2.Normalize(Projectile.velocity);
                 Projectile.velocity = Projectile.velocity.RotatedBy(angle);
-                //Projectile.rotation = Projectile.velocity.ToRotation();
                 Projectile.Center = player.MountedCenter + Projectile.velocity * (HoldoutRangeMax / (!secondHitbox ? 1.2f : 2.5f));
             }
 
@@ -121,16 +120,11 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
             // Avoid spawning dusts on dedicated servers
             if (!Main.dedServ)
             {
-                // These dusts are added later, for the 'ExampleMod' effect
                 if (Main.rand.NextBool(3))
-                {
                     Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Blood, Projectile.velocity.X * 2f, Projectile.velocity.Y * 2f, Alpha: 128, Scale: 1.2f);
-                }
 
                 if (Main.rand.NextBool(4))
-                {
                     Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Blood, Alpha: 128, Scale: 0.3f);
-                }
             }
 
             if (Main.player[Projectile.owner].direction == -1)
@@ -164,7 +158,6 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Players.FSSpesialWeaponsPlayer chargeManager = player.GetModPlayer<Players.FSSpesialWeaponsPlayer>();
-            //if (Main.rand.NextFloat() < .35f) { chargeManager.Rozaline_Spikes_ChargeMeter += 0.06f; chargeManager.Rozaline_Spikes_UnchargeCooldown = 600; }
             if (target.life <= 0 && target.lifeMax > 10)
             {
                 chargeManager.Rozaline_Spikes_ChargeMeter += 2.5f;

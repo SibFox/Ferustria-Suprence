@@ -42,7 +42,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
         {
 			position.ApplyMuzzleOffset(velocity);
 			type = ModContent.ProjectileType<Angelic_Bolt_Friendly>();
-			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI, 1f);
+			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI, -5f);
 			return false;
         }
 

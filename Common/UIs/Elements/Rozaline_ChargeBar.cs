@@ -17,7 +17,7 @@ namespace Ferustria.Common.UIs.Elements
             Texture2D texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("Rozaline"));
             Texture2D textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("Rozaline", true));
 
-            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Rozaline>().Name && !Main.LocalPlayer.dead)
+            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItemName<Rozaline>() && !Main.LocalPlayer.dead)
             {
                 spriteBatch.Draw(textureBG, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight - 128) / 2f, Color.White);
                 Color gradientB = Color.DarkOliveGreen;

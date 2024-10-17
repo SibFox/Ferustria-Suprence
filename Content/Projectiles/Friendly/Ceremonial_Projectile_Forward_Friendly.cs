@@ -50,7 +50,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 
             Point coords = Projectile.Center.ToTileCoordinates();
             Tile projectileTile = Main.tile[coords.X, coords.Y];
-            if (projectileTile.HasTile && Main.tileSolid[projectileTile.TileType] && projectileTile.TileType != TileID.Platforms) Projectile.velocity *= 0.955f;
+            if (!projectileTile.IsTileEmpty()) Projectile.velocity *= 0.955f;
             else Projectile.velocity *= 0.98f;
 
             // Loop through the 4 animation frames, spending 5 ticks on each
@@ -93,6 +93,8 @@ namespace Ferustria.Content.Projectiles.Friendly
             if (Projectile.alpha > 255)
                 Projectile.Kill();
         }
+
+        
 
         // Some advanced drawing because the texture image isn't centered or symetrical
         // If you dont want to manually drawing you can use vanilla projectile rendering offsets

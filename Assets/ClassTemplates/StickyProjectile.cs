@@ -37,7 +37,7 @@ namespace Ferustria.Assets.ClassTemplates
 
         
         private string _texture = Ferustria.emptyPixel;
-        public string SetTexture { get => _texture; set => _texture = Mod.Name + "/" + value; }
+        public string SetTexture { get => _texture; set => _texture = value.Contains(Mod.Name) ? value : Mod.Name + "/" + value; }
         public override string Texture => SetTexture;
 
 
