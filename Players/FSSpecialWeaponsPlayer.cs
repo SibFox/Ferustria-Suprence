@@ -22,6 +22,7 @@ using static Terraria.ModLoader.ModLoader;
 
 namespace Ferustria.Players
 {
+    [CloneByReference]
     class FSSpesialWeaponsPlayer : ModPlayer
     {
         enum Weapons
@@ -33,6 +34,7 @@ namespace Ferustria.Players
             PyriteShotgun,
             CKnife1,
             BarathrumPruner,
+            AMBladesSalivar
         }
 
         Weapons wieldedWeapon;
@@ -64,17 +66,36 @@ namespace Ferustria.Players
         [CloneByReference] public float BarathrumPruner_Charge = 0f;
         [CloneByReference] public int BarathrumPruner_Charge_DepleteTimer = 420;
 
+        //// ~~~~ АМ-Мечи ордена Саливар
+        public const int AMBlades_Salivar_FrameTime = 2;
+        public const int AMBlades_Salivar_FrameCountFor1 = 7 * AMBlades_Salivar_FrameTime;
+        public const int AMBlades_Salivar_UseCooldown_Max = (int)(AMBlades_Salivar_FrameCountFor1 * 1.5);
+        public int AMBlades_Salivar_Combo_Count = 0;
+        public int AMBlades_Salivar_Combo_Timer = 0;
+        public int AMBlades_Salivar_UseCooldown = 0;
+        public int AMBlades_Salivar_UseTime = 0;
+        
+
 
         public override void ResetEffects()
         {
+            //Сделано не через switch, потому что, походу, выдаёт ошибку по причине GetItemName является статическим, или из-за самого класса являющегося статическим
+            //Он пытается создать экземлпяр или что?
+            //CS0426 Имя типа "GetItemName<>" не существует в типе "FSHelper"
+            /*switch (heldItem)
+            {
+                case FSHelper.GetItemName<Rozaline>(): wieldedWeapon = Weapons.Rozaline; break;
+            }*/
+
             wieldedWeapon = Weapons.Unused;
             string heldItem = Player.HeldItem.Name;
-            if (heldItem == FSHelper.GetItem<Rozaline>().Name) wieldedWeapon = Weapons.Rozaline;
-            if (heldItem == FSHelper.GetItem<Vicious_Herrscher>().Name) wieldedWeapon = Weapons.ViciousHerrscher;
-            if (heldItem == FSHelper.GetItem<Pyrite_Machinegun>().Name) wieldedWeapon = Weapons.PyriteMachinegun;
-            if (heldItem == FSHelper.GetItem<Pyrite_Shotgun>().Name) wieldedWeapon = Weapons.PyriteShotgun;
-            if (heldItem == FSHelper.GetItem<Ceremonial_Knife>().Name) wieldedWeapon = Weapons.CKnife1;
-            if (heldItem == FSHelper.GetItem<Barathrum_Pruner>().Name) wieldedWeapon = Weapons.BarathrumPruner;
+            if (heldItem == FSHelper.GetItemName<Rozaline>()) wieldedWeapon = Weapons.Rozaline;
+            if (heldItem == FSHelper.GetItemName<Vicious_Herrscher>()) wieldedWeapon = Weapons.ViciousHerrscher;
+            if (heldItem == FSHelper.GetItemName<Pyrite_Machinegun>()) wieldedWeapon = Weapons.PyriteMachinegun;
+            if (heldItem == FSHelper.GetItemName<Pyrite_Shotgun>()) wieldedWeapon = Weapons.PyriteShotgun;
+            if (heldItem == FSHelper.GetItemName<Ceremonial_Knife>()) wieldedWeapon = Weapons.CKnife1;
+            if (heldItem == FSHelper.GetItemName<Barathrum_Pruner>()) wieldedWeapon = Weapons.BarathrumPruner;
+            //if (heldItem == FSHelper.GetItemName<AMBlades_Salivar>()) wieldedWeapon = Weapons.AMBladesSalivar;
 
 
             //// ~~~ Копьё Розалина
@@ -102,6 +123,14 @@ namespace Ferustria.Players
                 PMachinegun_ShotDelay = 1;
             }
 
+            //// ~~~ АМ-Мечи ордена Саливар
+            if (AMBlades_Salivar_Combo_Timer < 1 || wieldedWeapon != Weapons.AMBladesSalivar) { AMBlades_Salivar_Combo_Count = 0; AMBlades_Salivar_Combo_Timer = 0; }
+
+            if (wieldedWeapon == Weapons.AMBladesSalivar)
+            {
+                if (AMBlades_Salivar_Combo_Timer > 0) AMBlades_Salivar_Combo_Timer--;
+                if (AMBlades_Salivar_UseCooldown > 0) AMBlades_Salivar_UseCooldown--;
+            }
         }
 
         public override void PreUpdate()
@@ -111,7 +140,7 @@ namespace Ferustria.Players
             {
                 if (!Rozaline_ChargedUp_Notification)
                 {
-                    CombatText.NewText(new Rectangle((int)Player.position.X, (int)Player.position.Y - 15, 10, 5), Color.YellowGreen, "Spikes ready!", true, true);
+                    CombatText.NewText(new Rectangle((int)Player.position.X, (int)Player.position.Y - 15, 10, 5), Color.YellowGreen, "Mods.Ferustria.Common.ChargeNotifications.Rozaline", true, true);
                     Rozaline_ChargedUp_Notification = true;
                 }
                 Rozaline_Spikes_ChargeMeter = 100f;
@@ -169,7 +198,7 @@ namespace Ferustria.Players
             }
             if (wieldedWeapon != Weapons.CKnife1 && CKnifeL1_Knifes_Charge >= 100f) { CKnifeL1_Knifes_Charge = 99f; }
 
-            //// ~~~ Секатор пустоты
+            //// ~~~ Секатор Пропасти
             if (BarathrumPruner_Charge > 100f)
                 BarathrumPruner_Charge = 100f;
             if (BarathrumPruner_Charge < 0f)
