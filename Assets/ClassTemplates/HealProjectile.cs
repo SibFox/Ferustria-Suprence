@@ -74,11 +74,12 @@ namespace Ferustria.Assets.ClassTemplates
             {
                 if (Projectile.owner == Main.myPlayer && !player.moonLeech)
                 {
-                    int heal = Main.rand.Next(HealAmout.min - 1, HealAmout.max) + 1;
-                    player.statLife += heal;
-                    if (player.statLife > player.statLifeMax2) player.statLife = player.statLifeMax2;
-                    player.HealEffect(heal);
-                    NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Projectile.owner, heal, 0.0f, 0.0f, 0, 0, 0);
+                    player.Heal(Main.rand.Next(HealAmout.min - 1, HealAmout.max) + 1);
+                    //int heal = Main.rand.Next(HealAmout.min - 1, HealAmout.max) + 1;
+                    //player.statLife += heal;
+                    //if (player.statLife > player.statLifeMax2) player.statLife = player.statLifeMax2;
+                    //player.HealEffect(heal);
+                    //NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Projectile.owner, heal, 0.0f, 0.0f, 0, 0, 0);
                 }
                 Projectile.Kill();
             }

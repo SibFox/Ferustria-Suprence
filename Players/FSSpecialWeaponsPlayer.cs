@@ -72,8 +72,13 @@ namespace Ferustria.Players
         public const int AMBlades_Salivar_UseCooldown_Max = (int)(AMBlades_Salivar_FrameCountFor1 * 1.5);
         public int AMBlades_Salivar_Combo_Count = 0;
         public int AMBlades_Salivar_Combo_Timer = 0;
+        public int AMBlades_Salivar_Frame_Count = 0;
         public int AMBlades_Salivar_UseCooldown = 0;
         public int AMBlades_Salivar_UseTime = 0;
+        public float AMBlades_Salivar_Charge = 0f;
+        public int AMBlades_Salivar_Charge_Deplete_Timer = 420;
+        public bool AMBlades_Salivar_Enhansed = false;
+        public bool AMBlades_Salivar_Enhansed_Active = false;
         
 
 
@@ -95,7 +100,7 @@ namespace Ferustria.Players
             if (heldItem == FSHelper.GetItemName<Pyrite_Shotgun>()) wieldedWeapon = Weapons.PyriteShotgun;
             if (heldItem == FSHelper.GetItemName<Ceremonial_Knife>()) wieldedWeapon = Weapons.CKnife1;
             if (heldItem == FSHelper.GetItemName<Barathrum_Pruner>()) wieldedWeapon = Weapons.BarathrumPruner;
-            //if (heldItem == FSHelper.GetItemName<AMBlades_Salivar>()) wieldedWeapon = Weapons.AMBladesSalivar;
+            if (heldItem == FSHelper.GetItemName<AMBlades_Salivar>()) wieldedWeapon = Weapons.AMBladesSalivar;
 
 
             //// ~~~ Копьё Розалина
@@ -125,12 +130,6 @@ namespace Ferustria.Players
 
             //// ~~~ АМ-Мечи ордена Саливар
             if (AMBlades_Salivar_Combo_Timer < 1 || wieldedWeapon != Weapons.AMBladesSalivar) { AMBlades_Salivar_Combo_Count = 0; AMBlades_Salivar_Combo_Timer = 0; }
-
-            if (wieldedWeapon == Weapons.AMBladesSalivar)
-            {
-                if (AMBlades_Salivar_Combo_Timer > 0) AMBlades_Salivar_Combo_Timer--;
-                if (AMBlades_Salivar_UseCooldown > 0) AMBlades_Salivar_UseCooldown--;
-            }
         }
 
         public override void PreUpdate()
@@ -211,6 +210,33 @@ namespace Ferustria.Players
                 BarathrumPruner_Charge -= 3.5f / 60f;
             }
 
+            //// ~~~ АМ-Мечи ордена Саливар
+            if (AMBlades_Salivar_Combo_Timer > 0) AMBlades_Salivar_Combo_Timer--;
+            if (AMBlades_Salivar_UseCooldown > 0) AMBlades_Salivar_UseCooldown--;
+            if (AMBlades_Salivar_Combo_Timer < 1)
+            {
+                AMBlades_Salivar_Combo_Count = 0; AMBlades_Salivar_Frame_Count = 0; AMBlades_Salivar_Combo_Timer = 0;
+                AMBlades_Salivar_UseCooldown = 0; AMBlades_Salivar_UseTime = 0;
+            }
+            if (AMBlades_Salivar_Frame_Count > 3) AMBlades_Salivar_Frame_Count = 0;
+
+            if (AMBlades_Salivar_Charge_Deplete_Timer > 0 && !AMBlades_Salivar_Enhansed) 
+                AMBlades_Salivar_Charge_Deplete_Timer--;
+            if (AMBlades_Salivar_Charge_Deplete_Timer <= 0 && !AMBlades_Salivar_Enhansed)
+            {
+                AMBlades_Salivar_Charge_Deplete_Timer = 0;
+                AMBlades_Salivar_Charge -= 10f / 60f;
+            }
+            if (AMBlades_Salivar_Charge > 100) AMBlades_Salivar_Charge = 100;
+            if (AMBlades_Salivar_Charge < 0) { AMBlades_Salivar_Charge = 0; AMBlades_Salivar_Charge_Deplete_Timer = 0; 
+                AMBlades_Salivar_Enhansed = false; AMBlades_Salivar_Enhansed_Active = false; }
+            
+            if (AMBlades_Salivar_Enhansed)
+            {
+                AMBlades_Salivar_Combo_Timer = 60;
+                AMBlades_Salivar_Charge_Deplete_Timer = 0;
+                AMBlades_Salivar_Charge -= 15f / 60f;
+            }
         }
 
           ////////////////////////////////////////////////////////////
@@ -218,7 +244,33 @@ namespace Ferustria.Players
         ////////////////////////////////////////////////////////////
         public override void PostUpdate()
         {
+            if (wieldedWeapon == Weapons.AMBladesSalivar)
+            {
+                Player.statManaMax2 -= 50;
+                //if (Player.GetModPlayer<FSSpesialWeaponsPlayer>().AMBlades_Salivar_Enhansed_Active) Player.SetManaDrain(50);
+                //else Player.SetManaDrain(30);
+                
+            }
+        }
 
+        public override void UpdateLifeRegen()
+        {
+            
+        }
+        public override void UpdateBadLifeRegen()
+        {
+            
+        }
+        public override void PostUpdateBuffs()
+        {
+            // Не работающая параша
+            if (wieldedWeapon == Weapons.AMBladesSalivar)
+            {
+                if (Player.GetModPlayer<FSSpesialWeaponsPlayer>().AMBlades_Salivar_Enhansed_Active) Player.SetManaDrain(50);
+                else Player.SetManaDrain(30);
+                if (Player.manaRegen > 0) { Player.manaRegen = 0; Player.manaRegenBonus = 0; }
+                Player.manaRegen -= 40;
+            }
         }
 
         public override void OnHitAnything(float x, float y, Entity victim)

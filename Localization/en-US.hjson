@@ -1,10 +1,7 @@
 Mods: {
 	Ferustria: {
-	Common: {
-			ChargeNotifications: {
-				Rozaline: Spikes ready!
-			}
-		}
+		Common.ChargeNotifications.Rozaline: Spikes ready!
+
 		Buffs: {
 			Rapid_Blood_Loss: {
 				DisplayName: Rapid Blood Loss
@@ -379,6 +376,23 @@ Mods: {
 				DisplayName: Spirit Scabbard
 				Tooltip: Summons the helping-knight Angel, who became the echo of past.
 			}
+
+			AMBlades_Salivar: {
+				DisplayName: Anti-Mage Blades of Salivar order
+				Tooltip:
+					'''
+					"[c/FA0000:WIP]"
+					"Mighty blades of formidable warriors"
+					As you hold these blades they slowly drain your mana.
+					Upon succesful hit you restore 1 to 5 mana.
+					If you completed 8-combo and the blades are charged, you can activate Fire Blades.
+					Press RMB to activate Fire Blades and perform Evisceration around you setting every victim on fire.
+					Fire Blades increase your damage and add some magic damage, drasticly increasing mana drain.
+					Fire Blades can put enemies on fire.
+					<CHARGE>
+					'''
+				ChargeTip: Fire Blades are charged for {0:N1}%
+			}
 		}
 
 		NPCs: {
@@ -419,6 +433,7 @@ Mods: {
 			Rot_Sac.DisplayName: Rot_ Sac
 			Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
 			Laser_Line.DisplayName: Laser_ Line
+			AMBlades_Salivar_Projectile.DisplayName: A M Blades_ Salivar_ Projectile
 		}
 
 		Bestiary: {

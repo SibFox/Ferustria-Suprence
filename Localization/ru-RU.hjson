@@ -1,10 +1,7 @@
 Mods: {
 	Ferustria: {
-		Common: {
-			ChargeNotifications: {
-				Rozaline: Заколи их всех!
-			}
-		}
+		Common.ChargeNotifications.Rozaline: Заколи их всех!
+
 		Buffs: {
 			Rapid_Blood_Loss: {
 				DisplayName: Быстрая кровопотеря
@@ -384,6 +381,23 @@ Mods: {
 				DisplayName: Ножны духа
 				Tooltip: Призывает Ангела рыцаря-помощника, ставшего отголоском времени.
 			}
+
+			AMBlades_Salivar: {
+				DisplayName: Анти-Магические Клинки ордена Саливар
+				Tooltip:
+					'''
+					"[c/FA0000:WIP]"
+					"Могучие клинки грозных воинов"
+					Пока вы держити эти клинки, они медленно истащают вашу ману.
+					При успешном ударе, вы восстановите от 1 до 5 маны.
+					Если вы выполнили комбо из 8-ми и у вас заряжено оружие, вы можете активировать Огненные Клинки.
+					Нажмите ПКМ, чтобы активировать Огненный Клинки и провести Потрошение вокруг вас, поджигая всех врагов вокруг.
+					Огненные Клинки увеличивают ваш урон и добавляют немного магического, резко увеличивая расход маны.
+					Огненные Клинки могут поджечь врагов.
+					<CHARGE>
+					'''
+				ChargeTip: Огненные Клинки заряженны на {0:N1}%
+			}
 		}
 
 		NPCs: {
@@ -424,6 +438,7 @@ Mods: {
 			// Rot_Sac.DisplayName: Rot_ Sac
 			// Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
 			// Laser_Line.DisplayName: Laser_ Line
+			// AMBlades_Salivar_Projectile.DisplayName: A M Blades_ Salivar_ Projectile
 		}
 
 		Bestiary: {

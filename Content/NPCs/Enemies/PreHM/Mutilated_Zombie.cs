@@ -18,6 +18,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
     {
         int jumpCD, leapCD, roarCD;
         bool leap = false, leaped = false, climb = false, enraged = false;
+        float standartKB = 0.2f;
 
         public override void SetStaticDefaults()
         {
@@ -40,7 +41,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             NPC.lifeMax = FSHelper.Scale(90, 135, 180);
             NPC.damage = FSHelper.Scale(30, 50, 75);
             NPC.defense = FSHelper.WOScale(9, 12, 14);
-            NPC.knockBackResist = 0.2f;
+            NPC.knockBackResist = standartKB;
             NPC.width = 40;
             NPC.height = 45;
             AnimationType = NPCID.BloodZombie;
@@ -82,8 +83,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
             Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
             if (NPC.velocity.Y >= 0) Collision.StepDown(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
-            if (target.position.X < NPC.position.X && NPC.collideY) NPC.direction = -1;
-            else NPC.direction = 1;
+            //if (target.position.X < NPC.position.X && NPC.collideY) NPC.direction = -1;
+            //else NPC.direction = 1;
 
             if (!leap)
             {
@@ -108,6 +109,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                 if (NPC.velocity.X <= -4.7f && !leap) NPC.velocity.X = -4.7f;
             }
 
+
             if (NPC.life <= NPC.lifeMax * 0.45) enraged = true;
 
             EnragedLeap(target);
@@ -130,6 +132,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                     NPC.velocity.Y -= Main.rand.NextFloat(4.5f, 6.15f);
                 jumpCD = 60;
                 leapCD = Main.rand.Next(60, 120);
+                NPC.knockBackResist = 0;
             }
             if (leap && NPC.velocity.Y <= 0f && !leaped)
             {
@@ -141,7 +144,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                 if (NPC.velocity.X <= -leapStrenght) NPC.velocity.X = -leapStrenght;
 
             }
-            if (leap && (NPC.collideX || NPC.collideY || Collision.down)) { leap = false; leaped = false; }
+            if (leap && (NPC.collideX || NPC.collideY || Collision.down)) { leap = false; leaped = false; NPC.knockBackResist = standartKB; }
         }
 
 
@@ -150,12 +153,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             if (Main.rand.NextFloat() < .8f && roarCD <= 0)
             {
                 roarCD = Main.rand.Next(360, 550);
-                SoundStyle sound;
-                switch (Main.rand.NextBool())
-                {
-                    case true: sound = SoundID.NPCDeath38; break;
-                    case false: sound = SoundID.NPCDeath39; break;
-                }
+                SoundStyle sound = Main.rand.NextBool() ? SoundID.NPCDeath38 : SoundID.NPCDeath39;
                 sound.Volume = 0.45f;
                 sound.Type = SoundType.Sound;
                 sound.PitchRange = enraged ? (-0.68f, -0.25f) : (-0.5f, -0.18f);

@@ -29,7 +29,7 @@ namespace Ferustria.Common.UIs.Elements
             pixelOff = 130;
 
 
-            if (Main.LocalPlayer.HeldItem.Name == FSHelper.GetItem<Barathrum_Pruner>().Name && !Main.LocalPlayer.dead)
+            if (Main.LocalPlayer.HeldItem == FSHelper.GetItem<Barathrum_Pruner>() && !Main.LocalPlayer.dead)
             {
                 texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner"));
                 textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner", true));

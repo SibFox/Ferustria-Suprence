@@ -86,7 +86,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                 int modifier = Sequence % 2 == 0 ? 1 : -1;
 
                 //float progress = modifier == -1 ? (float)Projectile.timeLeft / (float)duration : ((float)duration - (float)Projectile.timeLeft) / (float)duration;
-                float progress = Projectile.timeLeft / (float)duration * modifier * Projectile.direction;
+                float progress = Projectile.timeLeft / (float)duration * modifier;
                 angle = (float)(MathHelper.TwoPi * progress) * (MathHelper.ToRadians(MaxAngle) / MathHelper.TwoPi / MathHelper.TwoPi);
                 Projectile.velocity = Vector2.Normalize(Projectile.velocity);
                 Projectile.velocity = Projectile.velocity.RotatedBy(angle);
@@ -137,7 +137,7 @@ namespace Ferustria.Content.Projectiles.Friendly.Rozaline
                 // If sprite is facing right, rotate 135 degrees
                 Projectile.rotation += MathHelper.ToRadians(135f);
             }
-
+            player.direction = Projectile.direction;
             return false; // Don't execute vanilla AI.
         }
 

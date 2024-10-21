@@ -154,6 +154,32 @@ namespace Ferustria
         internal static bool IsTileEmpty(this Tile tile) => !tile.HasTile && !Main.tileSolid[tile.TileType] && tile.TileType != TileID.Platforms;
 
 
+        // Player
+        internal static void SetLifeRegenTo0(this Player player)
+        {
+            if (player.lifeRegen > 0)
+            {
+                player.lifeRegen = 0;
+                player.lifeRegenTime = 0;
+            }
+        }
+        internal static void SetManaRegenTo0(this Player player)
+        {
+            if (player.manaRegen > 0)
+                player.manaRegen = 0;
+        }
+        internal static void SetLifeDrain(this Player player, int drain)
+        {
+            player.SetLifeRegenTo0();
+            player.lifeRegen -= drain;
+        }
+        internal static void SetManaDrain(this Player player, int drain)
+        {
+            player.SetManaRegenTo0();
+            player.manaRegen -= drain;
+        }
+
+
         // NPC
         internal static int TargetClosestNPCid(this NPC npc, bool setToLocalAI3 = false)
         {
