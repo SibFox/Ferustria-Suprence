@@ -86,7 +86,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 					else max = target.height;
 					float distance = max + 120f;
 					double angle = Math.PI * 2.0 * Main.rand.NextFloat();
-					Vector2 setPos = target.Center + distance * Extensions.GetVectorWithAngle(angle) - Projectile.Size / 2f;
+					Vector2 setPos = target.Center + distance * Extensions.GetVector_WithAngle(angle) - Projectile.Size / 2f;
 					Vector2 pos = target.Center - setPos;
                     float magnitude = (float)Math.Sqrt(pos.X * pos.X + pos.Y * pos.Y);
                     if (magnitude > 0)

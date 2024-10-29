@@ -8,7 +8,7 @@ using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 using Ferustria.Content.Items.Weapons.Melee.PreHM;
 
-namespace Ferustria.Common.UIs.Elements
+namespace Ferustria.Common.UIs.Elements.ChargeBars
 {
     internal class Rozaline_ChargeBar : UIElement
     {

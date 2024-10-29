@@ -17,6 +17,7 @@ namespace Ferustria.Content.Projectiles.Friendly.HealProj
             speed = 17f;
             Light = (0.4f, 0.08f, 0.08f);
             SetTexture = "Crimson_Heal";
+            Projectile.extraUpdates = 2;
         }
 
         public override void CreateTrail()

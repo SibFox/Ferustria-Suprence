@@ -10,6 +10,9 @@
     <Compile Remove="Content\Projectiles\Friendly\Pyrite_Shot_Bugged.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\Textures\NPCs\Enemies\PreHM\Distraught_Little_Angel\Distraught_Little_Angel_Bestiary.png" />
+    <None Remove="Assets\Textures\NPCs\Enemies\PreHM\Distraught_Little_Angel\Distraught_Little_Angel_Body.png" />
+    <None Remove="Assets\Textures\NPCs\Enemies\PreHM\Distraught_Little_Angel\Distraught_Little_Angel_Wings.png" />
     <None Remove="Content\Projectiles\Friendly\Pyrite_Shot_Bugged.png" />
     <None Remove="Localization\en-EN.hjson" />
     <None Remove="localization\ru-RU.hjson" />

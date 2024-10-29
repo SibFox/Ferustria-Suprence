@@ -257,10 +257,12 @@ namespace Ferustria.Players
         {
             
         }
+
         public override void UpdateBadLifeRegen()
         {
             
         }
+
         public override void PostUpdateBuffs()
         {
             // Не работающая параша

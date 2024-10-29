@@ -21,7 +21,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 	{
 		public float scale;
 
-		public override string Texture => Ferustria.Paths.TexturesPathNPCs + "Enemies/PreHM/" + (!Main.hardMode ? "Fathomless_Fly_1" : "Fathomless_Fly_2");
+		public override string Texture => Ferustria.Paths.TexturesPathNPCs + "Enemies/PreHM/Fathomless_Fly/" + (!Main.hardMode ? "Fathomless_Fly_1" : "Fathomless_Fly_2");
 
         public override void SetStaticDefaults()
 		{
@@ -143,17 +143,6 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                         {
                             Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(MathHelper.Lerp(rotation, -rotation, i / projs)), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
                         }
-                        //if (!triple)
-                        //{
-                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                        //}
-                        //else if (triple)
-                        //{
-
-                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(-rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction, ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                        //    Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(rotation), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
-                        //}
                     }
                     NPC.velocity.X = -NPC.velocity.X * 4.5f;
                     NPC.velocity.Y = -NPC.velocity.Y * 4.5f;

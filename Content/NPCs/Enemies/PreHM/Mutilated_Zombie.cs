@@ -32,7 +32,6 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new()
             {
                 Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
-                Direction = -1 // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
             });
         }
 

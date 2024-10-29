@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
+using Terraria.Graphics.CameraModifiers;
 
 namespace Ferustria
 {
@@ -107,28 +108,32 @@ namespace Ferustria
             return numSolutions;
         }
 
+        // This adds a screen shake (screenshake) similar to Deerclops
+        //PunchCameraModifier modifier = new PunchCameraModifier(NPC.Center, (Main.rand.NextFloat() * ((float)Math.PI * 2f)).ToRotationVector2(), 20f, 6f, 20, 1000f, FullName);
+        //Main.instance.CameraModifiers.Add(modifier);
+
     }
 
     internal static class Extensions
     {
         // Vector2
-        internal static Vector2 GetVectorWithAngle(float angle) => new((float)Math.Cos(angle), (float)Math.Sin(angle));
-        internal static Vector2 GetVectorWithAngle(double angle) => new((float)Math.Cos(angle), (float)Math.Sin(angle));
-        internal static Vector2 GetVectorToAngle(this Vector2 vector, float angle, bool normalize = true)
+        internal static Vector2 GetVector_WithAngle(float angle) => new((float)Math.Cos(angle), (float)Math.Sin(angle));
+        internal static Vector2 GetVector_WithAngle(double angle) => new((float)Math.Cos(angle), (float)Math.Sin(angle));
+        internal static Vector2 GetVector_ToAngle(this Vector2 vector, float angle, bool normalize = true)
         {
             vector *= new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             if (normalize) vector.SafeNormalize(default);
             return vector;
         }
-        internal static Vector2 GetVectorToAngle(this Vector2 vector, double angle, bool normalize = true)
+        internal static Vector2 GetVector_ToAngle(this Vector2 vector, double angle, bool normalize = true)
         {
             vector *= new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             if (normalize) vector.SafeNormalize(default);
             return vector;
         }
-        internal static Vector2 GetVectorToAngleWithMult(this Vector2 vector, float angle, float speed) =>
+        internal static Vector2 GetVector_ToAngle_WithMult(this Vector2 vector, float angle, float speed) =>
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
-        internal static Vector2 GetVectorToAngleWithMult(this Vector2 vector, double angle, float speed) =>
+        internal static Vector2 GetVector_ToAngle_WithMult(this Vector2 vector, double angle, float speed) =>
             vector * (new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)).SafeNormalize(default) * speed);
         public static void ApplyMuzzleOffset(this Vector2 position, Vector2 velocity, float offset = 25f)
         {
@@ -229,7 +234,7 @@ namespace Ferustria
         internal static void SetStraightRotation(this Projectile projectile) => projectile.rotation = projectile.GetStraightRotation();
 
         public static void FindClosestNPC(this Projectile projectile, float maxDetectDistance, out NPC closestNPC, int idIgnore = -1) =>
-            projectile.FindClosestNPC(maxDetectDistance, out closestNPC, new int[1] { idIgnore });
+            projectile.FindClosestNPC(maxDetectDistance, out closestNPC, [idIgnore]);
 
         public static void FindClosestNPC(this Projectile projectile, float maxDetectDistance, out NPC closestNPC, int[] idIgnore = null)
         {
@@ -271,6 +276,23 @@ namespace Ferustria
                 }
             }
         }
+
+        public static Tile GetTile_FromPosition(this NPC npc, int x = 0, int y = 0, bool fromCenter = true)
+        {
+            if (fromCenter)
+                return Main.tile[npc.Center.ToTileCoordinates() + new Point(x, y)];
+            return Main.tile[npc.position.ToTileCoordinates() + new Point(x, y)];
+        }
+
+        public static Tile GetTile_FromPosition(this NPC npc, Point addPoint = new(), bool fromCenter = true)
+        {
+            if (fromCenter)
+                return Main.tile[npc.Center.ToTileCoordinates() + addPoint];
+            return Main.tile[npc.position.ToTileCoordinates() + addPoint];
+        }
+
+        // Textures
+        internal static string GetEnemyTexture(this NPC npc, int stage , string name) => Ferustria.Paths.TexturesPathEnemies + (stage == 1 ? "PreHM/" : stage == 2 ? "HM/" : "PostML/") + $"{name}";
 
     }
 

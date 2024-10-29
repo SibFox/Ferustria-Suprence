@@ -92,7 +92,7 @@ namespace Ferustria.Content.Projectiles.Friendly
         public void Rotate()
         {
             float angle = MathHelper.TwoPi * projectileNumber / 3 + MathHelper.ToRadians(rotation += 2f) * Projectile.spriteDirection;
-            Vector2 pos = Vector2.One.GetVectorToAngleWithMult(angle, currentDistance);
+            Vector2 pos = Vector2.One.GetVector_ToAngle_WithMult(angle, currentDistance);
             Projectile.Center = Main.player[Projectile.owner].Center + pos;
         }
 

@@ -11,7 +11,7 @@ using Ferustria.Content.Items.Weapons.Melee.HM;
 using System.Drawing.Text;
 using System.Runtime.CompilerServices;
 
-namespace Ferustria.Common.UIs.Elements
+namespace Ferustria.Common.UIs.Elements.ChargeBars
 {
     internal class BarathrumPruner_ChargeBar : UIElement
     {
@@ -73,17 +73,17 @@ namespace Ferustria.Common.UIs.Elements
 
 
                 int left = (Main.screenWidth - (texture.Width + 23)) / 2;
-                int right = (Main.screenWidth + (texture.Width + 24)) / 2;
+                int right = (Main.screenWidth + texture.Width + 24) / 2;
                 int steps = (int)((right - left) * charge);
                 for (int i = 0; i < steps; i++)
                 {
                     float percent = (float)i / steps; // Alternate Gradient Approach
                                                       //float percent = (float)i / (right - left);
-                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left + i, (Main.screenHeight + (int)pixelOff + (int)(texture.Height)) / 2, 1, 14),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left + i, (Main.screenHeight + (int)pixelOff + texture.Height) / 2, 1, 14),
                         Color.Lerp(Color.Lerp(gradientB, gradientA, percent), Color.Lerp(gradientA, gradientB, percent), percent));
                 }
 
-                spriteBatch.Draw(texture, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight + pixelOff) / 2f, null, Color.White, 0f, 
+                spriteBatch.Draw(texture, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight + pixelOff) / 2f, null, Color.White, 0f,
                     new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0.99f);
 
                 //Super Meter

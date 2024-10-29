@@ -8,7 +8,7 @@ using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 using Ferustria.Content.Items.Weapons.Mage.PreHM;
 
-namespace Ferustria.Common.UIs.Elements
+namespace Ferustria.Common.UIs.Elements.ChargeBars
 {
     internal class CKnife1_Charge_Bar : UIElement
     {

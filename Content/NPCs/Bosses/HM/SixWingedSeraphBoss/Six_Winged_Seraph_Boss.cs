@@ -410,7 +410,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 				}
 				
 				double angle = Math.PI * 2.0 * k / 12.0;
-				Vector2 speed = Vector2.One.GetVectorToAngleWithMult((float)angle, max);
+				Vector2 speed = Vector2.One.GetVector_ToAngle_WithMult((float)angle, max);
 				//speed.Normalize();
 				//speed *= max;
                 if (Main.netMode != 1)
@@ -493,8 +493,8 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     
                     float angle = MathHelper.TwoPi + MathHelper.ToRadians(Main.rand.NextFloat(360f));
                     int desSpeed = Main.rand.Next(23, 28);
-                    Vector2 speed = (Vector2.One * -desSpeed).GetVectorToAngle(angle);
-                    Vector2 fromPoint = Extensions.GetVectorWithAngle(angle) * Main.rand.NextFloat(1500f, 1800f) + centerPosition;
+                    Vector2 speed = (Vector2.One * -desSpeed).GetVector_ToAngle(angle);
+                    Vector2 fromPoint = Extensions.GetVector_WithAngle(angle) * Main.rand.NextFloat(1500f, 1800f) + centerPosition;
                     Projectile outOS = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LightBall:OutOfScreenToGather"), fromPoint, speed,
                         ModContent.ProjectileType<Light_Ball_Forward>(), projDamage_lightBall, 3f, Main.myPlayer, ai1: centerProj.whoAmI);
                     float distanceToCenter = Vector2.Distance(outOS.Center, centerPosition);
@@ -537,8 +537,8 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     Vector2 centerPosition = FerustriaFunctions.RandomPointInArea(topLeftCorner, bottomRightCorner);
                     float angle = MathHelper.TwoPi + MathHelper.ToRadians(Main.rand.NextFloat(360f));
                     int desSpeed = Main.rand.Next(25, 30);
-                    Vector2 speed = (Vector2.One * -desSpeed).GetVectorToAngle(angle);
-                    Vector2 fromPoint = Extensions.GetVectorWithAngle(angle) * Main.rand.NextFloat(2100f, 2900f) + centerPosition;
+                    Vector2 speed = (Vector2.One * -desSpeed).GetVector_ToAngle(angle);
+                    Vector2 fromPoint = Extensions.GetVector_WithAngle(angle) * Main.rand.NextFloat(2100f, 2900f) + centerPosition;
                     Projectile laserLine = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LaserLine:OutOfScreen"), fromPoint, speed,
                         ModContent.ProjectileType<Laser_Line>(), 0, 0, player.whoAmI, desSpeed, 6000f);
                     Projectile debug1 = Projectile.NewProjectileDirect(NPC.GetSource_FromThis("LightBall:OutOfScreen"), fromPoint, speed,
@@ -564,7 +564,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 		{
             if (actualSpeed < maxSpeed) actualSpeed += 0.036f;
             if (actualSpeed > maxSpeed) actualSpeed -= 0.028f;
-			Vector2 toSide = Vector2.One.GetVectorToAngleWithMult(angle, flyDistanceToPlayer);
+			Vector2 toSide = Vector2.One.GetVector_ToAngle_WithMult(angle, flyDistanceToPlayer);
 			NPC.MoveTowards(player.Center + toSide, maxSpeed, 16f);
 			NPC.noTileCollide = true;
 		}
@@ -591,7 +591,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                 MoveToSideOfPlayer(player, 9f, fromAngle);
                 for (int i = 0; i < 4; i++)
                 {
-                    Vector2 pos = Vector2.One.GetVectorToAngleWithMult(fromAngle, distance);
+                    Vector2 pos = Vector2.One.GetVector_ToAngle_WithMult(fromAngle, distance);
                     Dust.NewDust(pos + player.Center, 60 - (teleportTime / maxTime * 60), 60 - (teleportTime / maxTime * 60), ModContent.DustType<Angelic_Particles>(),
                         Main.rand.NextFloat(-1.5f, 1.5f), Main.rand.NextFloat(-1.5f, 1.5f), 0, default, Main.rand.NextFloat(.8f, 1.25f));
                     NPC.alpha = (int)((double)maxTime / (double)teleportTime * 60);
@@ -604,24 +604,24 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                 if (!appeared)
                 {
                     NPC.alpha = 0;
-                    Vector2 posC = Vector2.One.GetVectorToAngleWithMult(fromAngle, distance);
+                    Vector2 posC = Vector2.One.GetVector_ToAngle_WithMult(fromAngle, distance);
                     NPC.position = posC + player.position;
                     for (int i = 0; i < 250; i++)
                     {
                         double angle = 2.0 * Math.PI * i / 250;
-                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 7f);
+                        Vector2 speed = Vector2.One.GetVector_ToAngle_WithMult(angle, 7f);
                         Dust.NewDustPerfect(NPC.position, ModContent.DustType<Star_of_Hope_Effect>(), new(speed.X, speed.Y), 20, default, 3f);
                     }
                     for (int i = 0; i < 200; i++)
                     {
                         double angle = 2.0 * Math.PI * i / 200;
-                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 5.5f);
+                        Vector2 speed = Vector2.One.GetVector_ToAngle_WithMult(angle, 5.5f);
                         Dust.NewDustPerfect(NPC.position, ModContent.DustType<Star_of_Hope_Effect>(), new(speed.X, speed.Y), 20, default, 2.5f);
                     }
                     for (int i = 0; i < 150; i++)
                     {
                         double angle = 2.0 * Math.PI * i / 150;
-                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 4f);
+                        Vector2 speed = Vector2.One.GetVector_ToAngle_WithMult(angle, 4f);
                         Dust.NewDustPerfect(NPC.position, ModContent.DustType<Star_of_Hope_Effect>(), new(speed.X, speed.Y), 20, default, 2f);
                     }
                     appeared = true;
@@ -632,7 +632,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                 if (++teleportTime <= 80 && appeared)
                 {
                     double angleC = ((2.0 * Math.PI * (double)teleportTime / 80.0 * 0.45) + Math.Abs(sideToStart.ToRotation())) * modifier;
-                    Vector2 posC = Vector2.One.GetVectorToAngleWithMult(angleC, distance);
+                    Vector2 posC = Vector2.One.GetVector_ToAngle_WithMult(angleC, distance);
                     NPC.position = posC + player.position;
                     NPC.rotation = 0;
                 }

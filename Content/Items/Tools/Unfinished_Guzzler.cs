@@ -30,7 +30,7 @@ namespace Ferustria.Content.Items.Tools
 			Item.useTime = 18;
 			Item.useAnimation = 58;
 			Item.axe = 21;
-			Item.hammer = 74;
+			Item.hammer = 65;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 8.3f;
 			Item.value = Item.sellPrice(0, 0, 46, 0);

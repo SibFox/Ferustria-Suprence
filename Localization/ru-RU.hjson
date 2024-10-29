@@ -406,6 +406,7 @@ Mods: {
 			Mutilated_Zombie.DisplayName: Изуродованный зомби
 			Fathomless_Fly.DisplayName: Бездонная мушка
 			Shroom_Budy_Melee.DisplayName: Грибной дружок
+			Distraught_Little_Angel.DisplayName: Обезумевший ангелочек
 		}
 
 		Projectiles: {
@@ -439,11 +440,13 @@ Mods: {
 			// Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
 			// Laser_Line.DisplayName: Laser_ Line
 			// AMBlades_Salivar_Projectile.DisplayName: A M Blades_ Salivar_ Projectile
+			// Little_Light_Echo.DisplayName: Little_ Light_ Echo
 		}
 
 		Bestiary: {
 			Fathomless_Fly: Эта мушка ищет хоть что, чем бы себя заполнить.
 			Mutilated_Zombie: Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. Они становятся в разы страшнее, чем меньше у них здоровье.
+			Distraught_Little_Angel: None
 		}
 	}
 }

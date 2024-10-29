@@ -401,6 +401,7 @@ Mods: {
 			Mutilated_Zombie.DisplayName: Mutilated zombie
 			Fathomless_Fly.DisplayName: Fathomless Fly
 			Shroom_Budy_Melee.DisplayName: Shroom Budy
+			Distraught_Little_Angel.DisplayName: Distraught Little Angel
 		}
 
 		Projectiles: {
@@ -434,11 +435,13 @@ Mods: {
 			Rozaline_RoseProjectile.DisplayName: Rozaline_ Rose Projectile
 			Laser_Line.DisplayName: Laser_ Line
 			AMBlades_Salivar_Projectile.DisplayName: A M Blades_ Salivar_ Projectile
+			Little_Light_Echo.DisplayName: Little_ Light_ Echo
 		}
 
 		Bestiary: {
 			Fathomless_Fly: This fly is searching for anything to fill itself.
 			Mutilated_Zombie: The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.
+			Distraught_Little_Angel: None
 		}
 	}
 }

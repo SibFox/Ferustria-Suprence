@@ -70,7 +70,7 @@ namespace Ferustria.Players
                     }
                 }*/
                 if (Main.rand.NextFloat() < endure * 2)
-                    Dust.NewDust(Player.position, Player.width / 2, Player.height / 2, DustType<Angelic_Particles>(), Player.velocity.X / 3, Player.velocity.Y / 3, 0, default, Main.rand.NextFloat(0.7f, 1.15f));
+                    Dust.NewDust(Player.position, Player.width / 2, Player.height / 3, DustType<Angelic_Particles>(), Player.velocity.X / 3, Player.velocity.Y / 3, 0, default, Main.rand.NextFloat(0.7f, 1.15f));
             }
             if (Acc_StarOfHope_Countdown <= 0) { Acc_StarOfHope_Countdown = 0; endure = -0.15f; Endure_Effect = 0; Player.noKnockback = false; }
         }
@@ -133,7 +133,7 @@ namespace Ferustria.Players
                     for (int i = 0; i < particles; i++)
                     {
                         double angle = 2.0 * Math.PI * i / particles;
-                        Vector2 speed = Vector2.One.GetVectorToAngleWithMult(angle, 8.5f);
+                        Vector2 speed = Vector2.One.GetVector_ToAngle_WithMult(angle, 8.5f);
                         int type = DustType<Star_of_Hope_Effect>();
                         if (i % 4 == 0) type = DustType<Star_of_Hope_Effect_Gold>();
                         Dust.NewDustPerfect(Player.position, type, new(speed.X, speed.Y), 20, default, 2f);

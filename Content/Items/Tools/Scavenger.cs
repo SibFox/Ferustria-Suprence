@@ -25,8 +25,8 @@ namespace Ferustria.Content.Items.Tools
 			Item.crit = 0;
 			Item.width = 34;
 			Item.height = 32;
-			Item.useTime = 8;
-			Item.useAnimation = 22;
+			Item.useTime = 12;
+			Item.useAnimation = 26;
 			Item.pick = 85;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 3.2f;

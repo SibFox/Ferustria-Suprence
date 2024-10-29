@@ -121,7 +121,7 @@ namespace Ferustria.Content.Projectiles.Hostile
 			Projectile.localAI[1] += rotateSpeed;
 			Light_Ball_Circle_6 modProj = Projectile.ModProjectile as Light_Ball_Circle_6;
 			double angle = MathHelper.TwoPi * modProj.projectileNumber / 6 + Projectile.localAI[1];
-			Projectile.position = targetCenter + Vector2.One.GetVectorToAngleWithMult(angle, distance) - Projectile.Size / 2f;
+			Projectile.position = targetCenter + Vector2.One.GetVector_ToAngle_WithMult(angle, distance) - Projectile.Size / 2f;
 		}
 
 		public static void Appereance(Projectile Projectile, float stopDistance)
