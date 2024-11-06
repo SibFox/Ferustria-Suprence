@@ -1,8 +1,18 @@
-If you see this mod in browser, than it shouldn't be here. It was a mistake, it's still under development and you won't see anything interesting here... yet.
+If you see this mod in browser, than it shouldn't be here. It was a mistake, it's still under hard development and you won't see anything mostly interesting here... yet.
 
-But if you want, you can freely explore it, to see what it have for now
+But if you want, you can freely explore it, to see what it have for now.
+This mod targets to add different interesting weapons, encounters and story.
+But for it to get to some form, it still needs a lot of time. Because I try to make most things in here a bit more interesting.
 
+~Currently adds (probably): 
+- 18 (some unique) Weapons (6 Melee, 6 Ranged, 5 Mage and 1 Summoner)
+- 1 Boss (is wip)
+- 3 Enemies
+- 6 Effects((de)buffs)
+- 2 Potions
+- 1 Pet
 
+Localized on English and Russian.
 
 Code:
 - SibFox
