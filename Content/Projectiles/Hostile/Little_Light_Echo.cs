@@ -31,12 +31,10 @@ namespace Ferustria.Content.Projectiles.Hostile
 		{
 			if (Main.rand.NextFloat() < .55f)
 				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Angelic_Particles>(), 
-                    Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
+                    Projectile.velocity.X * .1f, Projectile.velocity.Y * .1f, 0, default, Main.rand.NextFloat(.42f, .75f));
 
             if (Projectile.velocity.Y < 16f)
                 Projectile.velocity.Y += 0.17f;
-
-			//Projectile.SetStraightRotation();
 		}
 
         public override void OnHitPlayer(Player target, Player.HurtInfo info)

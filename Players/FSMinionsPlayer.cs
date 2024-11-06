@@ -15,7 +15,7 @@ using Terraria.ModLoader.IO;
 using Ferustria.Content.Dusts;
 using Terraria.Audio;
 using static Terraria.ModLoader.ModContent;
-using Ferustria.Content.Buffs.Statuses;
+using Ferustria.Content.Buffs.Minions_And_Pets;
 
 namespace Ferustria.Players
 {

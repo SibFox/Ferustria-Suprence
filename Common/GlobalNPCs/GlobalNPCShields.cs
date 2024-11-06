@@ -19,26 +19,29 @@ namespace Ferustria.Common.GlobalNPCs
     // This file shows numerous examples of what you can do with the extensive NPC Loot lootable system.
     // You can find more info on the wiki: https://github.com/tModLoader/tModLoader/wiki/Basic-NPC-Drops-and-Loot-1.4
     // Despite this file being GlobalNPC, everything here can be used with a ModNPC as well! See examples of this in the Content/NPCs folder.
-    public class GlobalNPCSpecials : GlobalNPC
+    public class GlobalNPCShields : GlobalNPC
     {
         public override bool InstancePerEntity => true;
 
 
         public bool Any_Active_Shield { get; private set; }
+        float barScale;
         // Святой щит   |50% от стрелкового урона и 75% от магического, в общем снижает урон на 50%|
         public bool Uses_Holy_Shied { get; private set; }
         public bool Holy_Shield_Active { get; private set; }
-        public bool Holy_Shield_Destroyed_Control = false;
+        public bool Holy_Shield_Destroyed_Control { get; set; }
         public int Holy_Shield_Durability_Max { get; private set; }
         public int Holy_Shield_Durability { get; private set; }
         public int Holy_Shield_Recharge_Timer { get; private set; }
 
-        public void SetHolyShield(int shieldAmount = 1)
+        public void SetHolyShield(int shieldAmount = 1, int? maxShieldAmount = null, float barScale = 0.75f)
         {
             if (shieldAmount > 0)
             {
-                Holy_Shield_Durability_Max = Holy_Shield_Durability = shieldAmount;
-                Holy_Shield_Active = Uses_Holy_Shied = true;
+                this.barScale = barScale;
+                Holy_Shield_Durability_Max = maxShieldAmount == null ? shieldAmount : maxShieldAmount.Value;
+                Holy_Shield_Durability = shieldAmount;
+                Uses_Holy_Shied = Holy_Shield_Active = true;
             }
             else
             {
@@ -46,12 +49,12 @@ namespace Ferustria.Common.GlobalNPCs
             }
         }
 
-        public void RechargeHolyShield()
+        public void RechargeHolyShield(int? amount = null)
         {
             if (Uses_Holy_Shied)
             {
                 Holy_Shield_Active = true;
-                Holy_Shield_Durability = Holy_Shield_Durability_Max;
+                Holy_Shield_Durability = amount == null ? Holy_Shield_Durability_Max : amount.Value;
             }
             else
             {
@@ -132,31 +135,43 @@ namespace Ferustria.Common.GlobalNPCs
             }
         }
 
+        Texture2D texture = TextureAssets.MagicPixel.Value;
+        Texture2D textureHP = TextureAssets.MagicPixel.Value;
+
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             // Вычесть screenPos из drawPos
-            if (false)
+            if (Uses_Holy_Shied && Holy_Shield_Active && Holy_Shield_Durability < Holy_Shield_Durability_Max)
             {
-                spriteBatch.Draw(TextureAssets.MagicPixel.Value, (npc.Center + new Vector2(0, npc.height / 2 + 8)) - screenPos, new Color(220, 220, 220, 200));
+                texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetHPBarTexture("Holy_Shield"));
+                textureHP = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetHPBarTexture("Holy_Shield_HP"));
+
                 Color gradientA = Color.Blue;
                 Color gradientB = Color.Aqua;
 
-                float charge = Holy_Shield_Durability / Holy_Shield_Durability_Max;
+                spriteBatch.Draw(texture, (npc.Center + new Vector2((int)(-npc.width / 1.3 * barScale), npc.height / 2 + 8)) - screenPos, new Rectangle(0, 0, texture.Width, texture.Height),
+                    new Color(255, 255, 255) * 0.5f, 0, new(), barScale, SpriteEffects.None, 1f);
+                float charge = (float)Holy_Shield_Durability / (float)Holy_Shield_Durability_Max;
                 charge = Utils.Clamp(charge, 0f, 1f);
 
-                int left = (npc.width / 2 - 30) / 2; //npc.width / 2 +- 30
-                int right = (npc.width / 2 + 30) / 2;
-                int steps = (int)((right - left) * charge);
+                int width = 60;
+                int steps = (int)(width * charge);
                 for (int i = 0; i < steps; i++)
                 {
                     //float percent = (float)i / steps; // Alternate Gradient Approach
-                    float percent = (float)i / (right - left);
-                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left + i, (Main.screenHeight - 107) / 2, 1, 9), Color.Lerp(gradientA, gradientB, percent));
+                    float percent = (float)i / width;
+                    spriteBatch.Draw(textureHP, npc.Center + new Vector2((int)(-npc.width / 1.3 * barScale), npc.height / 2 + 8) - screenPos, new Rectangle(0, 0, i, 16), new Color(255, 255, 255, 100) * 0.5f,
+                        0, new(), barScale, SpriteEffects.None, 1f);
                 }
-
+                
                 //spriteBatch.Draw(TextureAssets.MagicPixel.Value, npc.Center - screenPos + new Vector2(0, npc.height + 32), Color.White);
             }
+        }
 
+        public override bool? DrawHealthBar(NPC npc, byte hbPosition, ref float scale, ref Vector2 position)
+        {
+            scale = Any_Active_Shield ? 0f : 1f;
+            return base.DrawHealthBar(npc, hbPosition, ref scale, ref position);
         }
     }
 }

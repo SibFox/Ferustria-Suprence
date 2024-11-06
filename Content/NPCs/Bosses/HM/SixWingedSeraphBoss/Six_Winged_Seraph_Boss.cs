@@ -509,7 +509,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
         ////     Шары света, летящие почти в игрока(в рандомную область в квадрате от игрока)     ////
         public void OutOfScreenAttack(Player player)
         {
-            if (Main.netMode != 1)
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int projectiles = 8;
                 if (!Main.expertMode)

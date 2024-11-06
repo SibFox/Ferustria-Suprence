@@ -53,17 +53,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             NPC.rarity = 1;
             NPC.noGravity = false;
             jumpCD = roarCD = 0;
-            
-            /*banner = NPC.type;
-            bannerItem = mod.ItemType("PetrousKnight1Banner");*/
         }
-
-        /*public override void PostDraw(SpriteBatch spriteBatch, Color drawColor)
-        {
-            var GlowMask = mod.GetTexture("Glow/PetrousKnight1_GlowMask");
-            var Effects = NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(GlowMask, NPC.Center - Main.screenPosition + new Vector2(0, NPC.gfxOffY), NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2, NPC.scale, Effects, 0);
-        }*/
 
         public override void OnSpawn(IEntitySource source)
         {
@@ -119,7 +109,6 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override bool? CanFallThroughPlatforms() =>
             NPC.position.Y < Main.player[NPC.target].position.Y - 20;
-        //&& !Collision.SolidTiles(NPC.position, NPC.width, NPC.height) && !NPC.collideX
 
         void EnragedLeap(Player target)
         {
@@ -127,8 +116,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             {
                 leap = true;
                 leaped = false;
-                if (jumpCD <= 0)
-                    NPC.velocity.Y -= Main.rand.NextFloat(4.5f, 6.15f);
+                NPC.velocity.Y -= Main.rand.NextFloat(4.5f, 6.15f);
                 jumpCD = 60;
                 leapCD = Main.rand.Next(60, 120);
                 NPC.knockBackResist = 0;
@@ -139,8 +127,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                 float leapStrenght = Main.rand.NextFloat(8.5f, 12.5f);
                 if (target.position.X <= NPC.position.X) NPC.velocity.X -= leapStrenght;
                 if (target.position.X >= NPC.position.X) NPC.velocity.X += leapStrenght;
-                if (NPC.velocity.X >= leapStrenght) NPC.velocity.X = leapStrenght;
-                if (NPC.velocity.X <= -leapStrenght) NPC.velocity.X = -leapStrenght;
+                NPC.velocity.X = Utils.Clamp(NPC.velocity.X, -leapStrenght, leapStrenght);
 
             }
             if (leap && (NPC.collideX || NPC.collideY || Collision.down)) { leap = false; leaped = false; NPC.knockBackResist = standartKB; }
@@ -149,7 +136,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         void SoundPlay()
         {
-            if (Main.rand.NextFloat() < .8f && roarCD <= 0)
+            if (Main.rand.NextFloat() < .5f && roarCD <= 0)
             {
                 roarCD = Main.rand.Next(360, 550);
                 SoundStyle sound = Main.rand.NextBool() ? SoundID.NPCDeath38 : SoundID.NPCDeath39;
@@ -170,8 +157,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                 int heal = (int)(info.Damage / 1.5);
                 if (heal > 0)
                 {
-                    NPC.life += heal;
-                    NPC.HealEffect(heal);
+                    NPC.Heal(heal);
                 }
             }
         }
@@ -184,11 +170,6 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                 {
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Blood, 2.5f * hit.HitDirection, -2.5f, 0, default, 1.3f);
                 }
-                /*Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore1"), 1f);
-                Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore2"), 1f);
-                Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore2"), 1f);
-                Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore3"), 1f);
-                Gore.NewGore(NPC.position, NPC.velocity, mod.GetGoreSlot("Gores/PetrousKnightGore3"), 1f);*/
             }
             else
             {
@@ -217,12 +198,10 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            //string text = "The abominated flesh seeking everywhere for the victim to rip it apart. They become more fearsome lesser their health.";
-            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
-            //    text = "Изуродованная плоть, рыщущая везде ради жертвы, дабы разорвать её на части. Они становятся в разы страшнее, чем меньше у них здоровье.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				// Sets the spawning conditions of this NPC that is listed in the bestiary.
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 				// Sets the description of this NPC that is listed in the bestiary.

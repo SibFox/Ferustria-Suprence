@@ -23,7 +23,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 	{
         //public override string Texture => Ferustria.Paths.TexturesPathNPCs + "Enemies/PreHM/" + (!Main.hardMode ? "Fathomless_Fly_1" : "Fathomless_Fly_2");
         public override string Texture => NPC.GetEnemyTexture(1, "Distraught_Little_Angel/Distraught_Little_Angel_Bestiary");
-        GlobalNPCSpecials npcSpecials = null;
+        GlobalNPCShields npcSpecials = null;
         Player player = null;
 
         bool enraged = false;
@@ -61,10 +61,10 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override void OnSpawn(IEntitySource source)
         {
-            npcSpecials = NPC.GetGlobalNPC<GlobalNPCSpecials>();
+            npcSpecials = NPC.GetGlobalNPC<GlobalNPCShields>();
             npcSpecials.SetHolyShield(FSHelper.Scale(20, 30, 40));
             if (Main.hardMode) { NPC.lifeMax *= 3; NPC.damage = (int)(NPC.damage * 2); NPC.defense *= 3;
-                npcSpecials = NPC.GetGlobalNPC<GlobalNPCSpecials>();
+                npcSpecials = NPC.GetGlobalNPC<GlobalNPCShields>();
                 npcSpecials.SetHolyShield(FSHelper.Scale(50, 70, 100));
             }
             
@@ -100,9 +100,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
             //}
         }
-        
-
-        //int frame { get => (int)NPC.localAI[3]; set => NPC.localAI[4] = value; }
+                
 		public override void AI()
 		{
             if (Main.netMode == NetmodeID.MultiplayerClient)
@@ -129,25 +127,38 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             if (npcSpecials.Holy_Shield_Destroyed_Control) { npcSpecials.SetHolyShieldRecharge(160); enraged = true; }
 		}
 
+        Vector2 storedVelocity = Vector2.Zero;
         void MoveBehaviour()
         {
-            bool groundClose = Collision.SolidCollision(NPC.Center + new Vector2(0, 1 * 16), NPC.width, NPC.height);
+            bool groundClose = Collision.SolidCollision(NPC.Center + new Vector2(0, 1 * 16), NPC.width/2, NPC.height) || NPC.collideX;
 
-            NPC.velocity.Y += fall ? 4f : 1.5f / 60;
+            NPC.velocity.Y += fall ? 4f / 60 : 1.5f / 60;
             if (!fall)
             {
                 if (groundClose) NPC.velocity.Y = -0.75f;
-                NPC.knockBackResist = 0.2f;
-                NPC.velocity.X += enraged ? 2.5f : 1f / 60 * NPC.direction;
+                NPC.knockBackResist = enraged ? 0.05f : 0.2f;
+                NPC.velocity.X += (enraged ? 2.5f : 1f) / 60 * NPC.direction;
             }
             else { NPC.velocity.X = 0; NPC.knockBackResist = 0f; }
+
             if (Main.tile[NPC.Center.ToTileCoordinates() + new Point(NPC.direction * 2, 0)].HasTile && !enraged) { NPC.direction *= -1; NPC.velocity.X *= -.5f; }
-            
-            if (shootPrepare) NPC.velocity = Vector2.Zero;
+
+            if (shootPrepare) 
+            {
+                if (storedVelocity != Vector2.Zero)
+                    storedVelocity = NPC.velocity;
+                NPC.velocity = Vector2.Zero; 
+            }
+            else if (!shootPrepare && storedVelocity !=  Vector2.Zero)
+            {
+                NPC.velocity = storedVelocity;
+                storedVelocity = Vector2.Zero;
+            }
 
             float maxVel = enraged ? 4.25f : 2.5f;
             if (NPC.velocity.X > maxVel) NPC.velocity.X = maxVel;
             if (NPC.velocity.X < -maxVel) NPC.velocity.X = -maxVel;
+            if (NPC.velocity.Y < -2f) NPC.velocity.Y = -2f;
             if (NPC.velocity.Y > 8f) NPC.velocity.Y = 8f;
         }
 
@@ -174,7 +185,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                             for (float i = 1; i <= 3; i++)
                             {
                                 Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, new((1.5f * i * NPC.direction) + (NPC.direction * 1f), -5f),
-                                    ModContent.ProjectileType<Little_Light_Echo>(), NPC.GetAttackDamage_ForProjectiles_MultiLerp(25, 35, 50), 3f);
+                                    ModContent.ProjectileType<Little_Light_Echo>(), NPC.GetAttackDamage_ForProjectiles_DividedFromDamage(), 3f);
                             }
                         }
                     }
@@ -188,8 +199,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         void DustAround()
         {
-            if (!Main.dedServ)
-                for (float i = 0; i < 180; i++)
+            if (!Main.dedServ && NPC.ai[0]++ % 6 == 0)
+                for (float i = 0; i < 160; i++)
                     Dust.NewDustDirect(NPC.Center + Vector2.One.GetVector_ToAngle_WithMult(360f * (i / 50f), countDown / 3 + 40), 1, 1, ModContent.DustType<Angelic_Particles_Stable>(), 0, 0, 0, default, .5f);
         }
 
@@ -211,7 +222,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             int bodyFrame = 0;
             if (shootPrepare) bodyFrame = 1;
             if (fall || handsUpFrames-- > 0) bodyFrame = 2;
-            if (fall && NPC.GetTile_FromPosition(new Point(0, (int)NPC.height / 16 + 1)).IsTileSolid()) { bodyFrame = 3; NPC.frameCounter = 2; }
+            if (fall && NPC.collideY/*NPC.GetTile_FromPosition(new Point(0, (int)NPC.height / 16 + 1)).IsTileSolid()*/) { bodyFrame = 3; NPC.frameCounter = 2; }
 
             int startYWings = frameHeightWings * (int)NPC.frameCounter;
             int startYBody = frameHeightBody * bodyFrame;
@@ -282,14 +293,11 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            //string text;
-            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
-            //    text = "Эта мушка ищет хоть что, чем бы себя заполнить.";
-            //else text = "This fly is looking for anything to fill itself.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 // Sets the spawning conditions of this NPC that is listed in the bestiary.
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
                 // Sets the description of this NPC that is listed in the bestiary.
                 new FlavorTextBestiaryInfoElement("Mods.Ferustria.Bestiary.Distraught_Little_Angel")

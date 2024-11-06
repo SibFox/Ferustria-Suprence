@@ -21,19 +21,25 @@ namespace Ferustria
             internal const string TexturesPathBGs = TexturesPath + "BGs/";
             internal const string TexturesPathEnemies = TexturesPathNPCs + "Enemies/";
 
-            internal static string GetChargeBarTexture(string item, bool bg = false) => TexturesPathUIs + item + "_ChargeBar" + (bg ? "_BG" : null);
-            internal static string GetCahrgeBarElement(string item, string addition) => TexturesPathUIs + item + "_ChargeBar_" + addition;
+            internal static string GetChargeBarTexture(string item, bool bg = false) => TexturesPathUIs + "ChargeBars/" + item + "_ChargeBar" + (bg ? "_BG" : null);
+            internal static string GetCahrgeBarElementTexture(string item, string addition) => TexturesPathUIs + "ChargeBars/" + item + "_ChargeBar_" + addition;
+            /// <summary>
+            /// Возвращает путь до текстуры элемента шкалы ХП в виде строки
+            /// </summary>
+            /// <param name="element">Нужный тип элемента без "_HPBar"</param>
+            internal static string GetHPBarTexture(string element) => TexturesPathUIs + "HPBars/" + element + "_HPBar";
         }
 
+#nullable enable
         public static class InnerDebug
         {
-            static readonly bool UseDebug = false;
-
-#nullable enable
+            static readonly bool UseDebug = true;
             public static void Print(string? message = null)
             {
-                //if (UseDebug) 
-                   Console.WriteLine("[Ferustria] " + message);
+                if (UseDebug)
+                {
+                    Console.WriteLine("[Ferustria] " + message);
+                }
             }
         }
     }

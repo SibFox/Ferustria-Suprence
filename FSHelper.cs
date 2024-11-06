@@ -228,10 +228,23 @@ namespace Ferustria
             return closeNpcReturn;
         }
 
+        internal static void Heal(this NPC npc, int amount)
+        {
+            npc.life += amount;
+            if (Main.netMode == NetmodeID.SinglePlayer || Main.dedServ)
+                npc.HealEffect(amount);
+
+            if (npc.life > npc.lifeMax)
+                npc.life = npc.lifeMax;
+        }
+
+        internal static int GetAttackDamage_ForProjectiles_DividedFromDamage(this NPC npc) =>
+            npc.GetAttackDamage_ForProjectiles_MultiLerp(npc.damage, npc.damage / 2, npc.damage / 3);
+
 
         // Projectile
-        internal static float GetStraightRotation(this Projectile projectile) => projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-        internal static void SetStraightRotation(this Projectile projectile) => projectile.rotation = projectile.GetStraightRotation();
+        internal static float GetStraightRotation(this Projectile projectile, bool withPi = true) => withPi ? projectile.velocity.ToRotation() + MathHelper.ToRadians(90f) : projectile.velocity.ToRotation();
+        internal static void SetStraightRotation(this Projectile projectile, bool withPi = true) => projectile.rotation = projectile.GetStraightRotation(withPi);
 
         public static void FindClosestNPC(this Projectile projectile, float maxDetectDistance, out NPC closestNPC, int idIgnore = -1) =>
             projectile.FindClosestNPC(maxDetectDistance, out closestNPC, [idIgnore]);

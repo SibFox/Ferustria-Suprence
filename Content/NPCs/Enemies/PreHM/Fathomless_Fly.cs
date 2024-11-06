@@ -42,7 +42,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         {
             if (!Main.hardMode) scale = Main.rand.NextFloat(0.63f, 1.12f);
             else scale = Main.rand.NextFloat(0.75f, 1.24f);
-            NPC.lifeMax = (int)(FSHelper.Scale(110, 145, 185) * scale);
+            NPC.lifeMax = FSHelper.Scale(110, 145, 185);
             NPC.damage = FSHelper.Scale(30, 50, 70);
 			NPC.defense = 9;
             NPC.knockBackResist = 0.25f;
@@ -61,8 +61,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override void OnSpawn(IEntitySource source)
         {
-            //NPC.lifeMax = (int)(FSHelper.Scale(110, 145, 185) * scale);
             if (Main.hardMode) { NPC.lifeMax *= 3; NPC.damage = (int)(NPC.damage * 2); NPC.defense *= 3; }
+            NPC.lifeMax = (int)(NPC.lifeMax * scale);
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -141,7 +141,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                         float rotation = MathHelper.ToRadians(14);
                         for (float i = 1; i <= projs; i++)
                         {
-                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(MathHelper.Lerp(rotation, -rotation, i / projs)), ModContent.ProjectileType<Barathrum_Echo>(), NPC.damage / 5, 3f, Main.myPlayer, 0f, 0f);
+                            Projectile.NewProjectileDirect(NPC.GetSource_FromThis(), NPC.Center, playerPrediction.RotatedBy(MathHelper.Lerp(rotation, -rotation, i / projs)), 
+                                ModContent.ProjectileType<Barathrum_Echo>(), NPC.GetAttackDamage_ForProjectiles_DividedFromDamage(), 3f, Main.myPlayer, 0f, 0f);
                         }
                     }
                     NPC.velocity.X = -NPC.velocity.X * 4.5f;
@@ -170,14 +171,11 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public static LocalizedText BestiaryEntry { get; private set; }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            //string text;
-            //if (LanguageManager.Instance.ActiveCulture == FSHelper.RuTrans) 
-            //    text = "Эта мушка ищет хоть что, чем бы себя заполнить.";
-            //else text = "This fly is looking for anything to fill itself.";
             // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 // Sets the spawning conditions of this NPC that is listed in the bestiary.
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheUnderworld,
                 // Sets the description of this NPC that is listed in the bestiary.
                 new FlavorTextBestiaryInfoElement("Mods.Ferustria.Bestiary.Fathomless_Fly")

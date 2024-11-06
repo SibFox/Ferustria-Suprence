@@ -5,12 +5,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Audio;
 using System;
-using Ferustria.Content.Buffs.Statuses;
 using Ferustria.Content.Projectiles.Friendly;
+using Ferustria.Content.Buffs.Minions_And_Pets;
 
 namespace Ferustria.Content.Minions.PreHM
 {
-	public class Angelic_Spirit_Swordsman : ModProjectile
+    public class Angelic_Spirit_Swordsman : ModProjectile
 	{
         private int AttackTimer
         {

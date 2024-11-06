@@ -82,6 +82,11 @@ Mods: {
 					Continue shooting for more effectiveness
 					'''
 			}
+
+			JiL_Pet_Buff: {
+				DisplayName: Oh, there is a connection
+				Description: She is not happy with her stay here...
+			}
 		}
 
 		Items: {
@@ -393,6 +398,11 @@ Mods: {
 					'''
 				ChargeTip: Fire Blades are charged for {0:N1}%
 			}
+
+			JiL_Pet_Item: {
+				DisplayName: Broken PDA
+				Tooltip: A strange device... It seems to be malfunctioning, but it is able to transmit a signal.
+			}
 		}
 
 		NPCs: {
@@ -436,6 +446,7 @@ Mods: {
 			Laser_Line.DisplayName: Laser_ Line
 			AMBlades_Salivar_Projectile.DisplayName: A M Blades_ Salivar_ Projectile
 			Little_Light_Echo.DisplayName: Little_ Light_ Echo
+			JiL_Pet.DisplayName: JiL
 		}
 
 		Bestiary: {

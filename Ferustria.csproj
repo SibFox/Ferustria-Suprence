@@ -13,6 +13,12 @@
     <None Remove="Assets\Textures\NPCs\Enemies\PreHM\Distraught_Little_Angel\Distraught_Little_Angel_Bestiary.png" />
     <None Remove="Assets\Textures\NPCs\Enemies\PreHM\Distraught_Little_Angel\Distraught_Little_Angel_Body.png" />
     <None Remove="Assets\Textures\NPCs\Enemies\PreHM\Distraught_Little_Angel\Distraught_Little_Angel_Wings.png" />
+    <None Remove="Assets\Textures\Pets\JiL_Pet.png" />
+    <None Remove="Assets\Textures\Pets\JiL_Pet_Folder\JiL_Pet_Fly.png" />
+    <None Remove="Assets\Textures\Pets\JiL_Pet_Folder\JiL_Pet_Idle.png" />
+    <None Remove="Assets\Textures\Pets\JiL_Pet_Folder\JiL_Pet_Run.png" />
+    <None Remove="Content\Items\Pets\JiL_Pet_Item.png" />
+    <None Remove="Content\Pets\JiL_Pet.png" />
     <None Remove="Content\Projectiles\Friendly\Pyrite_Shot_Bugged.png" />
     <None Remove="Localization\en-EN.hjson" />
     <None Remove="localization\ru-RU.hjson" />
@@ -21,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Textures\NPCs\Bosses\" />
+    <Folder Include="Assets\Textures\UIs\HPBars\" />
     <Folder Include="Content\Items\Weapons\Mage\PostML\" />
     <Folder Include="Content\Items\Weapons\Melee\PostML\" />
     <Folder Include="Content\Items\Weapons\Ranger\PostML\" />

@@ -33,10 +33,10 @@ namespace Ferustria.Common.UIs.Elements.ChargeBars
             {
                 texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner"));
                 textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner", true));
-                textureSuperMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "SuperMeter_Activated"));
-                textureSuperMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "SuperMeter_Deactivated"));
-                textureMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "Meter_Activated"));
-                textureMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElement("BarathrumPruner", "Meter_Deactivated"));
+                textureSuperMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "SuperMeter_Activated"));
+                textureSuperMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "SuperMeter_Deactivated"));
+                textureMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "Meter_Activated"));
+                textureMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "Meter_Deactivated"));
 
 
 

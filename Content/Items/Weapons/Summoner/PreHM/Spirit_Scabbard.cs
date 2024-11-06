@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using Terraria.GameContent.Creative;
 using System.Collections.Generic;
-using Ferustria.Content.Buffs.Statuses;
 using Ferustria.Content.Minions.PreHM;
 using Terraria.DataStructures;
+using Ferustria.Content.Buffs.Minions_And_Pets;
 
 namespace Ferustria.Content.Items.Weapons.Summoner.PreHM
 {
