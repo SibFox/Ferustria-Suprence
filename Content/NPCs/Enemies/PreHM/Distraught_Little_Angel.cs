@@ -62,12 +62,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public override void OnSpawn(IEntitySource source)
         {
             npcSpecials = NPC.GetGlobalNPC<GlobalNPCShields>();
-            npcSpecials.SetHolyShield(FSHelper.Scale(20, 30, 40));
-            if (Main.hardMode) { NPC.lifeMax *= 3; NPC.damage = (int)(NPC.damage * 2); NPC.defense *= 3;
-                npcSpecials = NPC.GetGlobalNPC<GlobalNPCShields>();
-                npcSpecials.SetHolyShield(FSHelper.Scale(50, 70, 100));
-            }
-            
+            npcSpecials.SetHolyShield(Main.hardMode ? FSHelper.Scale(50, 100, 150) : FSHelper.Scale(20, 30, 40));
+            if (Main.hardMode) { NPC.lifeMax = NPC.life *= 3; NPC.damage *= 2; NPC.defense *= 3; }            
             NPC.TargetClosest(true);
             player = Main.player[NPC.target];
             NPC.direction = player.position.X < NPC.position.X ? -1 : 1;
@@ -199,8 +195,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         void DustAround()
         {
-            if (!Main.dedServ && NPC.ai[0]++ % 6 == 0)
-                for (float i = 0; i < 160; i++)
+            if (!Main.dedServ && NPC.ai[0]++ % 12 == 0)
+                for (float i = 0; i < 120; i++)
                     Dust.NewDustDirect(NPC.Center + Vector2.One.GetVector_ToAngle_WithMult(360f * (i / 50f), countDown / 3 + 40), 1, 1, ModContent.DustType<Angelic_Particles_Stable>(), 0, 0, 0, default, .5f);
         }
 

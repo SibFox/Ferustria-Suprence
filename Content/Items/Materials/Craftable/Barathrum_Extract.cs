@@ -20,7 +20,7 @@ namespace Ferustria.Content.Items.Materials.Craftable
             Item.width = 18;
             Item.height = 30;
             Item.maxStack = 999;
-            Item.value = Item.sellPrice(0, 0, 3, 0);
+            Item.value = Item.sellPrice(0, 0, 10, 0);
             Item.rare = ItemRarityID.LightPurple;
         }
 

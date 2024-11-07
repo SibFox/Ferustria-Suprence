@@ -6,6 +6,7 @@ But for it to get to some form, it still needs a lot of time. Because I try to m
 
 ~Currently adds (probably): 
 - 18 (some unique) Weapons (6 Melee, 6 Ranged, 5 Mage and 1 Summoner)
+- 1 Armor set (or 2?)
 - 1 Boss (is wip)
 - 3 Enemies
 - 6 Effects((de)buffs)

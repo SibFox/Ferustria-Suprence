@@ -57,7 +57,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.hardMode) { NPC.lifeMax = (int)(NPC.lifeMax * 3); NPC.damage = (int)(NPC.damage * 1.5); NPC.defense = (int)(NPC.defense * 2.5); }
+            if (Main.hardMode) { NPC.life = NPC.lifeMax *= 3; NPC.damage = (int)(NPC.damage * 1.5); NPC.defense = (int)(NPC.defense * 2.5); }
         }
 
 

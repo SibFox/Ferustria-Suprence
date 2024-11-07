@@ -12,15 +12,11 @@ namespace Ferustria.Content.Dusts
 			dust.velocity = Vector2.Zero;
 			dust.noGravity = true;
 			dust.noLight = true;
-            dust.velocity = Vector2.Clamp(dust.velocity, new Vector2(-2f, -2f), new Vector2(2f, 2f));
         }
 
 		public override bool Update(Dust dust)
 		{
-			dust.scale *= .987f;
-			float light = 0.83f * dust.scale;
-			if (light > 1f) light = 1f;
-			Lighting.AddLight(dust.position, 0, light * 0.8f, light * 0.85f);
+			dust.scale *= .95f;
 			if (dust.scale < .35f)
 			{
 				dust.active = false;

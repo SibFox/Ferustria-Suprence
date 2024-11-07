@@ -49,16 +49,16 @@ namespace Ferustria.Common.GlobalNPCs
             }
         }
 
-        public void RechargeHolyShield(int? amount = null)
+        public void RechargeHolyShield(int amount = 0)
         {
-            if (Uses_Holy_Shied)
+            if (Uses_Holy_Shied && amount >= 0)
             {
                 Holy_Shield_Active = true;
-                Holy_Shield_Durability = amount == null ? Holy_Shield_Durability_Max : amount.Value;
+                Holy_Shield_Durability = amount == 0 ? Holy_Shield_Durability_Max : amount;
             }
             else
             {
-                Ferustria.InnerDebug.Print("Tried to recharge holy shield when it's in no use");
+                Ferustria.InnerDebug.Print("Tried to recharge holy shield when it's in no use or amount set to zero");
             }
         }
 
