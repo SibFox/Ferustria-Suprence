@@ -28,22 +28,19 @@ namespace Ferustria.Common.UIs.Elements.ChargeBars
         {
             pixelOff = 130;
 
+            texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner"));
+            textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner", true));
+            textureSuperMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarElementTexture("BarathrumPruner", "SuperMeter_Activated"));
+            textureSuperMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarElementTexture("BarathrumPruner", "SuperMeter_Deactivated"));
+            textureMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarElementTexture("BarathrumPruner", "Meter_Activated"));
+            textureMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarElementTexture("BarathrumPruner", "Meter_Deactivated"));
+
+            Texture2D smt;
+            Texture2D mt1;
+            Texture2D mt2;
 
             if (Main.LocalPlayer.HeldItem == FSHelper.GetItem<Barathrum_Pruner>() && !Main.LocalPlayer.dead)
             {
-                texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner"));
-                textureBG = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetChargeBarTexture("BarathrumPruner", true));
-                textureSuperMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "SuperMeter_Activated"));
-                textureSuperMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "SuperMeter_Deactivated"));
-                textureMeterAct = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "Meter_Activated"));
-                textureMeterDeact = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetCahrgeBarElementTexture("BarathrumPruner", "Meter_Deactivated"));
-
-
-
-                Texture2D smt;
-                Texture2D mt1;
-                Texture2D mt2;
-
                 spriteBatch.Draw(textureBG, new Vector2(Main.screenWidth - texture.Width, Main.screenHeight + pixelOff) / 2f, null, Color.White, 0f,
                     new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0);
                 Color gradientA = new(0, (float)Main.time % 255, 255);
@@ -88,14 +85,14 @@ namespace Ferustria.Common.UIs.Elements.ChargeBars
 
                 //Super Meter
                 spriteBatch.Draw(smt, new Vector2(Main.screenWidth + texture.Width / 2 - smt.Width * 1.5f, Main.screenHeight + pixelOff + texture.Height * 2 + smt.Height * 1.7f) / 2f, null,
-                    Color.White, 0f, new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0.98f);
+                    Color.White, 0f, new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 1);
 
                 //Meter First
                 spriteBatch.Draw(mt2, new Vector2(Main.screenWidth - texture.Width / 2 + mt1.Width * 2.15f, Main.screenHeight + pixelOff + texture.Height * 2 + mt1.Height * 1.9f) / 2f, null,
-                    Color.White, 0f, new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0.98f);
+                    Color.White, 0f, new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 1);
 
                 spriteBatch.Draw(mt2, new Vector2(Main.screenWidth + texture.Width / 2 + mt1.Width * 2.58f, Main.screenHeight + pixelOff + texture.Height * 2 + mt1.Height * 1.9f) / 2f, null,
-                    Color.White, 0f, new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 0.98f);
+                    Color.White, 0f, new Vector2(texture.Width / 2 - texture.Width / 2 + texture.Width / 6, 0), 1.5f, 0, 1);
 
                 //Meter Second
                 spriteBatch.Draw(mt1, new Vector2(Main.screenWidth - texture.Width / 2 - mt2.Width * 1.28f, Main.screenHeight + pixelOff + texture.Height * 2 + mt1.Height * 1.9f) / 2f, null,

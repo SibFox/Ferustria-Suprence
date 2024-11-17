@@ -13,9 +13,11 @@ using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Mage.HM
 {
-	public class Barathrum_Blaster : ModItem
+	public class Barathrum_Blaster_Mage : ModItem
 	{
-		public override void SetStaticDefaults()
+        public override string Texture => Ferustria.Paths.TexturesPathItems + "HM/Barathrum_Blaster";
+
+        public override void SetStaticDefaults()
 		{
             Item.ResearchUnlockCount = 1;
 		}
@@ -31,7 +33,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 			Item.useAnimation = 12;
 			Item.useTime = 3;
 			Item.reuseDelay = 14;
-			Item.shootSpeed = 11.5f;
+			Item.shootSpeed = 22f;
 			Item.shoot = ProjectileType<Neon_Laser>();
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.25f;
@@ -50,11 +52,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
-            if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
-            {
-                position += muzzleOffset;
-            }
+            position.ApplyMuzzleOffset(velocity);
         }
 
 

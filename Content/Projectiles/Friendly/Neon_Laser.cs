@@ -3,6 +3,7 @@ using Ferustria.Content.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace Ferustria.Content.Projectiles.Friendly
 {
@@ -15,7 +16,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 			Projectile.aiStyle = 0;
 			Projectile.scale = 1f;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 120;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
@@ -26,8 +26,12 @@ namespace Ferustria.Content.Projectiles.Friendly
 			Projectile.localNPCHitCooldown = -1;
 		}
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Projectile.ai[0] > 0) Projectile.DamageType = DamageClass.Ranged;
+        }
 
-		public override void OnKill(int timeLeft)
+        public override void OnKill(int timeLeft)
 		{
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);
 			//Main.PlaySound(SoundID.Item10, Projectile.position);
@@ -35,10 +39,10 @@ namespace Ferustria.Content.Projectiles.Friendly
 
 		public override void AI()
 		{
-			if (Projectile.localAI[0]++ <= 1)
-            {
-				Projectile.velocity = (Projectile.velocity + Projectile.velocity / 3) * 1.2f;
-			}
+			//if (Projectile.localAI[0]++ <= 1)
+            //{
+			//	Projectile.velocity = (Projectile.velocity + Projectile.velocity / 3) * 1.2f;
+			//}
 			if (Projectile.alpha > 0)
 			{
 				Projectile.alpha -= 26;
@@ -48,9 +52,17 @@ namespace Ferustria.Content.Projectiles.Friendly
 				Projectile.alpha = 0;
 			}
             Projectile.SetStraightRotation();
-			//Projectile.rotation = Projectile.GetStraightRotation();
+
 			Lighting.AddLight(Projectile.position, 0, 0.7f, 0.7f);
+
+            DoDustTrail();
 		}
+
+        private void DoDustTrail()
+        {
+            if (Main.rand.NextBool(10) && !Main.dedServ)
+                Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Smoke, 0, 0, 80, new(0, Main.rand.Next(180, 256), 255), Main.rand.NextFloat(0.6f, 1f));
+        }
 
     }
 

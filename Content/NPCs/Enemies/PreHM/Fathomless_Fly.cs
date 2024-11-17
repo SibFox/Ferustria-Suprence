@@ -43,7 +43,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             if (!Main.hardMode) scale = Main.rand.NextFloat(0.63f, 1.12f);
             else scale = Main.rand.NextFloat(0.75f, 1.24f);
             NPC.lifeMax = FSHelper.Scale(110, 145, 185);
-            NPC.damage = FSHelper.Scale(30, 50, 70);
+            NPC.damage = FSHelper.Scale(50, 70, 95);
 			NPC.defense = 9;
             NPC.knockBackResist = 0.25f;
 			NPC.width = 26;
@@ -164,8 +164,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Impure_Dust>(), 1, 1, 3));
-            //npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Barathrum_Sample>(), 9, 6));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Barathrum_Sample>(), 11));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Barathrum_Sample>(), 13, chanceNumerator: 2));
 		}
 
         public static LocalizedText BestiaryEntry { get; private set; }

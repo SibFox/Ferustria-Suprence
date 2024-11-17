@@ -13,12 +13,14 @@ using Ferustria.Content.Items.Materials.Craftable;
 
 namespace Ferustria.Content.Items.Weapons.Mage.HM
 {
-	public class Barathrum_Wrecker : ModItem
+	public class Barathrum_Wrecker_Mage : ModItem
 	{
-		public override void SetStaticDefaults()
+        public override string Texture => Ferustria.Paths.TexturesPathItems + "HM/Barathrum_Wrecker";
+
+        public override void SetStaticDefaults()
 		{
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-		}
+            Item.ResearchUnlockCount = 1;
+        }
 
 		public override void SetDefaults()
 		{
@@ -30,14 +32,14 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 			Item.height = 28;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
-			Item.shootSpeed = 14.5f;
+			Item.shootSpeed = 18f;
 			Item.shoot = ModContent.ProjectileType<Neon_Blast>();
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.25f;
 			Item.UseSound = SoundID.Item91;
 			Item.value = Item.sellPrice(0, 2, 95, 0);
 			Item.rare = ItemRarityID.Purple;
-			Item.mana = 13;
+			Item.mana = 20;
 			Item.autoReuse = true;
 			Item.scale *= 0.86f;
 		}
@@ -50,13 +52,7 @@ namespace Ferustria.Content.Items.Weapons.Mage.HM
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Vector2 muzzleOffset = Vector2.Normalize(velocity) * 25f;
-			if (Collision.CanHit(position, 0, 0, position + muzzleOffset, 0, 0))
-			{
-				position += muzzleOffset;
-			}
-
-			return base.Shoot(player, source, position, velocity, type, damage, knockback);
+			return base.Shoot(player, source, position.ReturnMuzzleOffset(velocity), velocity, type, damage, knockback);
 		}
 
 		public override Vector2? HoldoutOffset()

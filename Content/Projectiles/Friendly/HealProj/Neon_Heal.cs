@@ -12,7 +12,7 @@ namespace Ferustria.Content.Projectiles.Friendly.HealProj
     {
         public override void SetValues()
         {
-            HealAmout = (4, 8);
+            HealAmout = (1, 5);
             timeLeft = 240;
             speed = 22f;
             Light = (0, 0.4f, 0.4f);

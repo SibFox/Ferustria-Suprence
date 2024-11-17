@@ -19,35 +19,44 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 		/// <summary>
 		/// Таймер атак
 		/// </summary>
-		public int attackTimer = 200;
-		public int moveTimer = 0;
-        public int attackDeterminator, sequenceDeterminator, movementDeterminator;
-        public int choosenAttack, continueAttack, moveChoise, continueMove;
-        public int dashed, face, sequenceTimer;
-        public float fromAngle, flyDistanceToPlayer;
-        public List<int> attackWeights = [200, 800, 600, 240];
-        public List<int> sequenceWeights = [600, 325]; //1 - Тройной дэш; 2 - Кружения с обстрелом
-        public List<int> movementWeights = [80, 250, 135]; //Продление, движение в стороне от игрока, дэш в игрока
-        public int allAttackWeights, allSequenceWeights, allMovementWeights;
-		public float accSpeedY, accSpeedX, rotate;
-		public string sequence;
-        public int projDamage_lightBall = (int)(FSHelper.Scale(130, 165, 250) / 2.5);
-        public int projDamage_lightBallCircle = (int)(FSHelper.Scale(100, 145, 200) / 2.5);
-        public int projDamage_angelicScythe = (int)(FSHelper.Scale(220, 280, 350) / 2.3);
-        public float maxDashSpeed = !Main.masterMode ? 16f : 20f;
+		int attackTimer = 200;
+		int moveTimer = 0;
+        int attackDeterminator, sequenceDeterminator, movementDeterminator;
+        int choosenAttack, continueAttack, moveChoise, continueMove;
+        int dashed, face, sequenceTimer;
+        float fromAngle, flyDistanceToPlayer;
+        List<int> attackWeights = [200, 800, 600, 240];
+        List<int> sequenceWeights = [600, 325]; //1 - Тройной дэш; 2 - Кружения с обстрелом
+        List<int> movementWeights = [80, 250, 135]; //Продление, движение в стороне от игрока, дэш в игрока
+        int allAttackWeights, allSequenceWeights, allMovementWeights;
+		float accSpeedY, accSpeedX, rotate;
+		string sequence;
+        int projDamage_lightBall = (int)(FSHelper.Scale(130, 165, 250) / 2.5);
+        int projDamage_lightBallCircle = (int)(FSHelper.Scale(100, 145, 200) / 2.5);
+        int projDamage_angelicScythe = (int)(FSHelper.Scale(220, 280, 350) / 2.3);
+        float maxDashSpeed = !Main.masterMode ? 16f : 20f;
         Vector2 center;
         /// <summary>
 		/// Ограничитель в единицах перед началом последовательности
 		/// </summary>
-		public int sequenceCounter;
+		int sequenceCounter;
 
-        public int GetPhase
+        enum Sequence
+        {
+            None,
+            TrippleDash
+        }
+        Sequence currentSequence;
+
+        Player player;
+
+        int GetPhase
         {
             get
             {
-                if ((NPC.life <= NPC.lifeMax * 0.35 && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.32 && Main.masterMode))
+                if (NPC.life <= NPC.lifeMax * (Main.masterMode ? 0.32 : 0.35))
                     return 3;
-                else if ((NPC.life <= NPC.lifeMax * 0.6 && !Main.masterMode) || (NPC.life <= NPC.lifeMax * 0.55 && Main.masterMode))
+                else if (NPC.life <= NPC.lifeMax * (Main.masterMode ? 0.55 : 0.6))
                     return 2;
                 return 1;
             }
@@ -173,9 +182,17 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 			{
 				NPC.TargetClosest();
 			}
-			Player player = Main.player[NPC.target];
-			Vector2 targetCenter = player.Center - NPC.Center;
-			Vector2 target = NPC.HasPlayerTarget ? player.Center : Main.npc[NPC.target].Center;
+
+            Vector2 targetDefinedPosition, target;
+
+            if (NPC.HasValidTarget)
+            {
+                player = Main.player[NPC.target];
+                target = NPC.HasPlayerTarget ? player.Center : Main.npc[NPC.target].Center;
+                targetDefinedPosition = player.Center - NPC.Center;
+            }
+            else return;
+			
 			if (player.dead)
 			{
 				NPC.velocity.Y -= 0.065f;
@@ -222,7 +239,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                     int modifier = 1;
                     if (attackTimer <= 0)
                     {
-                        attackDeterminator = Convert.ToInt32(Main.rand.NextFloat() * allAttackWeights);
+                        attackDeterminator = Main.rand.Next(allAttackWeights);
 
                         for (int i = 0; i < attackWeights.Count; i++)
                         {
@@ -251,6 +268,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                             case 1: RapidInPlayerAttack(player, true); break;
                         }
                     }
+
                     ////     Движения    ////
 
                     if (Math.Abs(NPC.velocity.X) < .35f && Math.Abs(NPC.velocity.Y) < .35f && continueMove == 0) moveTimer = 0;
@@ -267,7 +285,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
 
                             while (moveTimer <= 0)
                             {
-                                movementDeterminator = Convert.ToInt32(Main.rand.NextFloat() * allMovementWeights);
+                                movementDeterminator = Main.rand.Next(allMovementWeights);
 
                                 for (int i = 0; i < movementWeights.Count; i++)
                                 {
@@ -294,7 +312,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                                         if (dashed == 0 && sequence == "None")
                                         {
                                             if (GetPhase == 2) StarAttack();
-                                            center = targetCenter;
+                                            center = targetDefinedPosition;
                                             face = NPC.direction;
                                             moveTimer = !Main.masterMode ? 50 : 35; dashed = 1; continueMove = 2; attackTimer = moveTimer + 20;
                                             NPC.damage = FSHelper.Scale(220, 265, 280);
@@ -312,7 +330,7 @@ namespace Ferustria.Content.NPCs.Bosses.HM.SixWingedSeraphBoss
                         {
                             attackTimer = 160;
                             moveTimer = 160;
-                            center = targetCenter;
+                            center = targetDefinedPosition;
                             face = NPC.direction;
                             continueMove = 2;
                             sequenceTimer = 40;

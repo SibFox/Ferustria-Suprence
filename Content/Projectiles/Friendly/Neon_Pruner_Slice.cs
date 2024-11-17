@@ -37,7 +37,6 @@ namespace Ferustria.Content.Projectiles.Friendly
 
         public override void SetStaticDefaults()
         {
-            // Total count animation frames
             Main.projFrames[Projectile.type] = 1;
         }
 
@@ -51,7 +50,6 @@ namespace Ferustria.Content.Projectiles.Friendly
             Projectile.penetrate = 11;
             Projectile.timeLeft = 1200;
             Projectile.alpha = 255;
-            Projectile.extraUpdates = 0;
             Projectile.CritChance = 100;
         }
 
@@ -79,7 +77,7 @@ namespace Ferustria.Content.Projectiles.Friendly
         public override void OnSpawn(IEntitySource source)
         {
             if (Cleave_Level == 0)
-                OnKill(0);
+                Projectile.Kill();
             if (Cleave_Level == 1)
             {
                 Projectile.scale = 2f;
@@ -112,8 +110,6 @@ namespace Ferustria.Content.Projectiles.Friendly
                 SoundEngine.PlaySound(SoundID.Item122.WithPitchOffset(.2f).WithVolumeScale(1.55f), Main.player[Projectile.owner].position);
                 SoundEngine.PlaySound(SoundID.Item96.WithPitchOffset(-.3f).WithVolumeScale(1.9f), Main.player[Projectile.owner].position);
             }
-                                             //122
-            //SoundEngine.PlaySound(SoundID.Item96.WithPitchchOffset(.2f).WithVolumeScale(1.2f), Main.player[Projectile.owner].position);
 
 
             Projectile.height = Projectile.width = (int)(70 * Projectile.scale);
@@ -130,16 +126,6 @@ namespace Ferustria.Content.Projectiles.Friendly
             Tile projectileTile = Main.tile[coords.X, coords.Y];
             //if (projectileTile.HasTile && Main.tileSolid[projectileTile.TileType] && projectileTile.TileType != TileID.Platforms) Projectile.velocity *= 0.955f;
             Projectile.velocity *= 0.995f;
-
-            // Loop through the 4 animation frames, spending 5 ticks on each
-            // Projectile.frame — index of current frame
-            //if (++Projectile.frameCounter >= 3)
-            //{
-            //    Projectile.frameCounter = 0;
-            //    // Or more compactly Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
-            //    if (++Projectile.frame >= Main.projFrames[Projectile.type])
-            //        Projectile.frame = 0;
-            //}
 
 
             // Set both direction and spriteDirection to 1 or -1 (right and left respectively)
@@ -224,20 +210,17 @@ namespace Ferustria.Content.Projectiles.Friendly
             Projectile.damage = (int)(Projectile.damage / penDenum);
             Projectile.CritChance -= critDenum;
             if (Cleave_Level == 3)
-                target.AddBuff(BuffID.Frostburn2, 3 * 60);
+                target.AddBuff(BuffID.Frostburn2, 5 * 60);
 
             Player player = Main.player[Projectile.owner];
 
-            if (Projectile.owner == Main.myPlayer && !player.moonLeech)
+            if (Projectile.owner == Main.myPlayer && !player.moonLeech && Projectile.ai[2]++ <= 5)
             {
-                int heal = Main.rand.Next(0, Cleave_Level * 2 + 1);
+                int heal = Main.rand.Next(1, Cleave_Level * 2 + 1) * 10;
                 if (heal > 0)
                 {
                     if (target.life <= 0) heal = (int)(heal * 1.5f);
-                    player.statLife += heal;
-                    if (player.statLife > player.statLifeMax2) player.statLife = player.statLifeMax2;
-                    player.HealEffect(heal);
-                    NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, Projectile.owner, heal, 0.0f, 0.0f, 0, 0, 0);
+                    player.Heal(heal);
                 }
             }
         }

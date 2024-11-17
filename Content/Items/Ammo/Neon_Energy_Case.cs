@@ -7,7 +7,7 @@ using Ferustria.Content.Items.Materials.Drop;
 
 namespace Ferustria.Content.Items.Ammo
 {
-	public class Live_Compound_Tank : ModItem
+	public class Neon_Energy_Case : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -16,22 +16,26 @@ namespace Ferustria.Content.Items.Ammo
 
 		public override void SetDefaults()
 		{
-			Item.damage = 4;
+			Item.damage = 9;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 12;
 			Item.height = 16;
 			Item.maxStack = 9999;
 			Item.consumable = true;
-			Item.knockBack = 0.5f;
-			Item.value = Item.sellPrice(0, 0, 0, 18);
+			Item.knockBack = 0.2f;
+			Item.value = Item.sellPrice(0, 0, 0, 24);
 			Item.rare = ItemRarityID.White;
-			Item.shoot = ModContent.ProjectileType<Microorganism>();
+			Item.shoot = ModContent.ProjectileType<Neon_Laser>();
 			Item.ammo = Item.type;
 		}
 
         public override void AddRecipes()
         {
-            RegisterRecipe.Reg([ new(ModContent.ItemType<Rotten_Skin>()), new(ModContent.ItemType<Impure_Dust>(), 3), new(ItemID.Bottle) ], Type, 250, TileID.AlchemyTable);
+            CreateRecipe(250).
+                AddIngredient<Impure_Dust>(3).
+                AddIngredient(ItemID.SoulofNight).
+                AddTile(TileID.MythrilAnvil).
+                Register();
         }
     }
 }

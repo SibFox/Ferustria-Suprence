@@ -89,10 +89,10 @@ namespace Ferustria.Content.Projectiles.Friendly
 
         void DustEff()
         {
-            if (Main.rand.NextFloat() < 0.75f)
+            if (Main.rand.NextFloat() < .75f)
             {
                 int type = ModContent.DustType<Rot_Particles>();
-                if (Main.rand.NextBool() && Main.rand.NextBool()) type = ModContent.DustType<Barathrum_Particles>();
+                if (Main.rand.NextBool(3)) type = ModContent.DustType<Barathrum_Particles>();
                 Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, type, -Projectile.velocity.X * 0.45f, -Projectile.velocity.Y * 0.45f,
                     Scale: Main.rand.NextFloat(0.45f, 1.1f));
             }

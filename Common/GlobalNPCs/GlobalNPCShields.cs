@@ -16,32 +16,30 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Ferustria.Common.GlobalNPCs
 {
-    // This file shows numerous examples of what you can do with the extensive NPC Loot lootable system.
-    // You can find more info on the wiki: https://github.com/tModLoader/tModLoader/wiki/Basic-NPC-Drops-and-Loot-1.4
-    // Despite this file being GlobalNPC, everything here can be used with a ModNPC as well! See examples of this in the Content/NPCs folder.
     public class GlobalNPCShields : GlobalNPC
     {
         public override bool InstancePerEntity => true;
-
-
-        public bool Any_Active_Shield { get; private set; }
         float barScale;
+        public bool Any_Active_Shield { get; private set; }
         // Святой щит   |50% от стрелкового урона и 75% от магического, в общем снижает урон на 50%|
         public bool Uses_Holy_Shied { get; private set; }
-        public bool Holy_Shield_Active { get; private set; }
-        public bool Holy_Shield_Destroyed_Control { get; set; }
-        public int Holy_Shield_Durability_Max { get; private set; }
-        public int Holy_Shield_Durability { get; private set; }
-        public int Holy_Shield_Recharge_Timer { get; private set; }
+        public bool HolyShield_Active { get; private set; }
+        /// <summary>
+        /// Переменная для определния логики у NPC во время разрушения щита
+        /// </summary>
+        public bool HolyShield_Destroyed_Control { get; set; }
+        public int HolyShield_Durability_Max { get; private set; }
+        public int HolyShield_Durability { get; private set; }
+        public int HolyShield_Recharge_Timer { get; private set; }
 
         public void SetHolyShield(int shieldAmount = 1, int? maxShieldAmount = null, float barScale = 0.75f)
         {
             if (shieldAmount > 0)
             {
                 this.barScale = barScale;
-                Holy_Shield_Durability_Max = maxShieldAmount == null ? shieldAmount : maxShieldAmount.Value;
-                Holy_Shield_Durability = shieldAmount;
-                Uses_Holy_Shied = Holy_Shield_Active = true;
+                HolyShield_Durability_Max = maxShieldAmount == null ? shieldAmount : maxShieldAmount.Value;
+                HolyShield_Durability = shieldAmount;
+                Uses_Holy_Shied = HolyShield_Active = true;
             }
             else
             {
@@ -53,19 +51,19 @@ namespace Ferustria.Common.GlobalNPCs
         {
             if (Uses_Holy_Shied && amount >= 0)
             {
-                Holy_Shield_Active = true;
-                Holy_Shield_Durability = amount == 0 ? Holy_Shield_Durability_Max : amount;
+                HolyShield_Active = true;
+                HolyShield_Durability = amount == 0 ? HolyShield_Durability_Max : amount;
             }
             else
             {
-                Ferustria.InnerDebug.Print("Tried to recharge holy shield when it's in no use or amount set to zero");
+                new ArgumentException("Tried to recharge holy shield when it's in no use or amount set to zero", "amount");
             }
         }
 
         public void SetHolyShieldRecharge(int time)
         {
-            Holy_Shield_Recharge_Timer = time;
-            Holy_Shield_Destroyed_Control = false;
+            HolyShield_Recharge_Timer = time;
+            HolyShield_Destroyed_Control = false;
         }
 
         private static void HolyShieldDamageText(int damage, NPC npc)
@@ -74,17 +72,21 @@ namespace Ferustria.Common.GlobalNPCs
         }
 
 
-
-
         public override void AI(NPC npc)
         {
-            Any_Active_Shield = Holy_Shield_Active;
+            Any_Active_Shield = HolyShield_Active;
             
+            if (Any_Active_Shield)
+            {
+                for (int i = 0; i < NPC.maxBuffs; i++)
+                    npc.buffTime[i] = 0;
+            }
+
             if (Uses_Holy_Shied)
             {
-                npc.immortal = npc.HideStrikeDamage = Holy_Shield_Active;
-                if (Holy_Shield_Recharge_Timer >= 0) Holy_Shield_Recharge_Timer--;
-                if (Holy_Shield_Recharge_Timer < 0 && !Holy_Shield_Active)
+                npc.immortal = npc.HideStrikeDamage = HolyShield_Active;
+                if (HolyShield_Recharge_Timer >= 0) HolyShield_Recharge_Timer--;
+                if (HolyShield_Recharge_Timer < 0 && !HolyShield_Active)
                 {
                     RechargeHolyShield();
                 }
@@ -115,19 +117,19 @@ namespace Ferustria.Common.GlobalNPCs
                 // Святой щит   |50% от стрелкового урона и 75% от магического, в общем снижает урон на 50%|
                 if (Uses_Holy_Shied)
                 {
-                    if (Holy_Shield_Active)
+                    if (HolyShield_Active)
                     {
-                        int damageDealt = (int)(hit.Crit ? hit.Damage /2 : hit.Damage * (hit.DamageType == DamageClass.Magic ? 0.25 : hit.DamageType == DamageClass.Ranged ? 0.5 : 1) * 0.5);
-                        Holy_Shield_Durability -= damageDealt;
+                        int damageDealt = (int)((hit.Crit ? hit.Damage /2 : hit.Damage) * (hit.DamageType == DamageClass.Magic ? 0.25 : hit.DamageType == DamageClass.Ranged ? 0.5 : 1) * 0.5);
+                        HolyShield_Durability -= damageDealt;
 
                         //modifiers.FinalDamage *= 0;
                         HolyShieldDamageText(damageDealt, npc);
 
-                        if (Holy_Shield_Durability < 0)
+                        if (HolyShield_Durability < 0)
                         {
-                            Holy_Shield_Durability = 0;
-                            Holy_Shield_Active = false;
-                            Holy_Shield_Destroyed_Control = true;
+                            HolyShield_Durability = 0;
+                            HolyShield_Active = false;
+                            HolyShield_Destroyed_Control = true;
                         }
                     }
 
@@ -141,7 +143,7 @@ namespace Ferustria.Common.GlobalNPCs
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             // Вычесть screenPos из drawPos
-            if (Uses_Holy_Shied && Holy_Shield_Active && Holy_Shield_Durability < Holy_Shield_Durability_Max)
+            if (Uses_Holy_Shied && HolyShield_Active && HolyShield_Durability < HolyShield_Durability_Max)
             {
                 texture = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetHPBarTexture("Holy_Shield"));
                 textureHP = (Texture2D)Request<Texture2D>(Ferustria.Paths.GetHPBarTexture("Holy_Shield_HP"));
@@ -151,7 +153,7 @@ namespace Ferustria.Common.GlobalNPCs
 
                 spriteBatch.Draw(texture, (npc.Center + new Vector2((int)(-npc.width / 1.3 * barScale), npc.height / 2 + 8)) - screenPos, new Rectangle(0, 0, texture.Width, texture.Height),
                     new Color(255, 255, 255) * 0.5f, 0, new(), barScale, SpriteEffects.None, 1f);
-                float charge = (float)Holy_Shield_Durability / (float)Holy_Shield_Durability_Max;
+                float charge = (float)HolyShield_Durability / (float)HolyShield_Durability_Max;
                 charge = Utils.Clamp(charge, 0f, 1f);
 
                 int width = 60;

@@ -225,20 +225,6 @@ Mods: {
 					'''
 			}
 
-			Barathrum_Blaster: {
-				DisplayName: Barathrum Blaster
-				Tooltip: Shoots 4 neon lasers in a row, that pierce through enemies.
-			}
-
-			Barathrum_Wrecker: {
-				DisplayName: Barathrum Wrecker
-				Tooltip:
-					'''
-					Shoots a heavy neon blast that explodes upon contact.
-					Explosion stays for a time and heals you if hits enemies.
-					'''
-			}
-
 			Book_of_Roots: {
 				DisplayName: Book of Roots
 				Tooltip: ""
@@ -402,6 +388,40 @@ Mods: {
 			JiL_Pet_Item: {
 				DisplayName: Broken PDA
 				Tooltip: A strange device... It seems to be malfunctioning, but it is able to transmit a signal.
+			}
+
+			Barathrum_Wrecker_Ranged: {
+				DisplayName: Barathrum Wrecker
+				Tooltip:
+					'''
+					Shoots a heavy neon blast that explodes upon contact.
+					Explosion stays for a time and heals you if hits enemies.
+					Consumes 5 Neon Cases.
+					'''
+			}
+
+			Barathrum_Wrecker_Mage: {
+				DisplayName: Barathrum Wrecker
+				Tooltip:
+					'''
+					Shoots a heavy neon blast that explodes upon contact.
+					Explosion stays for a time and heals you if hits enemies.
+					'''
+			}
+
+			Barathrum_Blaster_Ranged: {
+				DisplayName: Barathrum Blaster
+				Tooltip: Shoots 4 neon lasers in a row, that pierce through enemies.
+			}
+
+			Barathrum_Blaster_Mage: {
+				DisplayName: Barathrum Blaster
+				Tooltip: Shoots 4 neon lasers in a row, that pierce through enemies.
+			}
+
+			Neon_Energy_Case: {
+				DisplayName: Neon Energy Case
+				Tooltip: Energy source for neon Barathrum weaponary.
 			}
 		}
 

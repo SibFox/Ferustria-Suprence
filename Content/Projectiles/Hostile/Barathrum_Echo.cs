@@ -61,11 +61,11 @@ namespace Ferustria.Content.Projectiles.Hostile
 		{
 			if (Projectile.penetrate <= 0)
 				Projectile.Kill();
-			if (Main.rand.NextFloat() < .75f)
+			if (Main.rand.NextFloat() < .45f && !Main.dedServ)
 				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height, ModContent.DustType<Barathrum_Particles>(), 
                     Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
 
-            if (Projectile.velocity.Y < 16f && Projectile.penetrate < 3)
+            if (Projectile.velocity.Y < 16f)
                 Projectile.velocity.Y += 0.17f;
 
 			Projectile.SetStraightRotation();

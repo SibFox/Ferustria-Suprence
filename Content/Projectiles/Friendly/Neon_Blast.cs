@@ -6,14 +6,12 @@ using Terraria.ModLoader;
 using System;
 using Terraria.Audio;
 using Ferustria.Content.Projectiles.Friendly.HealProj;
+using Terraria.DataStructures;
 
 namespace Ferustria.Content.Projectiles.Friendly
 {
     public class Neon_Blast : ModProjectile
 	{
-        public override void SetStaticDefaults()
-		{
-		}
 
 		public override void SetDefaults()
 		{
@@ -22,8 +20,8 @@ namespace Ferustria.Content.Projectiles.Friendly
 			Projectile.aiStyle = 0;
 			Projectile.scale = 1f;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 160;
+            Projectile.DamageType = DamageClass.Magic;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = true;
 			Projectile.knockBack = 1.8f;
@@ -33,13 +31,17 @@ namespace Ferustria.Content.Projectiles.Friendly
 			Projectile.localNPCHitCooldown = 10;
 		}
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Projectile.ai[0] > 0) Projectile.DamageType = DamageClass.Ranged;
+        }
 
         public override void AI()
 		{
-			if (Projectile.ai[0]++ <= 1)
-            {
-				Projectile.velocity = (Projectile.velocity + Projectile.velocity / 3) * 1.3f;
-			}
+			//if (Projectile.ai[0]++ <= 1)
+            //{
+			//	Projectile.velocity = (Projectile.velocity + Projectile.velocity / 3) * 1.3f;
+			//}
 			if (Projectile.ai[1] <= 0)
             {
 				if (Projectile.alpha > 0)
@@ -53,24 +55,52 @@ namespace Ferustria.Content.Projectiles.Friendly
 			}
 
             Projectile.SetStraightRotation();
-			//Projectile.rotation = Projectile.GetStraightRotation();
 
 			Lighting.AddLight(Projectile.position, 0, 0.8f, 0.8f);
 
-			if (Projectile.ai[1] > 0)
+            if (Projectile.ai[1] > 0)
             {
-				int particles = Main.rand.Next(1, 15);
-				for (int i = 0; i < particles; i++)
-				{
-					double angle = 2.0 * Math.PI * i / particles;
-					Vector2 speed = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
-                    speed.Normalize();
-                    speed *= 3.5f;
-					Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Smoke, speed.X, speed.Y, 80, new(0, Main.rand.Next(180, 256), 255), Main.rand.NextFloat(1f, 1.6f));
-					Projectile.rotation = 0;
-				}
-			}
+                Projectile.knockBack = 0f;
+                DoDustExplosion();
+            }
+            else DoDustTrail();
 		}
+
+        private void DoDustTrail()
+        {
+            if (Main.rand.NextBool() && !Main.dedServ)
+                Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Smoke, 0, 0, 80, new(0, Main.rand.Next(180, 256), 255), Main.rand.NextFloat(0.6f, 1f));
+        }
+
+        private void DoDustExplosion()
+        {
+            int particles = Main.rand.Next(1, 15);
+            for (int i = 0; i < particles; i++)
+            {
+                double angle = 2.0 * Math.PI * i / particles;
+                Vector2 speed = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+                speed.Normalize();
+                speed *= 3.5f;
+                Dust.NewDustDirect(Projectile.Center, 1, 1, DustID.Smoke, speed.X, speed.Y, 80, new(0, Main.rand.Next(180, 256), 255), Main.rand.NextFloat(1.2f, 1.8f));
+                Projectile.rotation = 0;
+            }
+        }
+
+        private void ExplosionStuff()
+        {
+            if (Projectile.ai[1]++ < 1 && Projectile.timeLeft > 0)
+            {
+                Projectile.alpha = 255;
+                Projectile.velocity = Vector2.Zero;
+                Projectile.tileCollide = false;
+                Projectile.damage /= 3;
+                Projectile.position = Projectile.Center;
+                Projectile.width = 150;
+                Projectile.height = 150;
+                Projectile.Center = Projectile.position;
+                Projectile.timeLeft = 30;
+            }
+        }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -79,38 +109,19 @@ namespace Ferustria.Content.Projectiles.Friendly
 				Projectile.localAI[0]++;
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new(0, 0), ModContent.ProjectileType<Neon_Heal>(), 0, 0, Projectile.owner);
 			}
-			if (Projectile.ai[1]++ <= 1 && Projectile.timeLeft > 0)
-			{
-				Projectile.alpha = 255;
-				Projectile.velocity = new Vector2(0, 0);
-				Projectile.tileCollide = false;
-				Projectile.damage /= 2;
-				Projectile.position = Projectile.Center;
-				Projectile.width = 150;
-				Projectile.height = 150;
-				Projectile.Center = Projectile.position;
-				Projectile.timeLeft = 45;
-				Projectile.ai[1]++;
-			}
-			
+
+            ExplosionStuff();
 		}
+
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            ExplosionStuff();
+        }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-			if (Projectile.ai[1]++ <= 1 && Projectile.timeLeft > 0)
-			{
-				Projectile.alpha = 255;
-				Projectile.velocity = new Vector2(0, 0);
-				Projectile.tileCollide = false;
-				Projectile.damage /= 2;
-				Projectile.position = Projectile.Center;
-				Projectile.width = 150;
-				Projectile.height = 150;
-				Projectile.Center = Projectile.position;
-				Projectile.timeLeft = 45;
-				Projectile.ai[1]++;
-			}
-			return false;
+            ExplosionStuff();
+            return false;
         }
 
     }

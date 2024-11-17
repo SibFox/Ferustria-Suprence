@@ -12,7 +12,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Bestiary;
 using Terraria.DataStructures;
 using Ferustria.Content.Items.Materials.Drop;
-using Microsoft.CodeAnalysis.Operations;
 using Ferustria.Common.GlobalNPCs;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -21,8 +20,8 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 
     public class Distraught_Little_Angel : ModNPC
 	{
-        //public override string Texture => Ferustria.Paths.TexturesPathNPCs + "Enemies/PreHM/" + (!Main.hardMode ? "Fathomless_Fly_1" : "Fathomless_Fly_2");
         public override string Texture => NPC.GetEnemyTexture(1, "Distraught_Little_Angel/Distraught_Little_Angel_Bestiary");
+
         GlobalNPCShields npcSpecials = null;
         Player player = null;
 
@@ -53,10 +52,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath4;
             NPC.value = Item.buyPrice(0, 0, 0, 75);
-            //NPC.noGravity = true;
-
-			//AIType = NPCID.CaveBat;
-			//AnimationType = NPCID.GiantBat;
+            NPC.noGravity = true;
         }
 
         public override void OnSpawn(IEntitySource source)
@@ -102,7 +98,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
 
-            fall = !npcSpecials.Holy_Shield_Active;
+            fall = !npcSpecials.HolyShield_Active;
 
             //NPC.netUpdate = true;
 			//NPC.TargetClosest(true);
@@ -120,7 +116,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
             MoveBehaviour();
             ProjectileControl();
 
-            if (npcSpecials.Holy_Shield_Destroyed_Control) { npcSpecials.SetHolyShieldRecharge(160); enraged = true; }
+            if (npcSpecials.HolyShield_Destroyed_Control) { npcSpecials.SetHolyShieldRecharge(160); enraged = true; }
 		}
 
         Vector2 storedVelocity = Vector2.Zero;
@@ -270,7 +266,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             NPC.target = player.whoAmI;
-            if (npcSpecials.Holy_Shield_Durability < npcSpecials.Holy_Shield_Durability_Max / 2) enraged = true;
+            if (npcSpecials.HolyShield_Durability < npcSpecials.HolyShield_Durability_Max / 2) enraged = true;
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -284,7 +280,7 @@ namespace Ferustria.Content.NPCs.Enemies.PreHM
                         NPC.target = owner.whoAmI;
                 }                
             }
-            if (npcSpecials.Holy_Shield_Durability < npcSpecials.Holy_Shield_Durability_Max / 2) enraged = true;
+            if (npcSpecials.HolyShield_Durability < npcSpecials.HolyShield_Durability_Max / 2) enraged = true;
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)

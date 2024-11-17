@@ -28,7 +28,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
 			Item.useTime = 38;
 			Item.useAnimation = 38;
 			Item.shootSpeed = 10.2f;
-			Item.shoot = 10;
+			Item.shoot = ModContent.ProjectileType<Angelic_Bolt_Friendly>();
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 2.6f;
 			Item.value = Item.sellPrice(0, 0, 40, 0);
@@ -41,7 +41,7 @@ namespace Ferustria.Content.Items.Weapons.Ranger.PreHM
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			position.ApplyMuzzleOffset(velocity);
-			type = ModContent.ProjectileType<Angelic_Bolt_Friendly>();
+            type = ModContent.ProjectileType<Angelic_Bolt_Friendly>();
 			Projectile.NewProjectile(source, position.X, position.Y, velocity.X, velocity.Y, type, damage, knockback, player.whoAmI, -5f);
 			return false;
         }

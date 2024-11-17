@@ -58,9 +58,9 @@ namespace Ferustria.Content.Projectiles.Friendly
             if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
-                // Or more compactly Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
-                if (++Projectile.frame >= Main.projFrames[Projectile.type])
-                    Projectile.frame = 0;
+                Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
+                //if (++Projectile.frame >= Main.projFrames[Projectile.type])
+                //    Projectile.frame = 0;
             }
 
 

@@ -90,7 +90,7 @@ namespace Ferustria.Content.Projectiles.Friendly
 				}
 				Projectile.localAI[0] = 36f;
             }
-			if (Main.rand.NextFloat() < .75f)
+			if (Main.rand.NextFloat() < .75f && !Main.dedServ)
 			{
 				Dust.NewDust(Projectile.position + Projectile.velocity, Projectile.width, Projectile.height , ModContent.DustType<Barathrum_Particles>(), Projectile.velocity.X * .8f, Projectile.velocity.Y * .8f, 0, default, Main.rand.NextFloat(.52f, .95f));
 			}
